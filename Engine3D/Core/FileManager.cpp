@@ -26,13 +26,19 @@ File* FileManager::createFile(const aiMesh* m)
     return nullptr;
 }
 
-bool FileManager::saveFile()
+bool FileManager::saveFile(File* file)
 {
     bool ret = true;
     return ret;
 }
 
-bool FileManager::loadfile()
+bool FileManager::loadfile(File* file)
+{
+    bool ret = true;
+    return ret;
+}
+
+bool FileManager::removeFile(File* file)
 {
     bool ret = true;
     return ret;
