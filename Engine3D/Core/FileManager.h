@@ -20,7 +20,8 @@ public:
 	bool CleanUp() override;
 
 	File* createFile(const aiMesh* m);
-	bool saveFile();
-	bool loadfile();
+	bool saveFile(File* file);
+	bool loadfile(File* file);
+	bool removeFile(File* file);
 
 };
