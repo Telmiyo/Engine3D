@@ -20,6 +20,7 @@ class ModuleViewportFrameBuffer;
 class ModuleImport;
 class ModuleFileSystem;
 class ModuleTextures;
+class FileManager;
 
 class Application
 {
@@ -35,6 +36,7 @@ public:
 	ModuleImport* import { nullptr };
 	ModuleFileSystem* fileSystem { nullptr };
 	ModuleTextures* textures { nullptr };
+	FileManager* files{ nullptr };
 
 	Application();
 	~Application();
