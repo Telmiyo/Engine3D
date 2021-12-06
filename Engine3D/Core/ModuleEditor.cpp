@@ -349,9 +349,13 @@ void ModuleEditor::MenuBar() {
 
         /* ---- FILE ---- */
         if (ImGui::BeginMenu("File")) {
-            if (ImGui::MenuItem("Save", "Ctrl + S")) //DO SOMETHING
+            if (ImGui::MenuItem("Save Scene", "(Ctrl + S)")) //DO SOMETHING
             {
-
+                App->scene->OnSave("scene1.scene");
+            }
+            if (ImGui::MenuItem("Load Scene", "(Ctrl + L)")) //DO SOMETHING
+            {
+                App->scene->OnLoad("scene1.scene");
             }
             ImGui::Separator();
             if (ImGui::MenuItem("Exit", "(Alt+F4)")) App->closeEngine = true;

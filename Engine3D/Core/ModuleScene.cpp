@@ -9,6 +9,7 @@
 #include "ModuleEditor.h"
 #include "Component.h"
 #include "ComponentTransform.h"
+#include "ModuleFileSystem.h"
 #include <stack>
 #include <queue>
 
@@ -22,6 +23,7 @@ bool ModuleScene::Start()
 	bool ret = true;
 	
 	root = new GameObject("Root");
+	App->editor->gameobjectSelected = root;
 
 	//Loading house and textures since beginning
 	App->import->LoadGeometry("Assets/Models/Street_environment.fbx");
@@ -117,4 +119,64 @@ GameObject* ModuleScene::CreateGameObject(const std::string name, GameObject* pa
 	else
 		root->AttachChild(temp);
 	return temp;
+}
+
+void ModuleScene::OnSave(std::string scene) const
+{
+	rapidjson::StringBuffer sb;
+	JSONWriter writer(sb);
+
+	writer.StartObject();
+	std::string tmp = "Scene: " + scene;
+	writer.String(tmp.c_str());
+
+	writer.StartObject();
+
+	/*root->OnSave(writer);*/
+
+	/*
+	for (size_t i = 0; i < modules.size(); i++)
+	{
+		modules[i]->OnSave(writer);
+	}
+	*/
+	writer.EndObject();
+
+	writer.EndObject();
+
+	if (App->fileSystem->Save(scene.c_str(), sb.GetString(), strlen(sb.GetString()), false))
+	{
+		LOG("Scene: '%s' succesfully saved", scene.c_str());
+	}
+	else
+	{
+		LOG("Error saving scene: '%s'", scene.c_str());
+	}
+}
+
+void ModuleScene::OnLoad(std::string scene)
+{
+	char* buffer = nullptr;
+	uint bytesFile = App->fileSystem->Load(scene.c_str(), &buffer);
+
+	if (bytesFile)
+	{
+		rapidjson::Document document;
+		if (document.Parse<rapidjson::kParseStopWhenDoneFlag>(buffer).HasParseError())
+		{
+			LOG("Error loading scene: '%s'", scene.c_str());
+		}
+		else
+		{
+			const rapidjson::Value config = document.GetObjectJSON();
+
+			/*for (size_t i = 0; i < modules.size(); i++)
+			{
+				modules[i]->OnLoad(config);
+			}*/
+
+			LOG("Scene: '%s' succesfully loaded", scene.c_str());
+		}
+	}
+	RELEASE_ARRAY(buffer);
 }
