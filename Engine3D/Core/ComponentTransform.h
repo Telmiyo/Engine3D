@@ -30,6 +30,9 @@ public:
 	void OnParentMoved();
 
 	void RecomputeGlobalMatrix();
+
+	void OnLoad(const JSONReader& reader) override;
+	void OnSave(JSONWriter& writer) const override;
 	
 	float4x4 transformMatrix;
 	float4x4 transformMatrixLocal;

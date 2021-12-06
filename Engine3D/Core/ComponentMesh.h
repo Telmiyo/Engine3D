@@ -34,6 +34,11 @@ public:
 	bool Update(float dt) override;
 	void OnGui() override;
 
+	void OnLoad(const JSONReader& reader) override;
+	void OnSave(JSONWriter& writer) const override;
+
+public:
+
 	uint vertexBufferId = 0, indexBufferId = 0, textureBufferId = 0;
 	std::string texturePath;
 	

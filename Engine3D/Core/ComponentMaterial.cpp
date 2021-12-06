@@ -26,3 +26,25 @@ void ComponentMaterial::OnGui()
 	}
 }
 
+void ComponentMaterial::OnLoad(const JSONReader& reader)
+{
+
+}
+void ComponentMaterial::OnSave(JSONWriter& writer) const
+{
+	writer.StartObject();
+		writer.String("Material");
+		writer.StartObject();
+			writer.String("Texture path");
+			writer.String(textureName.c_str());
+			writer.String("Size");
+			writer.StartArray();
+				writer.Int(width);
+				writer.Int(height);
+			writer.EndArray();
+			writer.String("Texture ID");
+			writer.Int(textureId);
+		writer.EndObject();
+	writer.EndObject();
+}
+

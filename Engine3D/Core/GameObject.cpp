@@ -9,7 +9,7 @@ GameObject::GameObject() {
 
 	name = name + ("GameObject");
 	parent = nullptr;
-
+	
 	transform = CreateComponent<ComponentTransform>();
 
 	active = true;
@@ -99,4 +99,62 @@ void GameObject::PropagateTransform()
 	{
 		go->transform->OnParentMoved();
 	}
+}
+
+void GameObject::OnSave(JSONWriter& writer) const
+{
+	writer.StartObject();
+
+	// Game object name
+	writer.String("Name");
+	writer.String(name.c_str());
+
+	// Game object uuid
+	writer.String("UUID");
+	writer.Uint(uuid);
+
+	// Game object parent uuid
+	if (parent != nullptr)
+	{
+		writer.String("Parent UUID");
+		writer.Uint(parentUuid);
+	}
+	else
+	{
+		writer.String("Parent UUID");
+		writer.String("none");
+	}
+
+	// Game object components
+	writer.String("Components");
+	writer.StartArray();
+	for (int i = 0; i < components.size(); ++i)
+	{
+		components[i]->OnSave(writer);
+	}
+	writer.EndArray();
+
+	// Game object children
+	if (children.size() > 0)
+	{
+		writer.String("Children");
+		writer.StartArray();
+		for (int i = 0; i < children.size(); ++i)
+		{
+			children[i]->OnSave(writer);
+		}
+		writer.EndArray();
+	}
+	else
+	{
+		writer.String("Children");
+		writer.String("none");
+	}
+	
+	writer.EndObject();
+}
+
+void OnLoad(const JSONReader& reader)
+{
+
 }

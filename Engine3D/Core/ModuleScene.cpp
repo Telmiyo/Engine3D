@@ -124,27 +124,25 @@ GameObject* ModuleScene::CreateGameObject(const std::string name, GameObject* pa
 
 void ModuleScene::OnSave(std::string scene) const
 {
+	std::string sceneName = "Scene: " + scene;
+
 	rapidjson::StringBuffer sb;
 	JSONWriter writer(sb);
 
 	writer.StartObject();
-	std::string tmp = "Scene: " + scene;
-	writer.String(tmp.c_str());
+	// Scene name
+	writer.String(sceneName.c_str());
 
+	// Scene game objects
 	writer.StartObject();
-
-	/*root->OnSave(writer);*/
-
-	/*
-	for (size_t i = 0; i < modules.size(); i++)
-	{
-		modules[i]->OnSave(writer);
-	}
-	*/
+	writer.String("Game Objects");
+	// Call to every game object save
+	root->OnSave(writer);
 	writer.EndObject();
 
 	writer.EndObject();
 
+	// LOG checker
 	if (App->fileSystem->Save(scene.c_str(), sb.GetString(), strlen(sb.GetString()), false))
 	{
 		LOG("Scene: '%s' succesfully saved", scene.c_str());
