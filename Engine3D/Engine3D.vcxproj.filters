@@ -182,9 +182,6 @@
     <ClCompile Include="Core\FileManager.cpp">
       <Filter>Engine\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Core\File.cpp">
-      <Filter>Engine\GameObjects - Components</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\ImGui\imconfig.h">
@@ -712,8 +709,14 @@
     <ClInclude Include="Core\FileManager.h">
       <Filter>Engine\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Core\File.h">
-      <Filter>Engine\GameObjects - Components</Filter>
+    <ClInclude Include="Core\iconcpp.h">
+      <Filter>Icons</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\icons.h">
+      <Filter>Icons</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\font.h">
+      <Filter>Icons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -770,6 +773,9 @@
     </Filter>
     <Filter Include="Engine\Tools">
       <UniqueIdentifier>{3b33fd60-8311-4ddf-87d9-d36b91d2b082}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Icons">
+      <UniqueIdentifier>{72e238b6-e54c-4b4e-b356-fe4ee787de21}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

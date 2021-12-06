@@ -15,7 +15,6 @@
     <ClCompile Include="Core\Color.cpp" />
     <ClCompile Include="Core\ComponentMaterial.cpp" />
     <ClCompile Include="Core\ComponentMesh.cpp" />
-    <ClCompile Include="Core\File.cpp" />
     <ClCompile Include="Core\FileManager.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\ModuleFileSystem.cpp" />
@@ -125,9 +124,11 @@
     <ClInclude Include="Core\DevIL\include\ilut_config.h" />
     <ClInclude Include="Core\DevIL\include\ilu_region.h" />
     <ClInclude Include="Core\DevIL\include\il_wrap.h" />
-    <ClInclude Include="Core\File.h" />
     <ClInclude Include="Core\FileManager.h" />
+    <ClInclude Include="Core\font.h" />
     <ClInclude Include="Core\GameObject.h" />
+    <ClInclude Include="Core\iconcpp.h" />
+    <ClInclude Include="Core\icons.h" />
     <ClInclude Include="Core\ModuleFileSystem.h" />
     <ClInclude Include="Core\Globals.h" />
     <ClInclude Include="Core\ImGui\imconfig.h" />

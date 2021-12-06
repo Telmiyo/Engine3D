@@ -55,6 +55,7 @@ public:
 	bool showAnotherWindow;
 	bool showAboutWindow;
 	bool showConfWindow;
+	bool showImportedMeshes;
 	bool showInspectorWindow;
 	bool showHierarchyWindow;
 	bool showSceneWindow;
