@@ -18,6 +18,7 @@ public:
 
 	bool LoadGeometry(const char* path);
 
+
 	void FindNodeName(const aiScene* scene, const size_t i, std::string& name);
 
 

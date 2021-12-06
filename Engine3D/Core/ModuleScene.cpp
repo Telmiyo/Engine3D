@@ -10,6 +10,7 @@
 #include "Component.h"
 #include "ComponentTransform.h"
 #include "ModuleFileSystem.h"
+#include "FileManager.h"
 #include <stack>
 #include <queue>
 
@@ -26,7 +27,7 @@ bool ModuleScene::Start()
 	App->editor->gameobjectSelected = root;
 
 	//Loading house and textures since beginning
-	App->import->LoadGeometry("Assets/Models/Street_environment.fbx");
+	App->import->LoadGeometry("Assets/Models/BakerHouse.fbx");
 	
 	return ret;
 }
