@@ -15,6 +15,9 @@ public:
 	update_status Update(float dt) override;
 	bool CleanUp() override;
 
+	void OnSave(std::string scene) const;
+	void OnLoad(std::string scene);
+
 	GameObject* CreateGameObject(GameObject* parent = nullptr);	
 	GameObject* CreateGameObject(const std::string name, GameObject* parent = nullptr);	
 	
