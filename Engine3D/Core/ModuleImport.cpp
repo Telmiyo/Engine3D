@@ -150,10 +150,9 @@ bool ModuleImport::LoadGeometry(const char* path) {
 			
 			mesh->GenerateBuffers();
 			mesh->GenerateBounds();
-			mesh->ComputeNormals();
-			std::string tmp = "Assets/Files/amogus.txt";
-						
-			App->files->createMymodel(assimpMesh,path);
+			mesh->ComputeNormals();			
+			const char* a = name.c_str();
+			App->files->createMymodel(assimpMesh,path, "test");
 			//App->files->saveModel(tmp, "Assets/Files/amogus.txt");
 
 		}

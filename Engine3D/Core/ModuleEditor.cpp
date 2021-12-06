@@ -92,9 +92,9 @@ bool ModuleEditor::Start()
 	icons_config.OversampleH = 2.5;
 	icons_config.OversampleV = 2.5;
 
-	io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(Custom), sizeof(Custom), 21.f, &CustomFont);
+	io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(Custom), sizeof(Custom), 17.f, &CustomFont);
 	io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 19.0f, &icons_config, icons_ranges);
-	io.Fonts->AddFontDefault();
+	//io.Fonts->AddFontDefault();
 
 	// Setup Platform/Renderer bindings
 	ImGui_ImplOpenGL3_Init();
@@ -495,19 +495,11 @@ void ModuleEditor::UpdateWindowStatus() {
 	if (showImportedMeshes) {
 		ImGui::Begin("Meshes", &showImportedMeshes);
 
-		if (ImGui::Button(ICON_FA_SEARCH"model1")) {}
-		ImGui::SameLine();
-		if (ImGui::Button(ICON_FA_CUBE"model2")) {}
-		ImGui::SameLine();
-		if (ImGui::Button(ICON_FA_FOLDER"model3")) {}
-		ImGui::SameLine();
-		if (ImGui::Button(ICON_FA_CAR"model4")) {}
-		ImGui::SameLine();
-		if (ImGui::Button(ICON_FA_CLOUD"model5")) {}
-
-		/*for (auto m : App->files->models)
+		for (auto m : App->files->models)
 		{
-		}*/
+			std::string a = ICON_FA_CUBE + std::string(m->name);
+		if (ImGui::Button(a.c_str())) {}
+		}
 		ImGui::End();
 
 	}
