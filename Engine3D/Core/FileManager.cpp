@@ -22,7 +22,7 @@ bool FileManager::CleanUp()
 	return true;
 }
 
-bool FileManager::createMymodel(const aiMesh* m, const char* path)
+bool FileManager::createMymodel(const aiMesh* m, const char* path, const char* name)
 {
 	TMYMODEL* mymodel = (TMYMODEL*)malloc(sizeof(TMYMODEL));
 	mymodel->verticesSizeBytes = m->mNumVertices * sizeof(float) * 3;//3==x,y,z
@@ -56,8 +56,9 @@ bool FileManager::createMymodel(const aiMesh* m, const char* path)
 	mymodel->info = (char*)malloc(mymodel->infoSizeBytes);
 	memcpy(mymodel->info, someinfo, mymodel->infoSizeBytes);
 	mymodel->info[mymodel->infoSizeBytes - 1] = '\0';
-	//mymodel->name = path;
-
+	
+	mymodel->name = name;
+	pushMymodel(mymodel);
 	return saveModel(mymodel, path);
 }
 
@@ -86,7 +87,7 @@ bool FileManager::saveModel(TMYMODEL* m, const char* path)
 
 		myfile.close();
 
-		pushMymodel(m);
+		
 		return true; //all fine
 	}
 	else
