@@ -2,6 +2,11 @@
 
 #include <vector>
 #include <string>
+#include "rapidjson-1.1.0/include/rapidjson/prettywriter.h"
+#include "rapidjson-1.1.0/include/rapidjson/document.h"
+
+typedef rapidjson::PrettyWriter<rapidjson::StringBuffer> JSONWriter;
+typedef rapidjson::Value JSONReader;
 
 class Component;
 class ComponentTransform;
@@ -42,7 +47,12 @@ public:
 	void RemoveChild(GameObject* child);
 	void PropagateTransform();
 
+	void OnSave(JSONWriter& writer) const;
+	void OnLoad(const JSONReader& reader);
+
 	std::string name;
+	unsigned int uuid;
+	unsigned int parentUuid;
 	GameObject* parent = nullptr;
 	ComponentTransform* transform = nullptr;
 	std::vector<GameObject*> children;

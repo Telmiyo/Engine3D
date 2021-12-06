@@ -232,4 +232,39 @@ void ComponentMesh::OnGui()
 	}
 }
 
+void ComponentMesh::OnLoad(const JSONReader& reader)
+{
+
+}
+void ComponentMesh::OnSave(JSONWriter& writer) const
+{
+	writer.StartObject();
+		writer.String("Mesh");
+		writer.StartObject();
+			writer.String("Vertex number");
+			writer.Int(numVertices);
+		/*writer.EndObject();*/
+		/*writer.StartObject();*/
+			writer.String("Face number");
+			writer.Int(numVertices);
+		/*writer.EndObject();*/
+		/*writer.StartObject();*/
+			writer.String("Wireframe");
+			writer.Bool(drawWireframe);
+		/*writer.EndObject();*/
+		/*writer.StartObject();*/
+			writer.String("Normal draw scale");
+			writer.Double(normalScale);
+		/*writer.EndObject();*/
+		/*writer.StartObject();*/
+			writer.String("Draw face normals");
+			writer.Bool(drawFaceNormals);
+		/*writer.EndObject();*/
+		/*writer.StartObject();*/
+			writer.String("Draw vertex normals");
+			writer.Bool(drawVertexNormals);
+		writer.EndObject();
+	writer.EndObject();
+}
+
 
