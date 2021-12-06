@@ -20,9 +20,8 @@ typedef struct _model
     float* normals = NULL;//float,float,float  every normal => sizeof(float) *3
     float* textCoords = NULL;//float,float        every normal => sizeof(float) *2
     char* info = NULL;
-    const char* name ;
-    std::string name2;
-
+   
+    std::string name = std::string("");
 
 }TMYMODEL;
 
@@ -35,13 +34,12 @@ public:
 	bool Init() override;
 	bool CleanUp() override;
 
-    bool createMymodel(const aiMesh* m, const char* path, const char* name);
+    bool createMymodel(const aiMesh* m, const char* path, std::string name);
     bool saveModel(TMYMODEL* m, const char* path);
     TMYMODEL* loadModel(const char* path);
     void destroyMymodel(TMYMODEL* mymodel);
 
     void pushMymodel(TMYMODEL* mymodel);
-
 
     std::vector<TMYMODEL*> models;
 
