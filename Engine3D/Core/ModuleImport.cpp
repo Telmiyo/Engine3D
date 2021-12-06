@@ -9,6 +9,7 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "GameObject.h"
+#include "FileManager.h"
 
 #include <vector>
 #include <queue>
@@ -44,7 +45,7 @@ update_status ModuleImport::Update(float dt) {
 }
 
 bool ModuleImport::LoadGeometry(const char* path) {
-
+	int a = 0;
 	//-- Own structure	
 	GameObject* root = nullptr;
 	std::string new_root_name(path);
@@ -150,6 +151,11 @@ bool ModuleImport::LoadGeometry(const char* path) {
 			mesh->GenerateBuffers();
 			mesh->GenerateBounds();
 			mesh->ComputeNormals();
+			std::string tmp = "Assets/Files/amogus.txt";
+						
+			App->files->createMymodel(assimpMesh,path);
+			//App->files->saveModel(tmp, "Assets/Files/amogus.txt");
+
 		}
 		aiReleaseImport(scene);		
 		RELEASE_ARRAY(buffer);

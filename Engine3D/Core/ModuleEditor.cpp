@@ -14,7 +14,10 @@
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
-
+#include "FileManager.h"
+#include "iconcpp.h"
+#include "icons.h"
+#include "font.h"
 //Tools
 
 #include <string>
@@ -34,6 +37,7 @@ ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, s
     showConfWindow = true;
 
     showConsoleWindow = true;
+    showImportedMeshes = true;
     showHierarchyWindow = true;
     showInspectorWindow = true;
     showGameWindow = true;
@@ -74,6 +78,23 @@ bool ModuleEditor::Start()
 
     // Setup ImGui style by default
     ImGui::StyleColorsDark();
+
+    // Setup icon fonts
+    static const ImWchar icons_ranges[] = { 0xf000, 0xf3ff, 0 };
+    ImFontConfig icons_config;
+
+    ImFontConfig CustomFont;
+    CustomFont.FontDataOwnedByAtlas = false;
+
+
+    icons_config.MergeMode = true;
+    icons_config.PixelSnapH = true;
+    icons_config.OversampleH = 2.5;
+    icons_config.OversampleV = 2.5;
+
+    io.Fonts->AddFontFromMemoryTTF(const_cast<std::uint8_t*>(Custom), sizeof(Custom), 21.f, &CustomFont);
+    io.Fonts->AddFontFromMemoryCompressedTTF(font_awesome_data, font_awesome_size, 19.0f, &icons_config, icons_ranges);
+    io.Fonts->AddFontDefault();
 
     // Setup Platform/Renderer bindings
 	ImGui_ImplOpenGL3_Init();
@@ -464,6 +485,21 @@ void ModuleEditor::UpdateWindowStatus() {
         ImGui::TextUnformatted(consoleText.begin(), consoleText.end());
         ImGui::SetScrollHere(1.0f);
         ImGui::End();
+    }
+
+    //Imported Meshes
+    if (showImportedMeshes) {
+        ImGui::Begin("Meshes", &showImportedMeshes);
+ 
+         //for (auto m : App->files->models)
+         //{            
+         //    std::string tmp = "\xef\x86\xb2" + m->name;
+         //    ImGui::Text(tmp.c_str());
+         //   // ImGui::SameLine();
+         //   // ImGui::Text(m->name.c_str());
+         //}
+        ImGui::End();
+
     }
 
     //Inspector
