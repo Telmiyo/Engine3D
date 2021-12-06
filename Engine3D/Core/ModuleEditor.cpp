@@ -494,11 +494,13 @@ void ModuleEditor::UpdateWindowStatus() {
 	//Imported Meshes
 	if (showImportedMeshes) {
 		ImGui::Begin("Meshes", &showImportedMeshes);
-
 		for (auto m : App->files->models)
 		{
-			std::string a = ICON_FA_CUBE + std::string(m->name);
-		if (ImGui::Button(a.c_str())) {}
+			std::string tmp = ICON_FA_CUBE + std::string(m->name);
+
+		if (ImGui::Button(tmp.c_str(),ImVec2(0,0))) {}
+			//ImGui::Text("%s", tmp.c_str());
+			//ImGui::Text("%s", b.c_str());
 		}
 		ImGui::End();
 
