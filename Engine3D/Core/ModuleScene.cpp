@@ -130,6 +130,7 @@ void ModuleScene::OnSave(std::string scene) const
 	JSONWriter writer(sb);
 
 	writer.StartObject();
+
 	// Scene name
 	writer.String(sceneName.c_str());
 
@@ -155,6 +156,8 @@ void ModuleScene::OnSave(std::string scene) const
 
 void ModuleScene::OnLoad(std::string scene)
 {
+	std::string sceneName = "Scene: " + scene;
+
 	char* buffer = nullptr;
 	uint bytesFile = App->fileSystem->Load(scene.c_str(), &buffer);
 
@@ -167,13 +170,26 @@ void ModuleScene::OnLoad(std::string scene)
 		}
 		else
 		{
-			const rapidjson::Value config = document.GetObjectJSON();
+			rapidjson::Value config = document.GetObjectJSON();
+			root = new GameObject("Root");
 
-			/*for (size_t i = 0; i < modules.size(); i++)
+			if (config.HasMember(sceneName.c_str()))
 			{
-				modules[i]->OnLoad(config);
-			}*/
-
+				const rapidjson::Value& itemScene = config[sceneName.c_str()];
+				if (itemScene.HasMember("Game Objects"))
+				{
+					const rapidjson::Value& itemGameObjs = itemScene["Game Objects"];
+					if (itemGameObjs.IsArray())
+					{
+						for (rapidjson::Value::ConstValueIterator it = itemGameObjs.Begin(); it != itemGameObjs.End(); ++it)
+						{
+							root->OnLoad(it->GetObjectJSON());
+						}
+					}
+					else
+						root->OnLoad(itemGameObjs.GetObjectJSON());
+				}
+			}
 			LOG("Scene: '%s' succesfully loaded", scene.c_str());
 		}
 	}
