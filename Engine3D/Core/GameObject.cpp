@@ -154,7 +154,12 @@ void GameObject::OnSave(JSONWriter& writer) const
 	writer.EndObject();
 }
 
-void OnLoad(const JSONReader& reader)
+void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& reader)
 {
-
+	if (reader.HasMember("Name"))
+	{
+		name = reader["Name"].GetString();
+	}
 }
+
+
