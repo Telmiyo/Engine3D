@@ -179,6 +179,7 @@ void ModuleScene::OnLoad(std::string scene)
 				if (itemScene.HasMember("Game Objects"))
 				{
 					const rapidjson::Value& itemGameObjs = itemScene["Game Objects"];
+
 					if (itemGameObjs.IsArray())
 					{
 						for (rapidjson::Value::ConstValueIterator it = itemGameObjs.Begin(); it != itemGameObjs.End(); ++it)

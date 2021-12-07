@@ -7,7 +7,7 @@
 #include "ImGui/imgui.h"
 
 ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent) {
-	
+
 	position = float3::zero;
 	rotation = Quat::identity;
 	scale = float3::one;
@@ -68,7 +68,7 @@ void ComponentTransform::SetPosition(const float3& newPosition)
 
 void ComponentTransform::SetRotation(const float3& newRotation)
 {
-	Quat rotationDelta = Quat::FromEulerXYZ(newRotation.x - rotationEuler.x, newRotation.y - rotationEuler.y, newRotation.z - rotationEuler.z);	
+	Quat rotationDelta = Quat::FromEulerXYZ(newRotation.x - rotationEuler.x, newRotation.y - rotationEuler.y, newRotation.z - rotationEuler.z);
 	rotation = rotation * rotationDelta;
 	rotationEuler = newRotation;
 	isDirty = true;
@@ -107,35 +107,42 @@ void ComponentTransform::RecomputeGlobalMatrix()
 	}
 }
 
-void ComponentTransform::OnLoad(const JSONReader& reader) 
-{
-
-}
 void ComponentTransform::OnSave(JSONWriter& writer) const
 {
 	writer.String("Transform");
 	writer.StartObject();
-		writer.String("Position");
-		writer.StartArray();
-			writer.Double(position.x);
-			writer.Double(position.y);
-			writer.Double(position.z);
-		writer.EndArray();
+	writer.String("Position");
+	writer.StartArray();
+	writer.Double(position.x);
+	writer.Double(position.y);
+	writer.Double(position.z);
+	writer.EndArray();
 	writer.EndObject();
 	writer.StartObject();
-		writer.String("Rotation");
-		writer.StartArray();
-			writer.Double(rotation.x);
-			writer.Double(rotation.y);
-			writer.Double(rotation.z);
-		writer.EndArray();
+	writer.String("Rotation");
+	writer.StartArray();
+	writer.Double(rotation.x);
+	writer.Double(rotation.y);
+	writer.Double(rotation.z);
+	writer.EndArray();
 	writer.EndObject();
 	writer.StartObject();
-		writer.String("Scale");
-		writer.StartArray();
-			writer.Double(scale.x);
-			writer.Double(scale.y);
-			writer.Double(scale.z);
-		writer.EndArray();
+	writer.String("Scale");
+	writer.StartArray();
+	writer.Double(scale.x);
+	writer.Double(scale.y);
+	writer.Double(scale.z);
+	writer.EndArray();
 	writer.EndObject();
+}
+
+void ComponentTransform::OnLoad(const JSONReader& reader)
+{
+	assert(reader.IsArray()); // attributes is an array
+	rapidjson::Value::ConstValueIterator itr = reader.Begin();
+	const rapidjson::Value& attribute = *itr;
+	//assert(attribute.IsObject());
+
+
+
 }
