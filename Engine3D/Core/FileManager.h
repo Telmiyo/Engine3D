@@ -35,8 +35,8 @@ public:
 	bool CleanUp() override;
 
     bool createMymodel(const aiMesh* m, const char* path, std::string name);
-    bool saveModel(TMYMODEL* m, const char* path);
-    TMYMODEL* loadModel(const char* path);
+    bool saveModel(TMYMODEL* m, const char* path, std::string name);
+    TMYMODEL* loadModel(std::string name);
     void destroyMymodel(TMYMODEL* mymodel);
 
     void pushMymodel(TMYMODEL* mymodel);
