@@ -12,7 +12,6 @@ FileManager::FileManager(Application* app, bool start_enabled) : Module(app, sta
 bool FileManager::Init()
 {
 	bool ret = true;
-
 	return ret;
 }
 
@@ -62,10 +61,10 @@ bool FileManager::createMymodel(const aiMesh* m, const char* path, std::string n
 	
 	pushMymodel(mymodel);
 
-	return saveModel(mymodel, path);
+	return saveModel(mymodel, path, name);
 }
 
-bool FileManager::saveModel(TMYMODEL* m, const char* path)
+bool FileManager::saveModel(TMYMODEL* m, const char* path, std::string name)
 {
 	//My format
 	//Header
@@ -75,19 +74,18 @@ bool FileManager::saveModel(TMYMODEL* m, const char* path)
 	//d)unsigned for    indiceSizeBytes
 	//e)unsigned for      infoSizeBytes
 	//so the header size is 5 * sizeof(unsigned) -> 20 bytes
-
+	std::string fileName = "Assets/Files/" + name + ".amapola";
 	std::ofstream myfile;
-	myfile.open(path, std::ios::in | std::ios::app | std::ios::binary);
+	myfile.open(fileName.c_str(), std::ios::in | std::ios::app | std::ios::binary);
 	if (myfile.is_open())
 	{
 		myfile.write((char*)m, 5 * sizeof(unsigned)); //write header
-
 		myfile.write((char*)m->vertices, m->verticesSizeBytes);
 		myfile.write((char*)m->normals, m->normalsSizeBytes);
 		myfile.write((char*)m->textCoords, m->textCoordSizeBytes);
 		myfile.write((char*)m->indices, m->indiceSizeBytes);
 		myfile.write((char*)m->info, m->infoSizeBytes);
-
+		
 		myfile.close();
 
 		
@@ -100,10 +98,11 @@ bool FileManager::saveModel(TMYMODEL* m, const char* path)
 
 }
 
-TMYMODEL* FileManager::loadModel(const char* path)
+TMYMODEL* FileManager::loadModel(std::string name)
 {
 	std::ifstream myfile;
-	myfile.open(path, std::ios::binary);
+	std::string fullName = "Assets/Files/" + name + ".amapola";
+	myfile.open(fullName.c_str(), std::ios::binary);
 	if (myfile.is_open())
 	{
 
@@ -150,3 +149,4 @@ void FileManager::pushMymodel(TMYMODEL* mymodel)
 {
 	models.push_back(mymodel);
 }
+
