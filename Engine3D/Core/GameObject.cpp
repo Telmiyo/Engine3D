@@ -9,13 +9,13 @@ GameObject::GameObject() {
 
 	name = name + ("GameObject");
 	parent = nullptr;
-	
+
 	transform = CreateComponent<ComponentTransform>();
 
 	active = true;
 }
 
-GameObject::GameObject(const std::string name) : name(name) 
+GameObject::GameObject(const std::string name) : name(name)
 {
 	transform = CreateComponent<ComponentTransform>();
 
@@ -39,7 +39,7 @@ GameObject::~GameObject() {
 	parent = nullptr;
 }
 
-void GameObject::Update(float dt) 
+void GameObject::Update(float dt)
 {
 	for (Component* component : components)
 	{
@@ -150,7 +150,7 @@ void GameObject::OnSave(JSONWriter& writer) const
 		writer.String("Children");
 		writer.String("none");
 	}
-	
+
 	writer.EndObject();
 }
 
@@ -159,7 +159,37 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 	if (reader.HasMember("Name"))
 	{
 		name = reader["Name"].GetString();
+		uuid = reader["UUID"].GetUint();
+		//parentUuid = reader["ParentUUID"].GetUint();
+
+		rapidjson::Value& componentsFile = (rapidjson::Value&)reader["Components"];
+		
+		if (componentsFile.IsArray())
+		{
+			for (auto c : components)
+			{
+				c->OnLoad(componentsFile);
+			}
+
+		}
+
+		rapidjson::Value& objchildren = (rapidjson::Value&)reader["Children"];
+		int counter = 0;
+		while (objchildren.IsArray()) // objchildren is an array
+		{
+			// TODO set one by one each object
+
+			rapidjson::Value::ConstValueIterator itr = objchildren.Begin();
+			const rapidjson::Value& attribute = *itr;
+			assert(attribute.IsObject());
+
+			children.push_back(new GameObject());			
+			children[counter]->name = attribute.FindMember("Name")->value.GetString();
+			children[counter]->uuid = attribute.FindMember("UUID")->value.GetUint();
+			objchildren = (rapidjson::Value&)attribute.FindMember("Children");
+		}
 	}
+
 }
 
 
