@@ -223,7 +223,11 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 			const rapidjson::Value& attribute = *it;
 			assert(attribute.IsObject());
 
-			children.push_back(new GameObject());
+			GameObject* child = new GameObject();
+			children.push_back(child);
+			App->scene->gameObjectList.push_back(child);
+			
+			children[counter]->parent = this;
 			children[counter]->name = attribute.FindMember("Name")->value.GetString();
 			children[counter]->uuid = attribute.FindMember("UUID")->value.GetUint();
 
@@ -233,43 +237,43 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 				if (childrenComponents.HasMember("Transform"))
 				{
 					const rapidjson::Value& itemTransform = childrenComponents["Transform"];
-					/*for (auto c : children[counter]->components)
+					for (auto c : children[counter]->components)
 					{
 						if (c->componentType == ComponentType::COMPONENT_TRANSFORM)
 						{
 							c->OnLoad(itemTransform);
 						}
-					}*/
+					}
 				}
 				if (childrenComponents.HasMember("Material"))
 				{
 					const rapidjson::Value& itemMaterial = childrenComponents["Material"];
-					//children[counter]->AddComponent(new ComponentMaterial(children[counter]->parent));
+					children[counter]->CreateComponent<ComponentMaterial>();
 
-					/*for (auto c : children[counter]->components)
+					for (auto c : children[counter]->components)
 					{
 						if (c->componentType == ComponentType::COMPONENT_MATERIAL)
 						{
 							c->OnLoad(itemMaterial);
 						}
-					}*/
+					}
 				}
 				if (childrenComponents.HasMember("Mesh"))
 				{
 					const rapidjson::Value& itemMesh = childrenComponents["Mesh"];
-					//children[counter]->AddComponent(new ComponentMesh(children[counter]->parent));
+					children[counter]->CreateComponent<ComponentMesh>();
 
-		/*			for (auto c : children[counter]->components)
+					for (auto c : children[counter]->components)
 					{
 						if (c->componentType == ComponentType::COMPONENT_MESH)
 						{
 							c->OnLoad(itemMesh);
 						}
-					}*/
+					}
 				}
 
 			}
-
+			counter++;
 		}
 	}
 }
