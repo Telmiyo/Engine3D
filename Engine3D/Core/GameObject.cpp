@@ -59,6 +59,12 @@ void GameObject::OnGui()
 			component->OnGui();
 		}
 	}
+
+	if (ImGui::CollapsingHeader("Identifiers"))
+	{
+		ImGui::Text("UUID:", (unsigned int)uuid);
+		ImGui::Text("Parent UUID:", (unsigned int)parentUuid);
+	}
 }
 
 void GameObject::DeleteComponent(Component* component) {
@@ -82,6 +88,7 @@ void GameObject::AttachChild(GameObject* child)
 	children.push_back(child);
 	child->transform->NewAttachment();
 	child->PropagateTransform();
+	App->scene->gameObjectList.push_back(child);
 }
 
 void GameObject::RemoveChild(GameObject* child)

@@ -80,7 +80,7 @@ bool ModuleImport::LoadGeometry(const char* path) {
 			std::string name;
 			FindNodeName(scene, i, name);
 
-			GameObject* newGameObject = App->scene->CreateGameObject(name);
+			GameObject* newGameObject = App->scene->CreateGameObjectByName(name);
 			ComponentMesh* mesh = newGameObject->CreateComponent<ComponentMesh>();
 			assimpMesh = scene->mMeshes[i];
 			
