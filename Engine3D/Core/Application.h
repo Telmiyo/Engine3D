@@ -80,7 +80,8 @@ public:
 	//Engine configuration
 	bool closeEngine;
 	bool vsync;
-
+	char engineName[20] = TITLE;
+	char orgName[20] = ORGANITZATION;
 
 
 private: 
