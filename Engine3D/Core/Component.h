@@ -5,6 +5,14 @@
 #include <string>
 #include "GameObject.h"
 
+enum ComponentType
+{
+	COMPONENT_TRANSFORM,
+	COMPONENT_MESH,
+	COMPONENT_MATERIAL,
+	NONE
+};
+
 class Component {
 
 public:
@@ -30,6 +38,7 @@ public:
 
 public:
 
+	ComponentType componentType = ComponentType::NONE;
 	GameObject* owner = nullptr;
 	bool active = true;
 };

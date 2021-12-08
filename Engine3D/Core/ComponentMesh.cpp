@@ -12,7 +12,10 @@
 #include "par_shapes.h"
 
 
-ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent) {}
+ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent) {
+
+	componentType = ComponentType::COMPONENT_MESH;
+}
 
 ComponentMesh::ComponentMesh(GameObject* parent, Shape shape) : Component(parent)
 {
@@ -234,36 +237,53 @@ void ComponentMesh::OnGui()
 
 void ComponentMesh::OnLoad(const JSONReader& reader)
 {
-
+	if (reader.HasMember("Vertex number"))
+	{
+		const rapidjson::Value& itemVertexNumber = reader["Vertex number"];
+		numVertices = itemVertexNumber.GetInt();
+	}
+	if (reader.HasMember("Face number"))
+	{
+		const rapidjson::Value& itemFaceNumber = reader["Face number"];
+		numNormalFaces = itemFaceNumber.GetInt();
+	}
+	if (reader.HasMember("Face number"))
+	{
+		const rapidjson::Value& itemDrawWireframe = reader["Wireframe"];
+		drawWireframe = itemDrawWireframe.GetBool();
+	}
+	if (reader.HasMember("Normal draw scale"))
+	{
+		const rapidjson::Value& itemNormalDrawScale = reader["Normal draw scale"];
+		normalScale = itemNormalDrawScale.GetDouble();
+	}
+	if (reader.HasMember("Draw face normals"))
+	{
+		const rapidjson::Value& itemDrawFaceNormals = reader["Draw face normals"];
+		drawFaceNormals = itemDrawFaceNormals.GetBool();
+	}
+	if (reader.HasMember("Draw vertex normals"))
+	{
+		const rapidjson::Value& itemDrawVertexNormals = reader["Draw vertex normals"];
+		drawVertexNormals = itemDrawVertexNormals.GetBool();
+	}
 }
 void ComponentMesh::OnSave(JSONWriter& writer) const
 {
+	writer.String("Mesh");
 	writer.StartObject();
-		writer.String("Mesh");
-		writer.StartObject();
-			writer.String("Vertex number");
-			writer.Int(numVertices);
-		/*writer.EndObject();*/
-		/*writer.StartObject();*/
-			writer.String("Face number");
-			writer.Int(numVertices);
-		/*writer.EndObject();*/
-		/*writer.StartObject();*/
-			writer.String("Wireframe");
-			writer.Bool(drawWireframe);
-		/*writer.EndObject();*/
-		/*writer.StartObject();*/
-			writer.String("Normal draw scale");
-			writer.Double(normalScale);
-		/*writer.EndObject();*/
-		/*writer.StartObject();*/
-			writer.String("Draw face normals");
-			writer.Bool(drawFaceNormals);
-		/*writer.EndObject();*/
-		/*writer.StartObject();*/
-			writer.String("Draw vertex normals");
-			writer.Bool(drawVertexNormals);
-		writer.EndObject();
+		writer.String("Vertex number");
+		writer.Int(numVertices);
+		writer.String("Face number");
+		writer.Int(numNormalFaces);
+		writer.String("Wireframe");
+		writer.Bool(drawWireframe);
+		writer.String("Normal draw scale");
+		writer.Double(normalScale);
+		writer.String("Draw face normals");
+		writer.Bool(drawFaceNormals);
+		writer.String("Draw vertex normals");
+		writer.Bool(drawVertexNormals);
 	writer.EndObject();
 }
 

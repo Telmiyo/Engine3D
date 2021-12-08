@@ -3,125 +3,105 @@
         "Game Objects": {
             "Name": "Root",
             "UUID": 3452816845,
-            "Components": [
-                "Transform",
-                [
-                    "Position",
-                    [
+            "Components": {
+                "Transform": {
+                    "Position": [
                         0.0,
                         0.0,
                         0.0
                     ],
-                    "Rotation",
-                    [
+                    "Rotation": [
                         0.0,
                         0.0,
                         0.0
                     ],
-                    "Scale",
-                    [
+                    "Scale": [
                         1.0,
                         1.0,
                         1.0
                     ]
-                ]
-            ],
+                }
+            },
             "Children": [
                 {
                     "Name": "Chimney",
                     "UUID": 3452816845,
                     "Parent UUID": 3452816845,
-                    "Components": [
-                        "Transform",
-                        [
-                            "Position",
-                            [
+                    "Components": {
+                        "Transform": {
+                            "Position": [
                                 0.0,
                                 0.0,
                                 0.0
                             ],
-                            "Rotation",
-                            [
+                            "Rotation": [
                                 0.0,
                                 0.0,
                                 0.0
                             ],
-                            "Scale",
-                            [
+                            "Scale": [
                                 1.0,
                                 1.0,
                                 1.0
                             ]
-                        ],
-                        {
-                            "Mesh": {
-                                "Vertex number": 160,
-                                "Face number": 160,
-                                "Wireframe": false,
-                                "Normal draw scale": 1.0,
-                                "Draw face normals": false,
-                                "Draw vertex normals": false
-                            }
                         },
-                        {
-                            "Material": {
-                                "Texture path": "Assets/Textures/Baker_house.png",
-                                "Size": [
-                                    1024,
-                                    1024
-                                ],
-                                "Texture ID": 5
-                            }
+                        "Mesh": {
+                            "Vertex number": 160,
+                            "Face number": 972,
+                            "Wireframe": false,
+                            "Normal draw scale": 1.0,
+                            "Draw face normals": false,
+                            "Draw vertex normals": false
+                        },
+                        "Material": {
+                            "Texture path": "Assets/Textures/Baker_house.png",
+                            "Size": [
+                                1024,
+                                1024
+                            ],
+                            "Texture ID": 5
                         }
-                    ]
+                    }
                 },
                 {
                     "Name": "Baker_house",
                     "UUID": 3452816845,
                     "Parent UUID": 3452816845,
-                    "Components": [
-                        "Transform",
-                        [
-                            "Position",
-                            [
+                    "Components": {
+                        "Transform": {
+                            "Position": [
                                 0.0,
                                 0.0,
                                 0.0
                             ],
-                            "Rotation",
-                            [
+                            "Rotation": [
                                 0.0,
                                 0.0,
                                 0.0
                             ],
-                            "Scale",
-                            [
+                            "Scale": [
                                 1.0,
                                 1.0,
                                 1.0
                             ]
-                        ],
-                        {
-                            "Mesh": {
-                                "Vertex number": 1641,
-                                "Face number": 1641,
-                                "Wireframe": false,
-                                "Normal draw scale": 1.0,
-                                "Draw face normals": false,
-                                "Draw vertex normals": false
-                            }
                         },
-                        {
-                            "Material": {
-                                "Texture path": "Assets/Textures/Baker_house.png",
-                                "Size": [
-                                    1024,
-                                    1024
-                                ],
-                                "Texture ID": 5
-                            }
+                        "Mesh": {
+                            "Vertex number": 1641,
+                            "Face number": 8253,
+                            "Wireframe": false,
+                            "Normal draw scale": 1.0,
+                            "Draw face normals": false,
+                            "Draw vertex normals": false
+                        },
+                        "Material": {
+                            "Texture path": "Assets/Textures/Baker_house.png",
+                            "Size": [
+                                1024,
+                                1024
+                            ],
+                            "Texture ID": 5
                         }
-                    ]
+                    }
                 }
             ]
         }
