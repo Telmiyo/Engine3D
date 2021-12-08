@@ -119,11 +119,6 @@ void GameObject::OnSave(JSONWriter& writer) const
 		writer.String("Parent UUID");
 		writer.Uint(parentUuid);
 	}
-	else
-	{
-		writer.String("Parent UUID");
-		writer.String("none");
-	}
 
 	// Game object components
 	writer.String("Components");
@@ -145,11 +140,6 @@ void GameObject::OnSave(JSONWriter& writer) const
 		}
 		writer.EndArray();
 	}
-	else
-	{
-		writer.String("Children");
-		writer.String("none");
-	}
 
 	writer.EndObject();
 }
@@ -159,37 +149,47 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 	if (reader.HasMember("Name"))
 	{
 		name = reader["Name"].GetString();
+	}
+	if (reader.HasMember("UUID"))
+	{
 		uuid = reader["UUID"].GetUint();
-		//parentUuid = reader["ParentUUID"].GetUint();
-
-		rapidjson::Value& componentsFile = (rapidjson::Value&)reader["Components"];
+	}
+	if (reader.HasMember("Parent UUID"))
+	{
+		parentUuid = reader["Parent UUID"].GetUint();
+	}
 		
-		if (componentsFile.IsArray())
+	if (reader.HasMember("Components"))
+	{
+		rapidjson::Value& itemComponents = (rapidjson::Value&)reader["Components"];
+
+		if (itemComponents.IsArray())
 		{
 			for (auto c : components)
 			{
-				c->OnLoad(componentsFile);
+				c->OnLoad(itemComponents);
 			}
-
-		}
-
-		rapidjson::Value& objchildren = (rapidjson::Value&)reader["Children"];
-		int counter = 0;
-		while (objchildren.IsArray()) // objchildren is an array
-		{
-			// TODO set one by one each object
-
-			rapidjson::Value::ConstValueIterator itr = objchildren.Begin();
-			const rapidjson::Value& attribute = *itr;
-			assert(attribute.IsObject());
-
-			children.push_back(new GameObject());			
-			children[counter]->name = attribute.FindMember("Name")->value.GetString();
-			children[counter]->uuid = attribute.FindMember("UUID")->value.GetUint();
-			objchildren = (rapidjson::Value&)attribute.FindMember("Children");
 		}
 	}
 
+	if (reader.HasMember("Children"))
+	{
+		rapidjson::Value& itemChildren = (rapidjson::Value&)reader["Children"];
+		int counter = 0;
+		while (itemChildren.IsArray()) // objchildren is an array
+		{
+			// TODO set one by one each object
+
+			rapidjson::Value::ConstValueIterator itr = itemChildren.Begin();
+			const rapidjson::Value& attribute = *itr;
+			assert(attribute.IsObject());
+
+			children.push_back(new GameObject());
+			children[counter]->name = attribute.FindMember("Name")->value.GetString();
+			children[counter]->uuid = attribute.FindMember("UUID")->value.GetUint();
+			itemChildren = (rapidjson::Value&)attribute.FindMember("Children");
+		}
+	}
 }
 
 
