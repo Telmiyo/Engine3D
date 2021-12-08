@@ -366,20 +366,20 @@ void ModuleEditor::MenuBar() {
 		if (ImGui::BeginMenu("GameObject")) {
 
 			if (ImGui::MenuItem("Create empty GameObject")) {
-				App->scene->CreateGameObject();
+				App->scene->CreateEmptyGameObject();
 			}
 
 			if (ImGui::BeginMenu("3D Objects")) {
 				if (ImGui::MenuItem("Cube")) {
-					GameObject* newGameObject = App->scene->CreateGameObject("Cube");
+					GameObject* newGameObject = App->scene->CreateGameObjectByName("Cube");
 					ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::CUBE);
 				}
 				if (ImGui::MenuItem("Sphere")) {
-					GameObject* newGameObject = App->scene->CreateGameObject("Sphere");
+					GameObject* newGameObject = App->scene->CreateGameObjectByName("Sphere");
 					ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::SPHERE);
 				}
 				if (ImGui::MenuItem("Cylinder")) {
-					GameObject* newGameObject = App->scene->CreateGameObject("Cylinder");
+					GameObject* newGameObject = App->scene->CreateGameObjectByName("Cylinder");
 					ComponentMesh* newMesh = new ComponentMesh(newGameObject, ComponentMesh::Shape::CYLINDER);
 				}
 				ImGui::EndMenu();
@@ -524,17 +524,42 @@ void ModuleEditor::UpdateWindowStatus() {
 
 		ImGui::Begin("Hierarchy", &showHierarchyWindow);
 
-		//Just cleaning gameObjects(not textures,buffers...)
-		if (ImGui::Button("Clear", { 60,20 }))
+		if (App->scene->root->name == "Root")
 		{
-			App->editor->gameobjectSelected = nullptr;
-			App->scene->CleanUp(); //Clean GameObjects 
+			// Create empty gameobject at root
+			if (ImGui::Button("New Empty", { 100,20 }))
+			{
+				App->scene->CreateEmptyGameObject();
+			}
+			ImGui::SameLine();
+
+			// Create empty children
+			if (ImGui::Button("New Children", { 100,20 }))
+			{
+				App->scene->CreateChildrenGameObject(gameobjectSelected);
+			}
+
+			// Delete the selected game object
+			if (ImGui::Button("Delete Selected", { 100,20 }))
+			{
+				App->scene->DeleteSelectedGameObject(gameobjectSelected); //Clean GameObjects 
+				App->editor->gameobjectSelected = nullptr;
+			}
+			ImGui::SameLine();
+
+			// Just cleaning gameObjects(not textures,buffers...)
+			if (ImGui::Button("Delete All", { 100,20 }))
+			{
+				App->scene->DeleteAllGameObjects(); //Clean GameObjects
+				App->editor->gameobjectSelected = nullptr;
+			}
 		}
-		ImGui::SameLine();
-		if (ImGui::Button("New", { 60,20 }))
+		else
 		{
-			App->scene->CreateGameObject();
+			if (ImGui::Button("Create Root", { 100,20 }))
+				App->scene->CreateRoot();
 		}
+
 		std::stack<GameObject*> S;
 		std::stack<uint> indents;
 		S.push(App->scene->root);

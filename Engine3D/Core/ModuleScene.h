@@ -18,10 +18,20 @@ public:
 	void OnSave(std::string scene) const;
 	void OnLoad(std::string scene);
 
-	GameObject* CreateGameObject(GameObject* parent = nullptr);	
-	GameObject* CreateGameObject(const std::string name, GameObject* parent = nullptr);	
+	bool DeleteAllGameObjects();
+	bool DeleteSelectedGameObject(GameObject* selectedGameObject);
+
+	GameObject* CreateGameObjectByName(const std::string name, GameObject* parent = nullptr);
+	GameObject* CreateEmptyGameObject(GameObject* parent = nullptr);
+	GameObject* CreateChildrenGameObject(GameObject* parent = nullptr);
+	void DuplicateGameObject(GameObject* parent = nullptr);
+	void CreateRoot();
 	
+private:
+	int emptyCounter = 0;
+
 public:
-	
 	GameObject* root;
+	std::vector<GameObject*> gameObjectList;
+	std::vector<GameObject*> rootList;
 };
