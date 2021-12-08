@@ -142,7 +142,7 @@ void ModuleScene::OnSave(std::string scene) const
 
 void ModuleScene::OnLoad(std::string scene)
 {
-	std::string sceneName = "Scene: " + scene;
+	std::string sceneName = "Scene: " + scene;//Scene:Scene1.scene
 
 	char* buffer = nullptr;
 	uint bytesFile = App->fileSystem->Load(scene.c_str(), &buffer);
@@ -156,19 +156,19 @@ void ModuleScene::OnLoad(std::string scene)
 		}
 		else
 		{
-			rapidjson::Value config = document.GetObjectJSON();
+			rapidjson::Value config = document.GetObjectJSON();//Document
 			root = new GameObject("Root");
 
 			if (config.HasMember(sceneName.c_str()))
 			{
-				const rapidjson::Value& itemScene = config[sceneName.c_str()];
+				const rapidjson::Value& itemScene = config[sceneName.c_str()];//Scene:
 				if (itemScene.HasMember("Game Objects"))
 				{
-					const rapidjson::Value& itemGameObjs = itemScene["Game Objects"];
+					const rapidjson::Value& itemGameObjs = itemScene["Game Objects"];//Game Objects:
 
 					if (itemGameObjs.IsArray())
 					{
-						for (rapidjson::Value::ConstValueIterator it = itemGameObjs.Begin(); it != itemGameObjs.End(); ++it)
+						for (rapidjson::Value::ConstValueIterator it = itemGameObjs.Begin(); it != itemGameObjs.End(); ++it)//
 						{
 							root->OnLoad(it->GetObjectJSON());
 						}
