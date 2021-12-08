@@ -14,6 +14,8 @@ ComponentTransform::ComponentTransform(GameObject* parent) : Component(parent) {
 
 	transformMatrix.SetIdentity();
 	transformMatrixLocal.SetIdentity();
+
+	componentType = ComponentType::COMPONENT_TRANSFORM;
 }
 
 
@@ -110,35 +112,76 @@ void ComponentTransform::RecomputeGlobalMatrix()
 void ComponentTransform::OnSave(JSONWriter& writer) const
 {
 	writer.String("Transform");
-	writer.StartArray();
-	writer.String("Position");
-	writer.StartArray();
-	writer.Double(position.x);
-	writer.Double(position.y);
-	writer.Double(position.z);
-	writer.EndArray();
-	writer.String("Rotation");
-	writer.StartArray();
-	writer.Double(rotation.x);
-	writer.Double(rotation.y);
-	writer.Double(rotation.z);
-	writer.EndArray();
-	writer.String("Scale");
-	writer.StartArray();
-	writer.Double(scale.x);
-	writer.Double(scale.y);
-	writer.Double(scale.z);
-	writer.EndArray();
-	writer.EndArray();
+	writer.StartObject();
+		writer.String("Position");
+		writer.StartArray();
+			writer.Double(position.x);
+			writer.Double(position.y);
+			writer.Double(position.z);
+		writer.EndArray();
+		writer.String("Rotation");
+		writer.StartArray();
+			writer.Double(rotation.x);
+			writer.Double(rotation.y);
+			writer.Double(rotation.z);
+		writer.EndArray();
+		writer.String("Scale");
+		writer.StartArray();
+			writer.Double(scale.x);
+			writer.Double(scale.y);
+			writer.Double(scale.z);
+		writer.EndArray();
+	writer.EndObject();
 }
 
 void ComponentTransform::OnLoad(const JSONReader& reader)
 {
-	assert(reader.IsArray()); // attributes is an array
-	rapidjson::Value::ConstValueIterator itr = reader.Begin();
-	const rapidjson::Value& attribute = *itr;
-	//assert(attribute.IsObject());
-
-
-
+	if (reader.HasMember("Position"))
+	{
+		const rapidjson::Value& itemPosition = reader["Position"];
+		float posX = 0.0f;
+		float posY = 0.0f; 
+		float posZ = 0.0f;
+		int i = 0;
+		for (rapidjson::Value::ConstValueIterator it = itemPosition.Begin(); it != itemPosition.End(); ++it)
+		{
+			if (i == 0) posX = it->GetDouble();
+			else if (i == 1) posY = it->GetDouble();
+			else if (i == 2) posZ = it->GetDouble();
+			i++;
+		}
+		position = { posX, posY, posZ };
+	}
+	if (reader.HasMember("Rotation"))
+	{
+		const rapidjson::Value& itemRotation = reader["Rotation"];
+		float rotX = 0.0f;
+		float rotY = 0.0f;
+		float rotZ = 0.0f;
+		int i = 0;
+		for (rapidjson::Value::ConstValueIterator it = itemRotation.Begin(); it != itemRotation.End(); ++it)
+		{
+			if (i == 0) rotX = it->GetDouble();
+			else if (i == 1) rotY = it->GetDouble();
+			else if (i == 2) rotZ = it->GetDouble();
+			i++;
+		}
+		rotation = { rotX, rotY, rotZ, rotation.w };
+	}
+	if (reader.HasMember("Scale"))
+	{
+		const rapidjson::Value& itemScale = reader["Scale"];
+		float scaleX = 0.0f;
+		float scaleY = 0.0f;
+		float scaleZ = 0.0f;
+		int i = 0;
+		for (rapidjson::Value::ConstValueIterator it = itemScale.Begin(); it != itemScale.End(); ++it)
+		{
+			if (i == 0) scaleX = it->GetDouble();
+			else if (i == 1) scaleY = it->GetDouble();
+			else if (i == 2) scaleZ = it->GetDouble();
+			i++;
+		}
+		scale = { scaleX, scaleY, scaleZ };
+	}
 }

@@ -3,7 +3,10 @@
 #include "ImGui/imgui.h"
 #include "ComponentMaterial.h"
 
-ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent) {}
+ComponentMaterial::ComponentMaterial(GameObject* parent) : Component(parent) {
+
+	componentType = ComponentType::COMPONENT_MATERIAL;
+}
 
 void ComponentMaterial::SetTexture(const TextureObject& texture)
 {
@@ -28,23 +31,46 @@ void ComponentMaterial::OnGui()
 
 void ComponentMaterial::OnLoad(const JSONReader& reader)
 {
-
+	if (reader.HasMember("Texture Path"))
+	{
+		const rapidjson::Value& itemTexturePath = reader["Texture Path"];
+		textureName = itemTexturePath.GetString();
+	}
+	if (reader.HasMember("Size"))
+	{
+		const rapidjson::Value& itemSize = reader["Size"];
+		int width_ = 0;
+		int height_ = 0;
+		int i = 0;
+		for (rapidjson::Value::ConstValueIterator it = itemSize.Begin(); it != itemSize.End(); ++it)
+		{
+			if (i == 0) width_ = it->GetInt();
+			else if (i == 1) height_ = it->GetInt();
+			i++;
+		}
+		width = width_;
+		height = height_;
+	}
+	if (reader.HasMember("Texture ID"))
+	{
+		const rapidjson::Value& itemTextureId = reader["Texture ID"];
+		textureId = itemTextureId.GetInt();
+	}
 }
+
 void ComponentMaterial::OnSave(JSONWriter& writer) const
 {
+	writer.String("Material");
 	writer.StartObject();
-		writer.String("Material");
-		writer.StartObject();
-			writer.String("Texture path");
-			writer.String(textureName.c_str());
-			writer.String("Size");
-			writer.StartArray();
-				writer.Int(width);
-				writer.Int(height);
-			writer.EndArray();
-			writer.String("Texture ID");
-			writer.Int(textureId);
-		writer.EndObject();
+		writer.String("Texture path");
+		writer.String(textureName.c_str());
+		writer.String("Size");
+		writer.StartArray();
+			writer.Int(width);
+			writer.Int(height);
+		writer.EndArray();
+		writer.String("Texture ID");
+		writer.Int(textureId);
 	writer.EndObject();
 }
 
