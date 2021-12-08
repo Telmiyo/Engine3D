@@ -158,6 +158,11 @@ void ModuleScene::OnLoad(std::string scene)
 		{
 			rapidjson::Value config = document.GetObjectJSON();//Document
 			root = new GameObject("Root");
+			rootList.clear();
+			rootList.push_back(root);
+			gameObjectList.clear();
+			gameObjectList.push_back(root);
+			
 
 			if (config.HasMember(sceneName.c_str()))
 			{
@@ -177,6 +182,8 @@ void ModuleScene::OnLoad(std::string scene)
 						root->OnLoad(itemGameObjs.GetObjectJSON());
 				}
 			}
+		
+
 			LOG("Scene: '%s' succesfully loaded", scene.c_str());
 		}
 	}
@@ -287,6 +294,8 @@ bool ModuleScene::DeleteAllGameObjects()
 	emptyCounter = 0;
 
 	return ret;
+
+
 }
 
 bool ModuleScene::DeleteSelectedGameObject(GameObject* selectedGameObject)

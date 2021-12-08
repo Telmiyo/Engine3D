@@ -31,9 +31,9 @@ void ComponentMaterial::OnGui()
 
 void ComponentMaterial::OnLoad(const JSONReader& reader)
 {
-	if (reader.HasMember("Texture Path"))
+	if (reader.HasMember("Texture path"))
 	{
-		const rapidjson::Value& itemTexturePath = reader["Texture Path"];
+		const rapidjson::Value& itemTexturePath = reader["Texture path"];
 		textureName = itemTexturePath.GetString();
 	}
 	if (reader.HasMember("Size"))
