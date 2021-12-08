@@ -46,6 +46,10 @@
                             ]
                         },
                         "Mesh": {
+                            "vertexBufferId": 1,
+                            "indexBufferId": 2,
+                            "textureBufferId": 3,
+                            "numIndices": 324,
                             "Vertex number": 160,
                             "Face number": 972,
                             "Wireframe": false,
@@ -86,6 +90,10 @@
                             ]
                         },
                         "Mesh": {
+                            "vertexBufferId": 4,
+                            "indexBufferId": 5,
+                            "textureBufferId": 6,
+                            "numIndices": 2751,
                             "Vertex number": 1641,
                             "Face number": 8253,
                             "Wireframe": false,
@@ -102,6 +110,106 @@
                             "Texture ID": 5
                         }
                     }
+                },
+                {
+                    "Name": "GameObject1",
+                    "UUID": 3452816845,
+                    "Parent UUID": 3452816845,
+                    "Components": {
+                        "Transform": {
+                            "Position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "Rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "Scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    "Children": [
+                        {
+                            "Name": "GameObject",
+                            "UUID": 3452816845,
+                            "Parent UUID": 3452816845,
+                            "Components": {
+                                "Transform": {
+                                    "Position": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "Rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "Scale": [
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "Name": "GameObject3",
+                    "UUID": 3452816845,
+                    "Parent UUID": 3452816845,
+                    "Components": {
+                        "Transform": {
+                            "Position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "Rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "Scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    },
+                    "Children": [
+                        {
+                            "Name": "GameObject2",
+                            "UUID": 3452816845,
+                            "Parent UUID": 3452816845,
+                            "Components": {
+                                "Transform": {
+                                    "Position": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "Rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "Scale": [
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ]
+                                }
+                            }
+                        }
+                    ]
                 }
             ]
         }
