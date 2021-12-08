@@ -175,11 +175,11 @@ void ModuleScene::OnLoad(std::string scene)
 					{
 						for (rapidjson::Value::ConstValueIterator it = itemGameObjs.Begin(); it != itemGameObjs.End(); ++it)//
 						{
-							root->OnLoad(it->GetObjectJSON());
+							root->OnLoad(*root,it->GetObjectJSON());
 						}
 					}
 					else
-						root->OnLoad(itemGameObjs.GetObjectJSON());
+						root->OnLoad(*root,itemGameObjs.GetObjectJSON());
 				}
 			}
 		

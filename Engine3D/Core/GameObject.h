@@ -48,7 +48,7 @@ public:
 	void PropagateTransform();
 
 	void OnSave(JSONWriter& writer) const;
-	void OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& reader);
+	void OnLoad(GameObject& object, const rapidjson::GenericObject<true, rapidjson::Value>& reader);
 
 	std::string name;
 	unsigned int uuid;
