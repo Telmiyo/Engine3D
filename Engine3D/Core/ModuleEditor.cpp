@@ -583,26 +583,29 @@ void ModuleEditor::UpdateWindowStatus() {
 
 			if (ImGui::TreeNodeEx(go->name.c_str(), nodeFlags))
 			{
-				if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
+				if (go->name != App->scene->root->name)
 				{
-					ImGui::SetDragDropPayload("DragDropHierarchy", &go, sizeof(GameObject*), ImGuiCond_Once);
-					ImGui::Text("%s", go->name.c_str());
-					ImGui::EndDragDropSource();
-				}
-
-				if (ImGui::BeginDragDropTarget())
-				{
-					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DragDropHierarchy"))
+					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 					{
-						IM_ASSERT(payload->DataSize == sizeof(GameObject*));
-						GameObject* droppedGo = (GameObject*)*(const int*)payload->Data;
-						if (droppedGo)
-						{
-							droppedGo->parent->RemoveChild(droppedGo);
-							go->AttachChild(droppedGo);
-						}
+						ImGui::SetDragDropPayload("DragDropHierarchy", &go, sizeof(GameObject*), ImGuiCond_Once);
+						ImGui::Text("%s", go->name.c_str());
+						ImGui::EndDragDropSource();
 					}
-					ImGui::EndDragDropTarget();
+
+					if (ImGui::BeginDragDropTarget())
+					{
+						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DragDropHierarchy"))
+						{
+							IM_ASSERT(payload->DataSize == sizeof(GameObject*));
+							GameObject* droppedGo = (GameObject*)*(const int*)payload->Data;
+							if (droppedGo)
+							{
+								droppedGo->parent->RemoveChild(droppedGo);
+								go->AttachChild(droppedGo);
+							}
+						}
+						ImGui::EndDragDropTarget();
+					}
 				}
 
 				if (ImGui::IsItemClicked()) {
