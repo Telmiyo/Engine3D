@@ -12,7 +12,7 @@
 #include "ModuleViewportFrameBuffer.h"
 #include "ModuleFileSystem.h"
 #include "ModuleTextures.h"
-#include "FileManager.h"
+#include "ResourceManager.h"
 #include "Globals.h"
 
 
@@ -30,7 +30,7 @@ Application::Application()
 	import = new ModuleImport(this);
 	fileSystem = new ModuleFileSystem(this);
 	textures = new ModuleTextures(this);
-	files = new FileManager(this);
+	resources = new ResourceManager(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -38,12 +38,12 @@ Application::Application()
 
 	// Main Modules
 	AddModule(fileSystem);
+	AddModule(resources);
 	AddModule(window);
 	AddModule(camera);
 	AddModule(input);
 	AddModule(textures);
 	AddModule(import);
-	AddModule(files);
 	
 	// Scenes
 	AddModule(viewportBuffer);

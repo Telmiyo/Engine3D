@@ -9,7 +9,7 @@
 #include "ModuleEditor.h"
 #include "Component.h"
 #include "ComponentTransform.h"
-#include "FileManager.h"
+#include "ComponentCamera.h"
 #include "ModuleFileSystem.h"
 #include <stack>
 #include <queue>
@@ -24,6 +24,8 @@ bool ModuleScene::Start()
 	bool ret = true;
 	
 	CreateRoot();
+	GameObject* camera = CreateGameObjectByName("Camera", root);
+	camera->CreateComponent<ComponentCamera>();
 
 	//Loading house and textures since beginning
 	App->import->LoadGeometry("Assets/Models/BakerHouse.fbx");

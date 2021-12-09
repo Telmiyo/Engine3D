@@ -179,8 +179,11 @@
     <ClCompile Include="Core\Application.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Core\FileManager.cpp">
-      <Filter>Engine\Modules</Filter>
+    <ClCompile Include="Core\ComponentCamera.cpp">
+      <Filter>Engine\GameObjects - Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ResourceManager.cpp">
+      <Filter>Engine\Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -706,9 +709,6 @@
     <ClInclude Include="Core\Application.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Core\FileManager.h">
-      <Filter>Engine\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Core\iconcpp.h">
       <Filter>Icons</Filter>
     </ClInclude>
@@ -717,6 +717,15 @@
     </ClInclude>
     <ClInclude Include="Core\font.h">
       <Filter>Icons</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ComponentCamera.h">
+      <Filter>Engine\GameObjects - Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\MeshFile.h">
+      <Filter>Engine\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ResourceManager.h">
+      <Filter>Engine\Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -776,6 +785,9 @@
     </Filter>
     <Filter Include="Icons">
       <UniqueIdentifier>{72e238b6-e54c-4b4e-b356-fe4ee787de21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Files">
+      <UniqueIdentifier>{6a79eb54-0c08-48ac-adca-c772df8b4856}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

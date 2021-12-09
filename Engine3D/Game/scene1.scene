@@ -24,6 +24,30 @@
             },
             "Children": [
                 {
+                    "Name": "Camera",
+                    "UUID": 3452816845,
+                    "Parent UUID": 3452816845,
+                    "Components": {
+                        "Transform": {
+                            "Position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "Rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "Scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                },
+                {
                     "Name": "Baker_house",
                     "UUID": 3452816845,
                     "Parent UUID": 3452816845,

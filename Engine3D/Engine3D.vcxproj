@@ -13,9 +13,9 @@
   <ItemGroup>
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\Color.cpp" />
+    <ClCompile Include="Core\ComponentCamera.cpp" />
     <ClCompile Include="Core\ComponentMaterial.cpp" />
     <ClCompile Include="Core\ComponentMesh.cpp" />
-    <ClCompile Include="Core\FileManager.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\ModuleFileSystem.cpp" />
     <ClCompile Include="Core\ImGui\imgui.cpp" />
@@ -69,6 +69,7 @@
     <ClCompile Include="Core\ModuleWindow.cpp" />
     <ClCompile Include="Core\par_shapes.cpp" />
     <ClCompile Include="Core\PerfTimer.cpp" />
+    <ClCompile Include="Core\ResourceManager.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
     <ClCompile Include="Core\ComponentTransform.cpp" />
     <ClCompile Include="Core\ModuleViewportFrameBuffer.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="Core\Assimp\include\version.h" />
     <ClInclude Include="Core\Color.h" />
     <ClInclude Include="Core\Component.h" />
+    <ClInclude Include="Core\ComponentCamera.h" />
     <ClInclude Include="Core\ComponentMaterial.h" />
     <ClInclude Include="Core\ComponentMesh.h" />
     <ClInclude Include="Core\DevIL\include\config.h" />
@@ -124,11 +126,11 @@
     <ClInclude Include="Core\DevIL\include\ilut_config.h" />
     <ClInclude Include="Core\DevIL\include\ilu_region.h" />
     <ClInclude Include="Core\DevIL\include\il_wrap.h" />
-    <ClInclude Include="Core\FileManager.h" />
     <ClInclude Include="Core\font.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\iconcpp.h" />
     <ClInclude Include="Core\icons.h" />
+    <ClInclude Include="Core\MeshFile.h" />
     <ClInclude Include="Core\ModuleFileSystem.h" />
     <ClInclude Include="Core\Globals.h" />
     <ClInclude Include="Core\ImGui\imconfig.h" />
@@ -249,6 +251,7 @@
     <ClInclude Include="Core\rapidjson-1.1.0\include\rapidjson\stream.h" />
     <ClInclude Include="Core\rapidjson-1.1.0\include\rapidjson\stringbuffer.h" />
     <ClInclude Include="Core\rapidjson-1.1.0\include\rapidjson\writer.h" />
+    <ClInclude Include="Core\ResourceManager.h" />
     <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\ComponentTransform.h" />
     <ClInclude Include="Core\ModuleViewportFrameBuffer.h" />
