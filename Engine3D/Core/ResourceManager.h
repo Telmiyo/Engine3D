@@ -18,6 +18,12 @@ public:
 	bool saveModelFile(MeshFile* file, const char* path, std::string name);
 	MeshFile* loadModel(std::string name);
 
+	MontuMeshFile* MontuImportMyModelData(const aiMesh* m); // Data conversion (import)
+	bool MontuMeshToFile(const MontuMeshFile* m, const char* path); // Mesh file creation (file)
+	MontuMeshFile* MontuLoadMyModelFile(const char* path);
+	void ArrayToVectorConversion(MontuMeshFile* mymodel);
+	
+	std::vector<float3> Array2VecFloat3(float* array, unsigned int sizeOf);
 	//Load Texture
 
 	//Data Containers
