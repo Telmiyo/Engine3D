@@ -191,7 +191,7 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 		if (itemComponents.HasMember("Material"))
 		{
 			const rapidjson::Value& itemMaterial = itemComponents["Material"];
-			AddComponent(CreateComponent<ComponentMaterial>());
+			CreateComponent<ComponentMaterial>();
 			for (auto c : components)
 			{
 				if (c->componentType == ComponentType::COMPONENT_MATERIAL)
@@ -203,7 +203,7 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 		if (itemComponents.HasMember("Mesh"))
 		{
 			const rapidjson::Value& itemMesh = itemComponents["Mesh"];
-			AddComponent(CreateComponent<ComponentMesh>());
+			CreateComponent<ComponentMesh>();
 			for (auto c : components)
 			{
 				if (c->componentType == ComponentType::COMPONENT_MESH)
