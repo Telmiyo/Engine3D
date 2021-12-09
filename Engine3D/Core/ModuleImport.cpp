@@ -9,7 +9,7 @@
 #include "ComponentMesh.h"
 #include "ComponentMaterial.h"
 #include "GameObject.h"
-#include "FileManager.h"
+#include "ResourceManager.h"
 
 #include <vector>
 #include <queue>
@@ -70,7 +70,6 @@ bool ModuleImport::LoadGeometry(const char* path) {
 	else {
 		scene = aiImportFile(path, aiProcessPreset_TargetRealtime_MaxQuality);
 	}
-
 
 	if (scene != nullptr && scene->HasMeshes()) {
 		//Use scene->mNumMeshes to iterate on scene->mMeshes array
@@ -153,10 +152,11 @@ bool ModuleImport::LoadGeometry(const char* path) {
 			mesh->ComputeNormals();			
 			const char* a = name.c_str();
 			
-				App->files->createMymodel(assimpMesh,path, name);
+			//CREATE MESH FILE
+			/*App->resources->CreateModelFile(assimpMesh,path, name);
+			MeshFile* m = App->resources->loadModel(name);*/
 
-			//App->files->setName(name);
-			//App->files->saveModel(tmp, "Assets/Files/amogus.txt");
+			App->resources->CreateModelFile(assimpMesh, path, name);
 
 		}
 		aiReleaseImport(scene);		

@@ -14,10 +14,10 @@
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
-#include "FileManager.h"
 #include "iconcpp.h"
 #include "icons.h"
 #include "font.h"
+#include "ResourceManager.h"
 //Tools
 
 #include <string>
@@ -494,7 +494,7 @@ void ModuleEditor::UpdateWindowStatus() {
 	//Imported Meshes
 	if (showImportedMeshes) {
 		ImGui::Begin("Meshes", &showImportedMeshes);
-		for (auto m : App->files->models)
+		for (auto m : App->resources->models)
 		{
 			std::string tmp = ICON_FA_CUBE + std::string(m->name);
 
