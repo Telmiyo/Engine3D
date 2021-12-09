@@ -24,50 +24,6 @@
             },
             "Children": [
                 {
-                    "Name": "Chimney",
-                    "UUID": 3452816845,
-                    "Parent UUID": 3452816845,
-                    "Components": {
-                        "Transform": {
-                            "Position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "Rotation": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "Scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ]
-                        },
-                        "Mesh": {
-                            "vertexBufferId": 1,
-                            "indexBufferId": 2,
-                            "textureBufferId": 3,
-                            "numIndices": 324,
-                            "Vertex number": 160,
-                            "Face number": 972,
-                            "Wireframe": false,
-                            "Normal draw scale": 1.0,
-                            "Draw face normals": false,
-                            "Draw vertex normals": false
-                        },
-                        "Material": {
-                            "Texture path": "Assets/Textures/Baker_house.png",
-                            "Size": [
-                                1024,
-                                1024
-                            ],
-                            "Texture ID": 5
-                        }
-                    }
-                },
-                {
                     "Name": "Baker_house",
                     "UUID": 3452816845,
                     "Parent UUID": 3452816845,
@@ -109,34 +65,10 @@
                             ],
                             "Texture ID": 5
                         }
-                    }
-                },
-                {
-                    "Name": "GameObject1",
-                    "UUID": 3452816845,
-                    "Parent UUID": 3452816845,
-                    "Components": {
-                        "Transform": {
-                            "Position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "Rotation": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "Scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ]
-                        }
                     },
                     "Children": [
                         {
-                            "Name": "GameObject",
+                            "Name": "Chimney",
                             "UUID": 3452816845,
                             "Parent UUID": 3452816845,
                             "Components": {
@@ -156,56 +88,26 @@
                                         1.0,
                                         1.0
                                     ]
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    "Name": "GameObject3",
-                    "UUID": 3452816845,
-                    "Parent UUID": 3452816845,
-                    "Components": {
-                        "Transform": {
-                            "Position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "Rotation": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "Scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ]
-                        }
-                    },
-                    "Children": [
-                        {
-                            "Name": "GameObject2",
-                            "UUID": 3452816845,
-                            "Parent UUID": 3452816845,
-                            "Components": {
-                                "Transform": {
-                                    "Position": [
-                                        0.0,
-                                        0.0,
-                                        0.0
+                                },
+                                "Mesh": {
+                                    "vertexBufferId": 1,
+                                    "indexBufferId": 2,
+                                    "textureBufferId": 3,
+                                    "numIndices": 324,
+                                    "Vertex number": 160,
+                                    "Face number": 972,
+                                    "Wireframe": false,
+                                    "Normal draw scale": 1.0,
+                                    "Draw face normals": false,
+                                    "Draw vertex normals": false
+                                },
+                                "Material": {
+                                    "Texture path": "Assets/Textures/Baker_house.png",
+                                    "Size": [
+                                        1024,
+                                        1024
                                     ],
-                                    "Rotation": [
-                                        0.0,
-                                        0.0,
-                                        0.0
-                                    ],
-                                    "Scale": [
-                                        1.0,
-                                        1.0,
-                                        1.0
-                                    ]
+                                    "Texture ID": 5
                                 }
                             }
                         }

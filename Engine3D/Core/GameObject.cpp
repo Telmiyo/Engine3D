@@ -158,19 +158,19 @@ void GameObject::OnSave(JSONWriter& writer) const
 	writer.EndObject();
 }
 
-void GameObject::OnLoad(GameObject& object, const rapidjson::GenericObject<true, rapidjson::Value>& reader)
+void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& reader)
 {
 	if (reader.HasMember("Name"))
 	{
-		object.name = reader["Name"].GetString();
+		name = reader["Name"].GetString();
 	}
 	if (reader.HasMember("UUID"))
 	{
-		object.uuid = reader["UUID"].GetUint();
+		uuid = reader["UUID"].GetUint();
 	}
 	if (reader.HasMember("Parent UUID"))
 	{
-		object.parentUuid = reader["Parent UUID"].GetUint();
+		parentUuid = reader["Parent UUID"].GetUint();
 	}
 
 	if (reader.HasMember("Components"))
@@ -191,7 +191,7 @@ void GameObject::OnLoad(GameObject& object, const rapidjson::GenericObject<true,
 		if (itemComponents.HasMember("Material"))
 		{
 			const rapidjson::Value& itemMaterial = itemComponents["Material"];
-			//object.AddComponent(CreateComponent<ComponentMaterial>());
+			AddComponent(CreateComponent<ComponentMaterial>());
 			for (auto c : components)
 			{
 				if (c->componentType == ComponentType::COMPONENT_MATERIAL)
@@ -203,7 +203,7 @@ void GameObject::OnLoad(GameObject& object, const rapidjson::GenericObject<true,
 		if (itemComponents.HasMember("Mesh"))
 		{
 			const rapidjson::Value& itemMesh = itemComponents["Mesh"];
-			//object.AddComponent(CreateComponent<ComponentMesh>());
+			AddComponent(CreateComponent<ComponentMesh>());
 			for (auto c : components)
 			{
 				if (c->componentType == ComponentType::COMPONENT_MESH)
@@ -217,15 +217,14 @@ void GameObject::OnLoad(GameObject& object, const rapidjson::GenericObject<true,
 	if (reader.HasMember("Children")) // Load the children
 	{
 		rapidjson::Value& itemChildren = (rapidjson::Value&)reader["Children"];
-		//itemChildren.HasMember("Name")
 		for (rapidjson::Value::ConstValueIterator it = itemChildren.Begin(); it != itemChildren.End(); ++it)
 		{
 			const rapidjson::Value& attribute = *it;
 			assert(attribute.IsObject());
 	
 			GameObject* child = new GameObject();
-			object.AttachChild(child);	
-			OnLoad(*child,attribute.GetObjectJSON());
+			AttachChild(child);	
+			child->OnLoad(attribute.GetObjectJSON());
 
 		}
 
