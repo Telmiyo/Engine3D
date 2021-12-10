@@ -17,10 +17,6 @@ public:
 	bool CreateModelFile(const aiMesh* m, const char* path, std::string name);
 	bool saveModelFile(MeshFile* file, const char* path, std::string name);
 	MeshFile* LoadMeshFile(std::string name);
-
-	MontuMeshFile* MontuImportMyModelData(const aiMesh* m); // Data conversion (import)
-	bool MontuMeshToFile(const MontuMeshFile* m, const char* path); // Mesh file creation (file)
-	MontuMeshFile* MontuLoadMyModelFile(const char* path);
 	
 	void ArrayToVectorConversion(MeshFile* mymodel);
 	

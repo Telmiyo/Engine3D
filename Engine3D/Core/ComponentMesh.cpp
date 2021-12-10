@@ -175,6 +175,8 @@ bool ComponentMesh::SetFileValues(MeshFile* meshFile)
 	numVertices = vertices.size();
 	numIndices = indices.size();
 
+	texturePath = meshFile->texturePath;
+
 	GenerateBuffers();
 
 	return true;
