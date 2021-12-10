@@ -2,6 +2,7 @@
 
 #include "Component.h"
 #include "Globals.h"
+#include "MathGeoLib.h"
 #include "Math/float3.h"
 #include "Math/float4x4.h"
 #include "Geometry/Frustum.h"
@@ -10,15 +11,21 @@
 class ComponentCamera : public Component {
 
 public:
-
 	ComponentCamera(GameObject* parent);
 	~ComponentCamera();
 
 	bool Update(float dt) override;
 
-	//void LookAt(const float3& point);
 	void CalculateViewMatrix();
-	//void RecalculateProjection();
+	void RecalculateProjection();
+	//Formulas from the power point
+	void SetHorizontalFov(float value);
+	void SetVerticalFov(float value);
+	
+	//Setters
+	void UpdateAspectRatio();
+	void UpdateHorizontalFov();
+	void UpdateVerticalFov();
 
 	void DrawCamera();
 	void OnGui() override;
@@ -30,10 +37,12 @@ public:
 	float4x4 viewMatrix;
 
 	float aspectRatio = 1.f;
-	float verticalFOV = 60.f;
-	float horizontalFOV = 60.f;
-	float nearPlaneDistance = 0.1f;
-	float farPlaneDistance = 5000.f;
+	float verticalFOV = 30.f;
+	float horizontalFOV = 80.f;
+	float horizontalFOVGui = 80.f;
+	float verticalFOVGui = 80.f;
+	float nearPlaneDistance = 10.f;
+	float farPlaneDistance = 50.f;
 	bool projectionIsDirty = false;
 
 };
