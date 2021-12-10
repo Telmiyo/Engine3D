@@ -45,16 +45,9 @@ update_status ModuleImport::Update(float dt) {
 }
 
 bool ModuleImport::LoadGeometry(const char* path) {
-	int a = 0;
-	//-- Own structure	
-	GameObject* root = nullptr;
-	std::string new_root_name(path);
 
 	//-- Assimp stuff
-	aiMesh* assimpMesh = nullptr;
 	const aiScene* scene = nullptr;
-	aiMaterial* texture = nullptr;
-	aiString texturePath;
 
 	//Create path buffer and import to scene
 	char* buffer = nullptr;
@@ -74,96 +67,11 @@ bool ModuleImport::LoadGeometry(const char* path) {
 	if (scene != nullptr && scene->HasMeshes()) {
 		//Use scene->mNumMeshes to iterate on scene->mMeshes array
 		for (size_t i = 0; i < scene->mNumMeshes; i++)
-		{		
+		{
 			bool nameFound = false;
 			std::string name;
 			FindNodeName(scene, i, name);
-
-			GameObject* newGameObject = App->scene->CreateGameObjectByName(name);
-			ComponentMesh* mesh = newGameObject->CreateComponent<ComponentMesh>();
-			assimpMesh = scene->mMeshes[i];
-			
-			if (scene->HasMaterials()) {
-				texture = scene->mMaterials[assimpMesh->mMaterialIndex];
-
-				if (texture != nullptr) {
-					aiGetMaterialTexture(texture, aiTextureType_DIFFUSE, assimpMesh->mMaterialIndex, &texturePath);
-					std::string new_path(texturePath.C_Str());
-					if (new_path.size() > 0) {
-						mesh->texturePath = "Assets/Textures/" + new_path;
-						if (!App->textures->Find(mesh->texturePath))
-						{
-							const TextureObject& textureObject = App->textures->Load(mesh->texturePath);							
-							ComponentMaterial* materialComp = newGameObject->CreateComponent<ComponentMaterial>();
-							materialComp->SetTexture(textureObject);
-							
-						}
-						else
-						{
-							const TextureObject& textureObject = App->textures->Get(mesh->texturePath);
-							ComponentMaterial* materialComp = newGameObject->CreateComponent<ComponentMaterial>();
-							materialComp->SetTexture(textureObject);
-						}
-					}
-				}
-			}
-	
-			mesh->numVertices = assimpMesh->mNumVertices;
-			mesh->vertices.resize(assimpMesh->mNumVertices);
-			
-			memcpy(&mesh->vertices[0], assimpMesh->mVertices, sizeof(float3) * assimpMesh->mNumVertices);
-			LOG("New mesh with %d vertices", assimpMesh->mNumVertices);
-
-			// -- Copying faces --//
-			if (assimpMesh->HasFaces()) {
-				mesh->numIndices = assimpMesh->mNumFaces * 3;
-				mesh->indices.resize(mesh->numIndices);
-
-				for (size_t i = 0; i < assimpMesh->mNumFaces; i++)
-				{
-					if (assimpMesh->mFaces[i].mNumIndices != 3) {
-						LOG("WARNING, geometry face with != 3 indices!")
-					}
-					else {
-						memcpy(&mesh->indices[i * 3], assimpMesh->mFaces[i].mIndices, 3 * sizeof(uint));
-					}
-				}
-			}
-			
-			// -- Copying Normals info --//
-			if (assimpMesh->HasNormals()) {
-
-				mesh->normals.resize(assimpMesh->mNumVertices);
-				memcpy(&mesh->normals[0], assimpMesh->mNormals, sizeof(float3) * assimpMesh->mNumVertices);
-			}
-			
-			// -- Copying UV info --//
-			if (assimpMesh->HasTextureCoords(0))
-			{
-				mesh->texCoords.resize(assimpMesh->mNumVertices);
-				for (size_t j = 0; j < assimpMesh->mNumVertices; ++j)
-				{
-					memcpy(&mesh->texCoords[j], &assimpMesh->mTextureCoords[0][j], sizeof(float2));
-				}
-			}
-			
-			mesh->GenerateBuffers();
-			mesh->GenerateBounds();
-			mesh->ComputeNormals();			
-			const char* a = name.c_str();
-			
-			//CREATE MESH FILE
-			/*App->resources->CreateModelFile(assimpMesh,path, name);
-			MeshFile* m = App->resources->loadModel(name);*/
-
-			// App->resources->CreateModelFile(assimpMesh, path, name);
-			//MontuMeshFile* montuMesh = App->resources->MontuImportMyModelData(assimpMesh);
-			//if (!App->resources->MontuMeshToFile(montuMesh, name.c_str()))
-			//	return false;
-			//MontuMeshFile* montuMesh2 = App->resources->MontuLoadMyModelFile(name.c_str());
-			//if (montuMesh == montuMesh2)
-			//	LOG(" ");
-			App->resources->CreateModelFile(assimpMesh, path, name);
+			App->resources->CreateModelFile(scene->mMeshes[i], path, name);
 
 		}
 		aiReleaseImport(scene);		
