@@ -498,9 +498,13 @@ void ModuleEditor::UpdateWindowStatus() {
 		{
 			std::string tmp = ICON_FA_CUBE + std::string(m->name);
 
-		if (ImGui::Button(tmp.c_str(),ImVec2(0,0))) {}
+		if (ImGui::Button(tmp.c_str(),ImVec2(0,0))) 
+		{
+			App->import->LoadGeometryCustom(m->name);
+		}
 			//ImGui::Text("%s", tmp.c_str());
 			//ImGui::Text("%s", b.c_str());
+		
 		}
 		ImGui::End();
 

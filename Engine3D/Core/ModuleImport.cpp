@@ -157,12 +157,13 @@ bool ModuleImport::LoadGeometry(const char* path) {
 			MeshFile* m = App->resources->loadModel(name);*/
 
 			// App->resources->CreateModelFile(assimpMesh, path, name);
-			MontuMeshFile* montuMesh = App->resources->MontuImportMyModelData(assimpMesh);
-			if (!App->resources->MontuMeshToFile(montuMesh, name.c_str()))
-				return false;
-			MontuMeshFile* montuMesh2 = App->resources->MontuLoadMyModelFile(name.c_str());
-			if (montuMesh == montuMesh2)
-				LOG(" ");
+			//MontuMeshFile* montuMesh = App->resources->MontuImportMyModelData(assimpMesh);
+			//if (!App->resources->MontuMeshToFile(montuMesh, name.c_str()))
+			//	return false;
+			//MontuMeshFile* montuMesh2 = App->resources->MontuLoadMyModelFile(name.c_str());
+			//if (montuMesh == montuMesh2)
+			//	LOG(" ");
+			App->resources->CreateModelFile(assimpMesh, path, name);
 
 		}
 		aiReleaseImport(scene);		
@@ -175,6 +176,19 @@ bool ModuleImport::LoadGeometry(const char* path) {
 	RELEASE_ARRAY(buffer);
 
 	return true;
+}
+
+bool ModuleImport::LoadGeometryCustom(std::string name)
+{
+	MeshFile* file = App->resources->LoadMeshFile(name);
+	GameObject* gameObject = App->scene->CreateGameObjectByName(name);
+
+	ComponentMesh* m = new ComponentMesh(gameObject);
+	ComponentMaterial* mat = new ComponentMaterial(gameObject);
+
+	m->SetFileValues(file);
+
+	return false;
 }
 
 void ModuleImport::FindNodeName(const aiScene* scene, const size_t i, std::string& name)

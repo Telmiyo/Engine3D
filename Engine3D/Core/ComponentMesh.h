@@ -6,6 +6,7 @@
 #include "Math/float2.h"
 #include "Geometry/AABB.h"
 #include "par_shapes.h"
+#include "MeshFile.h"
 
 class ComponentMesh : public Component {
 
@@ -31,6 +32,8 @@ public:
 	float3 GetCenterPointInWorldCoords() const;
 	inline float GetSphereRadius() const { return radius; }
 
+	bool SetFileValues(MeshFile* meshFile);
+
 	bool Update(float dt) override;
 	void OnGui() override;
 
@@ -39,21 +42,18 @@ public:
 
 public:
 
+	std::vector<float3> vertices;
+	std::vector<uint> indices;
+	std::vector<float3> normals;
+	std::vector<float2> texCoords;
+	uint numIndices = 0;
+	uint numVertices = 0;
+
 	uint vertexBufferId = 0, indexBufferId = 0, textureBufferId = 0;
 	std::string texturePath;
-	
-	uint numVertices = 0;
-	std::vector<float3> vertices;
-
 	uint numNormalFaces = 0;
-	std::vector<float3> normals;
 	std::vector<float3> faceNormals;
 	std::vector<float3> faceCenters;
-
-	std::vector<float2> texCoords;
-
-	uint numIndices = 0;
-	std::vector<uint> indices;
 
 	bool drawWireframe = false;
 	bool drawVertexNormals = false;

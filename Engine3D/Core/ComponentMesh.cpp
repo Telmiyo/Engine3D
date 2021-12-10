@@ -165,6 +165,21 @@ float3 ComponentMesh::GetCenterPointInWorldCoords() const
 	return owner->transform->transformMatrix.TransformPos(centerPoint);
 }
 
+bool ComponentMesh::SetFileValues(MeshFile* meshFile)
+{
+	vertices = meshFile->vecVertices;
+	normals = meshFile->vecNormals;
+	indices = meshFile->vecIndices;
+	texCoords = meshFile->vecTextCoords;
+
+	numVertices = vertices.size();
+	numIndices = indices.size();
+
+	GenerateBuffers();
+
+	return true;
+}
+
 bool ComponentMesh::Update(float dt)
 {
 

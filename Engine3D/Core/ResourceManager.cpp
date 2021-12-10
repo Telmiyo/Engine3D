@@ -13,45 +13,33 @@ bool ResourceManager::CreateModelFile(const aiMesh* m, const char* path, std::st
 {
 	MeshFile* file = new MeshFile();
 
-	file->numVertices = m->mNumVertices;
-	//file->numVerticesSizeBytes = m->mNumVertices * sizeof(float) * 3;//3==x,y,z
-	file->verticesSize = file->vertices.size();
+	file->verticesSizeBytes = m->mNumVertices * sizeof(float) * 3;
+	file->vertices_ = (float*)malloc(file->verticesSizeBytes);
+	memcpy(file->vertices_, m->mVertices, file->verticesSizeBytes);
 
-	file->vertices.resize(m->mNumVertices);
-	memcpy(&file->vertices[0], m->mVertices, sizeof(float3) * m->mNumVertices);
-	//file->verticesSizeBytes = file->vertices.size() * sizeof(float3);
+	// Normals Data
+	file->normalsSizeBytes = m->mNumVertices * sizeof(float) * 3;
+	file->normals_ = (float*)malloc(file->normalsSizeBytes);
+	memcpy(file->normals_, m->mNormals, file->normalsSizeBytes);
 
-	// -- Copying faces --//
-	if (m->HasFaces()) {
-		file->numIndices = m->mNumFaces * 3;
-		file->indices.resize(file->numIndices);
-
-		for (size_t i = 0; i < m->mNumFaces; i++)
-		{
-			if (m->mFaces[i].mNumIndices != 3) {
-				LOG("WARNING, geometry face with != 3 indices!")
-			}
-			else {
-				memcpy(&file->indices[i * 3], m->mFaces[i].mIndices, 3 * sizeof(uint));
-			}
-		}
-	}
-
-	// // -- Copying Normals info --//
-	if (m->HasNormals()) {
-
-		file->normals.resize(m->mNumVertices);
-		memcpy(&file->normals[0], m->mNormals, sizeof(float3) * m->mNumVertices);
-	}
-
-	// -- Copying UV info --//
-	if (m->HasTextureCoords(0))
+	// Text Coord Data
+	file->textCoordSizeBytes = m->mNumVertices * sizeof(float) * 2;
+	file->textCoords_ = (float*)malloc(file->textCoordSizeBytes);
+	for (int i = 0; i < m->mNumVertices; i++)
 	{
-		file->texCoords.resize(m->mNumVertices);
-		for (size_t j = 0; j < m->mNumVertices; ++j)
-		{
-			memcpy(&file->texCoords[j], &m->mTextureCoords[0][j], sizeof(float2));
-		}
+		*(file->textCoords_ + i * 2) = m->mTextureCoords[0][i].x;
+		*(file->textCoords_ + i * 2 + 1) = 1.0 - m->mTextureCoords[0][i].y;
+	}
+
+	// Indices Data
+	file->indiceSizeBytes = m->mNumFaces * sizeof(unsigned int) * 3;
+	file->indices_ = (unsigned*)malloc(file->indiceSizeBytes);
+	for (int i = 0; i < m->mNumFaces; i++)
+	{
+		aiFace* f = m->mFaces + i;
+		*(file->indices_ + 0 + i * 3) = f->mIndices[0];
+		*(file->indices_ + 1 + i * 3) = f->mIndices[1];
+		*(file->indices_ + 2 + i * 3) = f->mIndices[2];
 	}
 
 	file->name = name;
@@ -63,70 +51,62 @@ bool ResourceManager::CreateModelFile(const aiMesh* m, const char* path, std::st
 //LOAD IN BINARY THE FILE
 bool ResourceManager::saveModelFile(MeshFile* file, const char* path, std::string name)
 {
-
 	std::string fileName = "Assets/Files/" + name + ".amapola";
 	std::ofstream myfile;
-	myfile.open(fileName.c_str(), std::ios::in | std::ios::app | std::ios::binary);
+	myfile.open(fileName,/* std::ios::in | std::ios::app |*/ std::ios::binary);
 	if (myfile.is_open())
 	{
-		//FILE
-		//NUMVERTICES
-		//VERTICES SIZE
-		// Vertices
-		unsigned a = sizeof(file->numVertices);
-		myfile.write((char*)file, 5 * sizeof(unsigned)); //write header
-		myfile.write((char*)&file->numVertices, sizeof(unsigned));
-		myfile.write((char*)&file->verticesSize, sizeof(unsigned));
+		myfile.write((char*)file, 4 * sizeof(unsigned int)); // Save header data & numVertices & numFaces
 
-		for (auto v : file->vertices)
-		{
-			myfile.write((char*)&v, 3* sizeof(float));
-
-		}
+		myfile.write((char*)file->vertices_, file->verticesSizeBytes);
+		myfile.write((char*)file->normals_, file->normalsSizeBytes);
+		myfile.write((char*)file->textCoords_, file->textCoordSizeBytes);
+		myfile.write((char*)file->indices_, file->indiceSizeBytes);
 
 		myfile.close();
-
-
-		return true; //all fine
+		return true;
 	}
 	else
 	{
-		return false;//somethig bad
+		LOG("Error creating MontuMeshFile at '%s'", fileName);
+		return false;
 	}
 }
 
-MeshFile* ResourceManager::loadModel(std::string name)
+MeshFile* ResourceManager::LoadMeshFile(std::string name)
 {
-	std::ifstream newFile;
 	std::string fullName = "Assets/Files/" + name + ".amapola";
-	newFile.open(fullName.c_str(), std::ios::binary);
-	if (newFile.is_open())
+
+	std::ifstream myfile;
+	myfile.open(fullName, std::ios::binary);
+	if (myfile.is_open())
 	{
+		/*MontuMeshFile* mymodel = (MontuMeshFile*)malloc(sizeof(MontuMeshFile));*/
+		MeshFile* mymodel = new MeshFile();
+		myfile.read((char*)mymodel, 4 * sizeof(unsigned int)); // Load header data & numVertices & numFaces
 
-		MeshFile* file = (MeshFile*)malloc(sizeof(MeshFile));
-		//FILE
-		//NUMVERTICES
-		//VERTICES SIZE
-		// Vertices
-		newFile.read((char*)file, 5 * sizeof(unsigned)); //READ HEADER
+		mymodel->vertices_ = (float*)malloc(mymodel->verticesSizeBytes);
+		myfile.read((char*)mymodel->vertices_, mymodel->verticesSizeBytes);
 
-		newFile.read((char*)&file->numVertices, sizeof(unsigned));
-		newFile.read((char*)&file->verticesSize, sizeof(unsigned));
-		uint size = file->verticesSize;
-		//for (int i = 0; i < size; ++i)
-		//{
-		//	newFile.read((char*)&file->vertices[i], 3* sizeof(float));
+		mymodel->normals_ = (float*)malloc(mymodel->normalsSizeBytes);
+		myfile.read((char*)mymodel->normals_, mymodel->normalsSizeBytes);
 
-		//}
+		mymodel->textCoords_ = (float*)malloc(mymodel->textCoordSizeBytes);
+		myfile.read((char*)mymodel->textCoords_, mymodel->textCoordSizeBytes);
 
-	
+		mymodel->indices_ = (unsigned int*)malloc(mymodel->indiceSizeBytes);
+		myfile.read((char*)mymodel->indices_, mymodel->indiceSizeBytes);
 
-		newFile.close();
-		return file;
+		myfile.close();
+
+		ArrayToVectorConversion(mymodel);
+
+		return mymodel;
 	}
 	else
 	{
-		return NULL;
+		LOG("Error loading MontuMeshFile from '%s'", fullName);
+		return nullptr;
 	}
 }
 
@@ -181,6 +161,7 @@ bool ResourceManager::MontuMeshToFile(const MontuMeshFile* m, const char* path)
 	unsigned int textCoordSizeBytes = 0; 
 	total = 4 * sizeof(unsigned int)
 	*/
+
 	std::string fullPath = "Assets/Files/";
 	fullPath += path;
 	fullPath += ".amapola";
@@ -235,7 +216,7 @@ MontuMeshFile* ResourceManager::MontuLoadMyModelFile(const char* path)
 		myfile.close();
 
 		
-		ArrayToVectorConversion(mymodel);
+		/*ArrayToVectorConversion(mymodel);*/
 
 		return mymodel;
 	}
@@ -244,11 +225,9 @@ MontuMeshFile* ResourceManager::MontuLoadMyModelFile(const char* path)
 		LOG("Error loading MontuMeshFile from '%s'", fullPath);
 		return nullptr;
 	}
-
-
 }
 
-void ResourceManager::ArrayToVectorConversion(MontuMeshFile* mymodel)
+void ResourceManager::ArrayToVectorConversion(MeshFile* mymodel)
 {
 	mymodel->vecVertices = FloatArray2VecFloat3(mymodel->vertices_, mymodel->verticesSizeBytes / (sizeof(float)));
 	mymodel->vecNormals = FloatArray2VecFloat3(mymodel->normals_, mymodel->normalsSizeBytes / (sizeof(float)));
