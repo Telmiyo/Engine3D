@@ -10,6 +10,7 @@
 #include "Component.h"
 #include "ComponentTransform.h"
 #include "ComponentCamera.h"
+#include "ComponentMesh.h"
 #include "ModuleFileSystem.h"
 #include <stack>
 #include <queue>
@@ -26,9 +27,10 @@ bool ModuleScene::Start()
 	CreateRoot();
 	GameObject* camera = CreateGameObjectByName("Camera", root);
 	camera->CreateComponent<ComponentCamera>();
-
+	ComponentMesh* m = new ComponentMesh(camera, ComponentMesh::Shape::CUBE);
+	//camera->AddComponent(m);
 	//Loading house and textures since beginning
-	App->import->LoadGeometry("Assets/Models/BakerHouse.fbx");
+	//App->import->LoadGeometry("Assets/Models/BakerHouse.fbx");
 	
 	return ret;
 }
