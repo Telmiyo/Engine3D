@@ -156,7 +156,13 @@ bool ModuleImport::LoadGeometry(const char* path) {
 			/*App->resources->CreateModelFile(assimpMesh,path, name);
 			MeshFile* m = App->resources->loadModel(name);*/
 
-			App->resources->CreateModelFile(assimpMesh, path, name);
+			// App->resources->CreateModelFile(assimpMesh, path, name);
+			MontuMeshFile* montuMesh = App->resources->MontuImportMyModelData(assimpMesh);
+			if (!App->resources->MontuMeshToFile(montuMesh, name.c_str()))
+				return false;
+			MontuMeshFile* montuMesh2 = App->resources->MontuLoadMyModelFile(name.c_str());
+			if (montuMesh == montuMesh2)
+				LOG(" ");
 
 		}
 		aiReleaseImport(scene);		

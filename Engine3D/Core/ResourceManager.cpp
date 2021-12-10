@@ -128,7 +128,8 @@ MeshFile* ResourceManager::loadModel(std::string name)
 	{
 		return NULL;
 	}
-}}
+}
+
 // Converts data from aiMesh to MontuMeshFile
 MontuMeshFile* ResourceManager::MontuImportMyModelData(const aiMesh* m)
 {
@@ -185,10 +186,10 @@ bool ResourceManager::MontuMeshToFile(const MontuMeshFile* m, const char* path)
 	fullPath += ".amapola";
 
 	std::ofstream myfile;
-	myfile.open(fullPath, std::ios::in | std::ios::app | std::ios::binary);
+	myfile.open(fullPath,/* std::ios::in | std::ios::app |*/ std::ios::binary);
 	if (myfile.is_open())
 	{
-		myfile.write((char*)m, 4 * sizeof(unsigned)); // Header data saving
+		myfile.write((char*)m, 4 * sizeof(unsigned int)); // Save header data & numVertices & numFaces
 
 		myfile.write((char*)m->vertices_, m->verticesSizeBytes);
 		myfile.write((char*)m->normals_, m->normalsSizeBytes);
@@ -216,7 +217,7 @@ MontuMeshFile* ResourceManager::MontuLoadMyModelFile(const char* path)
 	if (myfile.is_open())
 	{
 		MontuMeshFile* mymodel = (MontuMeshFile*)malloc(sizeof(MontuMeshFile));
-		myfile.read((char*)mymodel, 5 * sizeof(unsigned)); // Load header data
+		myfile.read((char*)mymodel, 4 * sizeof(unsigned int)); // Load header data & numVertices & numFaces
 
 		mymodel->vertices_ = (float*)malloc(mymodel->verticesSizeBytes);
 		myfile.read((char*)mymodel->vertices_, mymodel->verticesSizeBytes);
@@ -232,7 +233,8 @@ MontuMeshFile* ResourceManager::MontuLoadMyModelFile(const char* path)
 
 		myfile.close();
 
-		ArrayToVectorConversion(mymodel);
+		/*ArrayToVectorConversion(mymodel);*/
+
 		return mymodel;
 	}
 	else
@@ -246,7 +248,7 @@ MontuMeshFile* ResourceManager::MontuLoadMyModelFile(const char* path)
 
 void ResourceManager::ArrayToVectorConversion(MontuMeshFile* mymodel)
 {
-	mymodel->vecVertices = Array2VecFloat3(mymodel->vertices_, mymodel->verticesSizeBytes);
+	mymodel->vecVertices = Array2VecFloat3(mymodel->vertices_, mymodel->verticesSizeBytes / (sizeof(float) * 3));
 }
 
 std::vector<float3> ResourceManager::Array2VecFloat3(float* src, unsigned int sizeOf_)
