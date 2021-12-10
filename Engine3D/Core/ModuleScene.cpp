@@ -30,7 +30,7 @@ bool ModuleScene::Start()
 	ComponentMesh* m = new ComponentMesh(camera, ComponentMesh::Shape::CUBE);
 	//camera->AddComponent(m);
 	//Loading house and textures since beginning
-	//App->import->LoadGeometry("Assets/Models/BakerHouse.fbx");
+	App->import->LoadGeometry("Assets/Models/BakerHouse.fbx");
 	
 	return ret;
 }

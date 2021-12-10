@@ -46,9 +46,9 @@ public:
 	float* textCoords_ = nullptr; // 1 textCoord = sizeof(float) * 2
 	unsigned int* indices_ = nullptr; // 1 index = sizeof(unsigned int) * 1
 	
-	std::vector<float3> vecVertices;
-	std::vector<float3> vecNormals;
-	std::vector<unsigned int> vecIndices;
-	std::vector<float2> vecTextCoords;
+	std::vector<float3*> vecVertices;
+	std::vector<float3*> vecNormals;
+	std::vector<unsigned int*> vecIndices;
+	std::vector<float2*> vecTextCoords;
 
 };

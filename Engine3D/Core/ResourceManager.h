@@ -23,7 +23,7 @@ public:
 	MontuMeshFile* MontuLoadMyModelFile(const char* path);
 	void ArrayToVectorConversion(MontuMeshFile* mymodel);
 	
-	std::vector<float3> Array2VecFloat3(float* array, unsigned int sizeOf);
+	std::vector<float3> FloatArray2VecFloat3(float* array, unsigned int sizeOf);
 	//Load Texture
 
 	//Data Containers

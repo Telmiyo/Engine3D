@@ -233,7 +233,19 @@ MontuMeshFile* ResourceManager::MontuLoadMyModelFile(const char* path)
 
 		myfile.close();
 
-		/*ArrayToVectorConversion(mymodel);*/
+		/*std::vector<float3> vec;
+		vec = FloatArray2VecFloat3(mymodel->vertices_, mymodel->verticesSizeBytes / (sizeof(float)));
+		mymodel->vecVertices = std::vector<float3>(vec.size(), {0.0f,0.0f,0.0f});
+		mymodel->vecVertices = vec;*/
+
+		std::vector<float3> vec;
+		unsigned int n = mymodel->verticesSizeBytes / (sizeof(float));
+		for (unsigned int i = 0; i < n; i += 3)
+		{
+			vec.push_back({ mymodel->vertices_[i], mymodel->vertices_[i + 1], mymodel->vertices_[i + 2] });
+		}
+
+		// ArrayToVectorConversion(mymodel);
 
 		return mymodel;
 	}
@@ -248,12 +260,19 @@ MontuMeshFile* ResourceManager::MontuLoadMyModelFile(const char* path)
 
 void ResourceManager::ArrayToVectorConversion(MontuMeshFile* mymodel)
 {
-	mymodel->vecVertices = Array2VecFloat3(mymodel->vertices_, mymodel->verticesSizeBytes / (sizeof(float) * 3));
+	std::vector<float3> vec;
+	vec = FloatArray2VecFloat3(mymodel->vertices_, mymodel->verticesSizeBytes / (sizeof(float)));
+	// mymodel.vecVertices = FloatArray2VecFloat3(mymodel->vertices_, mymodel->verticesSizeBytes / (sizeof(float)));
+	mymodel->vecVertices = vec;
 }
 
-std::vector<float3> ResourceManager::Array2VecFloat3(float* src, unsigned int sizeOf_)
+std::vector<float3> ResourceManager::FloatArray2VecFloat3(float* src, unsigned int n)
 {
-	std::vector<float3> dest(src, src + sizeOf_);
+	std::vector<float3> dest;
+	for (unsigned int i = 0; i < n; i += 3)
+	{
+		dest.push_back({ src[i], src[i + 1], src[i + 2]});
+	}
 	return dest;
 }
 
