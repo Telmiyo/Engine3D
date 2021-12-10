@@ -16,12 +16,13 @@ public:
 	//Model
 	bool CreateModelFile(const aiMesh* m, const char* path, std::string name);
 	bool saveModelFile(MeshFile* file, const char* path, std::string name);
-	MeshFile* loadModel(std::string name);
+	MeshFile* LoadMeshFile(std::string name);
 
 	MontuMeshFile* MontuImportMyModelData(const aiMesh* m); // Data conversion (import)
 	bool MontuMeshToFile(const MontuMeshFile* m, const char* path); // Mesh file creation (file)
 	MontuMeshFile* MontuLoadMyModelFile(const char* path);
-	void ArrayToVectorConversion(MontuMeshFile* mymodel);
+	
+	void ArrayToVectorConversion(MeshFile* mymodel);
 	
 	std::vector<float3> FloatArray2VecFloat3(float* array, unsigned int n);
 	std::vector<float2> FloatArray2VecFloat2(float* array, unsigned int n);
