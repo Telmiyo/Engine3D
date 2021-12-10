@@ -184,11 +184,13 @@ bool ModuleImport::LoadGeometryCustom(std::string name)
 	GameObject* gameObject = App->scene->CreateGameObjectByName(name);
 
 	ComponentMesh* m = new ComponentMesh(gameObject);
-	ComponentMaterial* mat = new ComponentMaterial(gameObject);
-
 	m->SetFileValues(file);
 
-	return false;
+	ComponentMaterial* mat = new ComponentMaterial(gameObject);
+	const TextureObject& textureObject = App->textures->Load(file->texturePath);
+	mat->SetTexture(textureObject);
+
+	return true;
 }
 
 void ModuleImport::FindNodeName(const aiScene* scene, const size_t i, std::string& name)
