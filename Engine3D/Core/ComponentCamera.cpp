@@ -104,8 +104,8 @@ void ComponentCamera::UpdateVerticalFov()
 
 void ComponentCamera::CheckObjects()
 {
-	std::vector<GameObject*> objectsToRender;
-	for (auto o : App->scene->gameObjectList)
+	//BY POSITION
+	/*for (auto o : App->scene->gameObjectList)
 	{
 		if (o->GetComponent<ComponentMesh>() != nullptr)
 		{
@@ -117,6 +117,32 @@ void ComponentCamera::CheckObjects()
 			else
 			{
 				o->GetComponent<ComponentMesh>()->render = false;
+
+			}
+
+		}
+
+	}*/
+	//BY AABB
+	for (auto o : App->scene->gameObjectList)
+	{
+		if (o->GetComponent<ComponentMesh>() != nullptr)
+		{
+			float3 corners[8];
+			o->GetComponent<ComponentMesh>()->localAABB.GetCornerPoints(corners);
+			for (float3 corner : corners)
+			{
+				bool status = cameraFrustum.Contains(corner);
+				if (status)
+				{
+					o->GetComponent<ComponentMesh>()->render = true;
+					break;
+				}
+				else
+				{
+					o->GetComponent<ComponentMesh>()->render = false;
+
+				}
 
 			}
 

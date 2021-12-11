@@ -34,6 +34,8 @@ public:
 
 	bool SetFileValues(MeshFile* meshFile);
 
+	void DrawAABB();
+
 	bool Update(float dt) override;
 	void OnGui() override;
 
