@@ -5,7 +5,9 @@
 #include "ModuleEditor.h"
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
+#include "ComponentCamera.h"
 #include "GameObject.h"
+#include "ModuleScene.h"
 
 ModuleCamera3D::ModuleCamera3D(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -259,10 +261,39 @@ GameObject* ModuleCamera3D::GetGameObjectMousePicked()
 	float normalized_x = -1.0 + 2.0 * App->editor->onSceneMousePos.x / App->editor->lastViewportSize.x;
 	float normalized_y = 1.0 - 2.0 * App->editor->onSceneMousePos.y / App->editor->lastViewportSize.y;
 
-	LineSegment* picking = cameraFrustum.UnProjectLineSegment(normalized_x, normalized_y);
+	// LineSegment picking = cameraFrustum.UnProjectLineSegment(normalized_x, normalized_y);
 
+	for (unsigned int i = 0; i < App->scene->gameObjectList.size(); ++i)
+	{
+		// If game object has mesh
+		if (ComponentMesh* mesh = App->scene->gameObjectList[i]->GetComponent<ComponentMesh>())
+		{
+			bool hit;
+			//bool hit = picking.Intersects(mesh->localAABB); // ray vs. AABB
+			if (hit)
+			{
+				hitList.push_back(App->scene->gameObjectList[i]);
+			}
+		}
+		// If game object is a camera
+		if (ComponentCamera* camera = App->scene->gameObjectList[i]->GetComponent<ComponentCamera>())
+		{
 
+		}
 
+		// First we test against all AABBs
+		// We should end with a list of hits ordered by distance
+		// On the closest one, using the vertex, we test the ray against all mesh triangles
+		// Do not stop on the first hit, test alland keep the closest to ray origin
+		// bool hit = my_ray.Intersects(game_object->aabb); // ray vs. AABB
+		// bool hit = ray_local_space.Intersects(tri, &distance, &hit_point); // ray vs. triangle
+		// You will need to construct one triangle at a time from the vertex list
+		// Remember : Its coordinates are in local space!
+		// And our ray coordinates are in global space ...
+		// You have two choices :
+		//		Transform each triangle to global space to test for ray intersection
+		//		Transform once the ray into Game Object space to test against all triangles
+	}
 
 	return nullptr;
 }

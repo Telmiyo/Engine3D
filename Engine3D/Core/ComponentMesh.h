@@ -60,13 +60,15 @@ public:
 	bool drawFaceNormals = false;
 	float normalScale = 1.f;
 	
+
+	//Local coords AABB
+	AABB localAABB;
+
 private:
 
 	//Bounding sphere
 	float3 centerPoint = float3::zero;
 	float radius;
 
-	//Local coords AABB
-	AABB localAABB;
 	
 };
