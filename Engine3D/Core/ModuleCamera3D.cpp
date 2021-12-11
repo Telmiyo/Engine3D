@@ -49,6 +49,14 @@ update_status ModuleCamera3D::Update(float dt)
 {
 	if (App->editor->isMouseOnScene())
 	{
+		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+		{
+			LOG("");
+
+			GameObject* gObj = GetGameObjectMousePicked();
+			App->editor->gameobjectSelected = gObj;
+		}
+
 		float3 newPos(0, 0, 0);
 		float speed = cameraSpeed * dt;
 		if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
@@ -249,4 +257,9 @@ void ModuleCamera3D::OnLoad(const JSONReader& reader)
 		LOAD_JSON_FLOAT(cameraSensitivity);
 	}
 	RecalculateProjection();
+}
+
+GameObject* ModuleCamera3D::GetGameObjectMousePicked()
+{
+	return nullptr;
 }
