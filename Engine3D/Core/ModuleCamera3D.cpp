@@ -261,18 +261,21 @@ GameObject* ModuleCamera3D::GetGameObjectMousePicked()
 	float normalized_x = -1.0 + 2.0 * App->editor->onSceneMousePos.x / App->editor->lastViewportSize.x;
 	float normalized_y = 1.0 - 2.0 * App->editor->onSceneMousePos.y / App->editor->lastViewportSize.y;
 
-	// LineSegment picking = cameraFrustum.UnProjectLineSegment(normalized_x, normalized_y);
+	 LineSegment picking = cameraFrustum.UnProjectLineSegment(normalized_x, normalized_y);
 
 	for (unsigned int i = 0; i < App->scene->gameObjectList.size(); ++i)
 	{
 		// If game object has mesh
 		if (ComponentMesh* mesh = App->scene->gameObjectList[i]->GetComponent<ComponentMesh>())
 		{
-			bool hit;
-			//bool hit = picking.Intersects(mesh->localAABB); // ray vs. AABB
+			//bool hit;
+			bool hit = picking.Intersects(mesh->localAABB); // ray vs. AABB
 			if (hit)
 			{
 				hitList.push_back(App->scene->gameObjectList[i]);
+
+				return App->scene->gameObjectList[i];
+
 			}
 		}
 		// If game object is a camera
