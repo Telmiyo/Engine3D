@@ -234,6 +234,7 @@ void ComponentMesh::DrawAABB()
 bool ComponentMesh::Update(float dt)
 {
 	DrawAABB();
+	localAABB.SetFromCenterAndSize(owner->GetComponent<ComponentTransform>()->GetPosition(), owner->GetComponent<ComponentTransform>()->GetScale());
 	if (render)
 	{
 		drawWireframe || App->renderer3D->wireframeMode ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -288,8 +289,11 @@ bool ComponentMesh::Update(float dt)
 			DrawNormals();
 
 		//UPDATE BBAB
-		localAABB.SetFromCenterAndSize(owner->GetComponent<ComponentTransform>()->GetPosition(), float3(5.f, 5.f, 5.f));
+		//localAABB.SetFromCenterAndSize(owner->GetComponent<ComponentTransform>()->GetPosition(), owner->GetComponent<ComponentTransform>()->GetScale());
+		//float3x3 aabbPos = float3x3();
 
+		//aabbPos.Set(owner->GetComponent<ComponentTransform>()->GetPosition(), owner->GetComponent<ComponentTransform>()->GetRotation(), owner->GetComponent<ComponentTransform>()->GetScale());
+		//localAABB.TransformAsAABB();
 
 	}
 	return true;
