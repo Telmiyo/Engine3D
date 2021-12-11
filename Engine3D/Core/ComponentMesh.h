@@ -64,6 +64,7 @@ public:
 	//Local coords AABB
 	AABB localAABB;
 
+	bool render = true;
 private:
 
 	//Bounding sphere

@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "ModuleEditor.h"
 #include "ModuleWindow.h"
+#include "ModuleScene.h"
 
 #include "glew.h"
 #include "SDL/include/SDL_opengl.h"
@@ -23,7 +24,7 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 	cameraFrustum.pos = parent->GetComponent<ComponentTransform>()->GetPosition();
 	cameraFrustum.front = parent->GetComponent<ComponentTransform>()->Front().Normalized();
 	cameraFrustum.up = parent->GetComponent<ComponentTransform>()->Up().Normalized();
-	
+
 	cameraFrustum.horizontalFov = horizontalFOV;
 	cameraFrustum.verticalFov = verticalFOV;
 	cameraFrustum.nearPlaneDistance = nearPlaneDistance;
@@ -38,7 +39,7 @@ ComponentCamera::~ComponentCamera()
 bool ComponentCamera::Update(float dt)
 {
 	CalculateViewMatrix();
-
+	CheckObjects();
 	DrawCamera();
 	return true;
 }
@@ -85,7 +86,32 @@ void ComponentCamera::UpdateAspectRatio()
 
 void ComponentCamera::UpdateVerticalFov()
 {
-	verticalFOV = 2 * atan(tan(horizontalFOV / 2) * 1/aspectRatio);
+	verticalFOV = 2 * atan(tan(horizontalFOV / 2) * 1 / aspectRatio);
+
+}
+
+void ComponentCamera::CheckObjects()
+{
+	std::vector<GameObject*> objectsToRender;
+	for (auto o : App->scene->gameObjectList)
+	{
+		if (o->GetComponent<ComponentMesh>() != nullptr)
+		{
+			bool status = cameraFrustum.Contains(o->GetComponent<ComponentTransform>()->GetPosition());
+			if (status)
+			{
+				o->GetComponent<ComponentMesh>()->render = true;
+			}
+			else
+			{
+				o->GetComponent<ComponentMesh>()->render = false;
+
+			}
+
+		}
+
+	}
+
 
 }
 
@@ -121,7 +147,7 @@ void ComponentCamera::DrawCamera()
 
 	glVertex3f(topLeft.pos.x, topLeft.pos.y, topLeft.pos.z);
 	glVertex3f(topLeft.pos.x + topLeft.dir.x * nearPlaneDistance, topLeft.pos.y + topLeft.dir.y * nearPlaneDistance, topLeft.pos.z + topLeft.dir.z * nearPlaneDistance);
-	
+
 	glVertex3f(topRigth.pos.x, topRigth.pos.y, topRigth.pos.z);
 	glVertex3f(topRigth.pos.x + topRigth.dir.x * nearPlaneDistance, topRigth.pos.y + topRigth.dir.y * nearPlaneDistance, topRigth.pos.z + topRigth.dir.z * nearPlaneDistance);
 
@@ -134,7 +160,7 @@ void ComponentCamera::DrawCamera()
 
 	glVertex3f(bottomRight.pos.x + bottomRight.dir.x * nearPlaneDistance, bottomRight.pos.y + bottomRight.dir.y * nearPlaneDistance, bottomRight.pos.z + bottomRight.dir.z * nearPlaneDistance);
 	glVertex3f(topLeft.pos.x + topLeft.dir.x * nearPlaneDistance, topLeft.pos.y + topLeft.dir.y * nearPlaneDistance, topLeft.pos.z + topLeft.dir.z * nearPlaneDistance);
-	
+
 	glVertex3f(topLeft.pos.x + topLeft.dir.x * nearPlaneDistance, topLeft.pos.y + topLeft.dir.y * nearPlaneDistance, topLeft.pos.z + topLeft.dir.z * nearPlaneDistance);
 	glVertex3f(topRigth.pos.x + topRigth.dir.x * nearPlaneDistance, topRigth.pos.y + topRigth.dir.y * nearPlaneDistance, topRigth.pos.z + topRigth.dir.z * nearPlaneDistance);
 
@@ -180,12 +206,12 @@ void ComponentCamera::OnGui()
 	if (ImGui::CollapsingHeader("Camera"))
 	{
 		ImGui::Text("AspectRatio %f", aspectRatio);
-		
+
 		if (ImGui::SliderFloat("FieldOfView", &horizontalFOVGui, 55.f, 110.f))
 		{
 			SetHorizontalFov(DegToRad(horizontalFOVGui));
 		}
-				
+
 		ImGui::Text("VerticalFov %f", verticalFOV);
 		//ImGui::Text("HorizontalFov %f", horizontalFOV);
 		ImGui::Text("Near Plane Distance %f", nearPlaneDistance);

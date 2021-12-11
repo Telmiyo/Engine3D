@@ -27,6 +27,8 @@ public:
 	void UpdateHorizontalFov();
 	void UpdateVerticalFov();
 
+	void CheckObjects();
+
 	void DrawCamera();
 	void OnGui() override;
 
