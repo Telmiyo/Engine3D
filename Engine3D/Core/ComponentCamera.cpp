@@ -79,6 +79,18 @@ void ComponentCamera::SetVerticalFov(float value)
 	projectionIsDirty = true;
 }
 
+void ComponentCamera::SetNearPlaneDistance(float value)
+{
+	nearPlaneDistance = value;
+	projectionIsDirty = true;
+}
+
+void ComponentCamera::SetFarPlaneDistance(float value)
+{
+	farPlaneDistance = value;
+	projectionIsDirty = true;
+}
+
 void ComponentCamera::UpdateAspectRatio()
 {
 	aspectRatio = tan(verticalFOV / 2) / tan(horizontalFOV / 2);
@@ -111,7 +123,6 @@ void ComponentCamera::CheckObjects()
 		}
 
 	}
-
 
 }
 
@@ -211,11 +222,14 @@ void ComponentCamera::OnGui()
 		{
 			SetHorizontalFov(DegToRad(horizontalFOVGui));
 		}
-
-		ImGui::Text("VerticalFov %f", verticalFOV);
-		//ImGui::Text("HorizontalFov %f", horizontalFOV);
-		ImGui::Text("Near Plane Distance %f", nearPlaneDistance);
-		ImGui::Text("Far Plane Distance %f", farPlaneDistance);
+		if (ImGui::SliderFloat("NearPlaneDistance", &nearPlaneDistanceGui, 1.f, farPlaneDistance))
+		{
+			SetNearPlaneDistance(nearPlaneDistanceGui);
+		}
+		if (ImGui::SliderFloat("FarPlaneDistance", &farPlaneDistanceGui, 100.f, 10000.f))
+		{
+			SetFarPlaneDistance(farPlaneDistanceGui);
+		}
 	}
 
 }

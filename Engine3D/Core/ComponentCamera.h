@@ -21,6 +21,8 @@ public:
 	//Formulas from the power point
 	void SetHorizontalFov(float value);
 	void SetVerticalFov(float value);
+	void SetNearPlaneDistance(float value);
+	void SetFarPlaneDistance(float value);
 	
 	//Setters
 	void UpdateAspectRatio();
@@ -41,10 +43,14 @@ public:
 	float aspectRatio = 1.f;
 	float verticalFOV = 30.f;
 	float horizontalFOV = 80.f;
+	float nearPlaneDistance = 10.f;
+	float farPlaneDistance = 500.f;
+	
 	float horizontalFOVGui = 80.f;
 	float verticalFOVGui = 80.f;
-	float nearPlaneDistance = 10.f;
-	float farPlaneDistance = 50.f;
+	float nearPlaneDistanceGui = 10.f;
+	float farPlaneDistanceGui = 500.f;
+
 	bool projectionIsDirty = false;
 
 };
