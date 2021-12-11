@@ -50,12 +50,7 @@ update_status ModuleCamera3D::Update(float dt)
 	if (App->editor->isMouseOnScene())
 	{
 		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
-		{
-			LOG("");
-
-			GameObject* gObj = GetGameObjectMousePicked();
-			App->editor->gameobjectSelected = gObj;
-		}
+			App->editor->gameobjectSelected = GetGameObjectMousePicked();
 
 		float3 newPos(0, 0, 0);
 		float speed = cameraSpeed * dt;
@@ -261,5 +256,13 @@ void ModuleCamera3D::OnLoad(const JSONReader& reader)
 
 GameObject* ModuleCamera3D::GetGameObjectMousePicked()
 {
+	float normalized_x = -1.0 + 2.0 * App->editor->onSceneMousePos.x / App->editor->lastViewportSize.x;
+	float normalized_y = 1.0 - 2.0 * App->editor->onSceneMousePos.y / App->editor->lastViewportSize.y;
+
+	LineSegment* picking = cameraFrustum.UnProjectLineSegment(normalized_x, normalized_y);
+
+
+
+
 	return nullptr;
 }
