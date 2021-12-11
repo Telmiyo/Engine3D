@@ -185,8 +185,55 @@ bool ComponentMesh::SetFileValues(MeshFile* meshFile)
 	return true;
 }
 
+void ComponentMesh::DrawAABB()
+{
+	glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
+	glLineWidth(3.5f);
+	glBegin(GL_LINES);
+	float3 corners[8];
+	localAABB.GetCornerPoints(corners);
+	glVertex3f(corners[0].x, corners[0].y, corners[0].z);
+	glVertex3f(corners[1].x, corners[1].y, corners[1].z);
+
+	glVertex3f(corners[1].x, corners[1].y, corners[1].z);
+	glVertex3f(corners[3].x, corners[3].y, corners[3].z);
+	
+	glVertex3f(corners[0].x, corners[0].y, corners[0].z);
+	glVertex3f(corners[2].x, corners[2].y, corners[2].z);
+
+	glVertex3f(corners[2].x, corners[2].y, corners[2].z);
+	glVertex3f(corners[3].x, corners[3].y, corners[3].z);
+	
+	glVertex3f(corners[4].x, corners[4].y, corners[4].z);
+	glVertex3f(corners[5].x, corners[5].y, corners[5].z);
+	
+	glVertex3f(corners[0].x, corners[0].y, corners[0].z);
+	glVertex3f(corners[4].x, corners[4].y, corners[4].z);
+
+	glVertex3f(corners[1].x, corners[1].y, corners[1].z);
+	glVertex3f(corners[5].x, corners[5].y, corners[5].z);
+
+	glVertex3f(corners[5].x, corners[5].y, corners[5].z);
+	glVertex3f(corners[7].x, corners[7].y, corners[7].z);
+
+	glVertex3f(corners[6].x, corners[6].y, corners[6].z);
+	glVertex3f(corners[7].x, corners[7].y, corners[7].z);
+
+	glVertex3f(corners[4].x, corners[4].y, corners[4].z);
+	glVertex3f(corners[6].x, corners[6].y, corners[6].z);
+
+	glVertex3f(corners[6].x, corners[6].y, corners[6].z);
+	glVertex3f(corners[2].x, corners[2].y, corners[2].z);
+
+	glVertex3f(corners[7].x, corners[7].y, corners[7].z);
+	glVertex3f(corners[3].x, corners[3].y, corners[3].z);
+
+	glEnd();
+}
+
 bool ComponentMesh::Update(float dt)
 {
+	DrawAABB();
 	if (render)
 	{
 		drawWireframe || App->renderer3D->wireframeMode ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -242,6 +289,7 @@ bool ComponentMesh::Update(float dt)
 
 		//UPDATE BBAB
 		localAABB.SetFromCenterAndSize(owner->GetComponent<ComponentTransform>()->GetPosition(), float3(5.f, 5.f, 5.f));
+
 
 	}
 	return true;
