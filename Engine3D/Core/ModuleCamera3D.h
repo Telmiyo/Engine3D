@@ -4,6 +4,7 @@
 #include "Math/float3.h"
 #include "Math/float4x4.h"
 #include "Geometry/Frustum.h"
+#include "GameObject.h"
 
 class ModuleCamera3D : public Module
 {
@@ -39,4 +40,5 @@ private:
 
 	float lastDeltaX = 0.f, lastDeltaY = 0.f;
 
+	std::vector<GameObject*> hitList;
 };
