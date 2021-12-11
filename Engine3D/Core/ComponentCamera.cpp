@@ -37,9 +37,6 @@ ComponentCamera::~ComponentCamera()
 
 bool ComponentCamera::Update(float dt)
 {
-	//LookAt(float3::zero);
-
-	//RecalculateProjection();
 	CalculateViewMatrix();
 
 	DrawCamera();
@@ -64,6 +61,7 @@ void ComponentCamera::RecalculateProjection()
 	cameraFrustum.farPlaneDistance = farPlaneDistance;
 	cameraFrustum.horizontalFov = horizontalFOV;
 	UpdateVerticalFov();
+	UpdateHorizontalFov();
 	cameraFrustum.verticalFov = verticalFOV;
 	projectionIsDirty = false;
 }
@@ -93,7 +91,7 @@ void ComponentCamera::UpdateVerticalFov()
 
 void ComponentCamera::UpdateHorizontalFov()
 {
-	horizontalFOV = RadToDeg(2 * atan(tan(verticalFOV / 2) * aspectRatio));
+	horizontalFOV = 2 * atan(tan(verticalFOV / 2) * aspectRatio);
 }
 
 void ComponentCamera::DrawCamera()
@@ -183,20 +181,15 @@ void ComponentCamera::OnGui()
 	{
 		ImGui::Text("AspectRatio %f", aspectRatio);
 		
-		if (ImGui::SliderFloat("HorizontalFov", &horizontalFOVGui, 55.f, 110.f))
+		if (ImGui::SliderFloat("FieldOfView", &horizontalFOVGui, 55.f, 110.f))
 		{
-			SetHorizontalFov(horizontalFOVGui);
-		}
-		if (ImGui::SliderFloat("VerticalFov", &verticalFOVGui, 55.f, 110.f))
-		{
-			SetHorizontalFov(verticalFOVGui);
+			SetHorizontalFov(DegToRad(horizontalFOVGui));
 		}
 				
 		ImGui::Text("VerticalFov %f", verticalFOV);
 		//ImGui::Text("HorizontalFov %f", horizontalFOV);
 		ImGui::Text("Near Plane Distance %f", nearPlaneDistance);
 		ImGui::Text("Far Plane Distance %f", farPlaneDistance);
-		ImGui::Checkbox("Projection is Dirty", &projectionIsDirty);
 	}
 
 }
