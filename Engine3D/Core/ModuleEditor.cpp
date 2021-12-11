@@ -657,6 +657,15 @@ void ModuleEditor::UpdateWindowStatus() {
 			App->camera->aspectRatio = viewportSize.x / viewportSize.y;
 			App->camera->RecalculateProjection();
 		}
+
+		onSceneMousePos.x = App->input->GetMouseX() - ImGui::GetCurrentWindow()->Pos.x;
+		onSceneMousePos.y = App->input->GetMouseY() - ImGui::GetCurrentWindow()->Pos.y - 23;
+
+		if (onSceneMousePos.x <= 0) onSceneMousePos.x = 0;
+		else if (onSceneMousePos.x > ImGui::GetCurrentWindow()->Size.x) onSceneMousePos.x = ImGui::GetCurrentWindow()->Size.x;
+		if (onSceneMousePos.y <= 0) onSceneMousePos.y = 0;
+		else if (onSceneMousePos.y > ImGui::GetCurrentWindow()->Size.y) onSceneMousePos.y = ImGui::GetCurrentWindow()->Size.y;
+
 		lastViewportSize = viewportSize;
 		ImGui::Image((ImTextureID)App->viewportBuffer->texture, viewportSize, ImVec2(0, 1), ImVec2(1, 0));
 		ImGui::End();
@@ -668,6 +677,21 @@ void ModuleEditor::InspectorGameObject()
 {
 	if (gameobjectSelected)
 		gameobjectSelected->OnGui();
+}
+
+bool ModuleEditor::isMouseOnScene()
+{
+	if (onSceneMousePos.x >= 0.1f &&
+		onSceneMousePos.y >= 0.1f &&
+		onSceneMousePos.x < lastViewportSize.x &&
+		onSceneMousePos.y < lastViewportSize.y)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 ModuleEditor::Grid::~Grid()

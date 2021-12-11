@@ -197,5 +197,15 @@ void ModuleInput::OnGui() {
 		ImGui::Text("Y: ");
 		ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%i", mouse_y);
+
+		ImGui::Text("Mouse Position on scene");
+
+		ImGui::Text("X: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%i", (int)App->editor->onSceneMousePos.x);
+		ImGui::SameLine();
+		ImGui::Text("Y: ");
+		ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%i", (int)App->editor->onSceneMousePos.y);
 	}
 }

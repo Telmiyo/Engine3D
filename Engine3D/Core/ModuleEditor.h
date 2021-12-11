@@ -50,6 +50,8 @@ public:
 	void About_Window();	//Can be done better
 	void InspectorGameObject();
 
+	bool isMouseOnScene();
+
 	//Window status control
 	bool showDemoWindow;
 	bool showAnotherWindow;
@@ -72,5 +74,5 @@ public:
 	GameObject* gameobjectSelected;
 
 	ImVec2 lastViewportSize;
-
+	ImVec2 onSceneMousePos;
 };
