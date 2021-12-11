@@ -6,6 +6,7 @@
 #include "ModuleRenderer3D.h"
 #include "ComponentMaterial.h"
 #include "ComponentTransform.h"
+#include "ResourceManager.h"
 #include "GameObject.h"
 #include "ImGui/imgui.h"
 #include "Geometry/Sphere.h"
@@ -178,6 +179,8 @@ bool ComponentMesh::SetFileValues(MeshFile* meshFile)
 	texturePath = meshFile->texturePath;
 
 	GenerateBuffers();
+	GenerateBounds();
+	ComputeNormals();
 
 	return true;
 }
@@ -236,6 +239,10 @@ bool ComponentMesh::Update(float dt)
 	if (drawFaceNormals || drawVertexNormals)
 		DrawNormals();
 
+	//UPDATE BBAB
+	localAABB.SetFromCenterAndSize(owner->GetComponent<ComponentTransform>()->GetPosition(),float3(5.f,5.f,5.f));
+	
+
 	return true;
 }
 
@@ -254,82 +261,14 @@ void ComponentMesh::OnGui()
 
 void ComponentMesh::OnLoad(const JSONReader& reader)
 {
-	if (reader.HasMember("vertexBufferId"))
-	{
-		const rapidjson::Value& vertexBuffer = reader["vertexBufferId"];
-		vertexBufferId = vertexBuffer.GetInt();
-	}
-	if (reader.HasMember("indexBufferId"))
-	{
-		const rapidjson::Value& indexBuffer = reader["indexBufferId"];
-		indexBufferId = indexBuffer.GetInt();
-	}
-	if (reader.HasMember("textureBufferId"))
-	{
-		const rapidjson::Value& textureBuffer = reader["textureBufferId"];
-		textureBufferId = textureBuffer.GetInt();
-	}
-	if (reader.HasMember("numIndices"))
-	{
-		const rapidjson::Value& numIndicesBuffer = reader["numIndices"];
-		numIndices = numIndicesBuffer.GetUint();
-	}
+	SetFileValues(App->resources->LoadMeshFile(owner->name));
+	GenerateBuffers();
 
-	if (reader.HasMember("Vertex number"))
-	{
-		const rapidjson::Value& itemVertexNumber = reader["Vertex number"];
-		numVertices = itemVertexNumber.GetInt();
-	}
-	if (reader.HasMember("Face number"))
-	{
-		const rapidjson::Value& itemFaceNumber = reader["Face number"];
-		numNormalFaces = itemFaceNumber.GetInt();
-	}
-	if (reader.HasMember("Face number"))
-	{
-		const rapidjson::Value& itemDrawWireframe = reader["Wireframe"];
-		drawWireframe = itemDrawWireframe.GetBool();
-	}
-	if (reader.HasMember("Normal draw scale"))
-	{
-		const rapidjson::Value& itemNormalDrawScale = reader["Normal draw scale"];
-		normalScale = itemNormalDrawScale.GetDouble();
-	}
-	if (reader.HasMember("Draw face normals"))
-	{
-		const rapidjson::Value& itemDrawFaceNormals = reader["Draw face normals"];
-		drawFaceNormals = itemDrawFaceNormals.GetBool();
-	}
-	if (reader.HasMember("Draw vertex normals"))
-	{
-		const rapidjson::Value& itemDrawVertexNormals = reader["Draw vertex normals"];
-		drawVertexNormals = itemDrawVertexNormals.GetBool();
-	}
 }
 void ComponentMesh::OnSave(JSONWriter& writer) const
 {
 	writer.String("Mesh");
 	writer.StartObject();
-	writer.String("vertexBufferId");
-	writer.Int(vertexBufferId);
-	writer.String("indexBufferId");
-	writer.Int(indexBufferId);
-	writer.String("textureBufferId");
-	writer.Int(textureBufferId);
-	writer.String("numIndices");
-	writer.Uint(numIndices);
-	writer.String("Vertex number");
-	writer.Int(numVertices);
-	writer.String("Face number");
-	writer.Int(numNormalFaces);
-	writer.String("Wireframe");
-	writer.Bool(drawWireframe);
-	writer.String("Normal draw scale");
-	writer.Double(normalScale);
-	writer.String("Draw face normals");
-	writer.Bool(drawFaceNormals);
-	writer.String("Draw vertex normals");
-	writer.Bool(drawVertexNormals);
 	writer.EndObject();
 }
 
