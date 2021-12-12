@@ -12,11 +12,6 @@
 - Object Selection my mouse.
 - A camera component that uses frustum culling.
 - Scenes can be serialized to a file that can be loaded.
-Mouse picking
-
-Serialization
-
-Frustum Culling
 
 ## Camera controls
  - Right Click: Rotate the camera freely
