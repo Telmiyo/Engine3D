@@ -244,7 +244,7 @@ void ComponentCamera::OnGui()
 	{
 		ImGui::Text("AspectRatio %f", aspectRatio);
 
-		if (ImGui::SliderFloat("FieldOfView", &horizontalFOVGui, 55.f, 110.f))
+		if (ImGui::SliderFloat("FieldOfView", &horizontalFOVGui, 1.f, 110.f))
 		{
 			SetHorizontalFov(DegToRad(horizontalFOVGui));
 		}
@@ -252,7 +252,7 @@ void ComponentCamera::OnGui()
 		{
 			SetNearPlaneDistance(nearPlaneDistanceGui);
 		}
-		if (ImGui::SliderFloat("FarPlaneDistance", &farPlaneDistanceGui, 100.f, 10000.f))
+		if (ImGui::SliderFloat("FarPlaneDistance", &farPlaneDistanceGui, nearPlaneDistance, 10000.f))
 		{
 			SetFarPlaneDistance(farPlaneDistanceGui);
 		}

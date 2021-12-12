@@ -127,8 +127,20 @@ void ComponentMesh::GenerateBounds()
 	sphere.pos = localAABB.CenterPoint();
 	sphere.Enclose(localAABB);
 
+	
+
 	radius = sphere.r;
 	centerPoint = sphere.pos;
+}
+
+void ComponentMesh::UpdateBounds()
+{
+	obb.SetFrom(localAABB);
+	obb.Transform(owner->GetComponent<ComponentTransform>()->transformMatrix);
+
+	localAABB.SetNegativeInfinity();
+	localAABB.Enclose(obb);
+
 }
 
 void ComponentMesh::DrawNormals() const
@@ -234,7 +246,12 @@ void ComponentMesh::DrawAABB()
 bool ComponentMesh::Update(float dt)
 {
 	DrawAABB();
-	localAABB.SetFromCenterAndSize(owner->GetComponent<ComponentTransform>()->GetPosition(), owner->GetComponent<ComponentTransform>()->GetScale());
+	
+	//Update AABB Position
+	GenerateBounds();
+	UpdateBounds();
+
+
 	if (render)
 	{
 		drawWireframe || App->renderer3D->wireframeMode ? glPolygonMode(GL_FRONT_AND_BACK, GL_LINE) : glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
