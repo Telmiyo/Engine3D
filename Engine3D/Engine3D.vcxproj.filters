@@ -789,6 +789,9 @@
     <Filter Include="Engine\Files">
       <UniqueIdentifier>{6a79eb54-0c08-48ac-adca-c772df8b4856}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ExternalLibraries\ImGuizmo">
+      <UniqueIdentifier>{32ccaabe-48c3-41c0-82ab-bf4dcd4c3026}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Core\MathGeoLib\include\Geometry\QuadTree.inl">
