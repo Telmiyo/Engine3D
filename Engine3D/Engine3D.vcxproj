@@ -310,7 +310,7 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Core\MathGeoLib\include;$(SolutionDir)\Core\glew\include;$(SolutionDir)\Core\JSONObject\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Core\MathGeoLib\include;$(SolutionDir)\Core\glew\include;$(SolutionDir)\Core\JSONObject\include;$(SolutionDir)\Core\ImGuizmo\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);</PreprocessorDefinitions>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <UndefinePreprocessorDefinitions>MATH_SSE;</UndefinePreprocessorDefinitions>
@@ -332,7 +332,7 @@
       <SDLCheck>false</SDLCheck>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Core\MathGeoLib\include;$(SolutionDir)\Core\glew\include;$(SolutionDir)\Core\JSONObject\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Core\MathGeoLib\include;$(SolutionDir)\Core\glew\include;$(SolutionDir)\Core\JSONObject\include;$(SolutionDir)\Core\ImGuizmo\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);</PreprocessorDefinitions>
       <UndefinePreprocessorDefinitions>MATH_SSE;</UndefinePreprocessorDefinitions>
     </ClCompile>
