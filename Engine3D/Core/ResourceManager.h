@@ -17,6 +17,7 @@ public:
 	bool CreateModelFile(const aiMesh* m, const char* path, std::string name);
 	bool saveModelFile(MeshFile* file, const char* path, std::string name);
 	MeshFile* LoadMeshFile(std::string name);
+	void DestroyMeshFile(MeshFile* mesh);
 	
 	void ArrayToVectorConversion(MeshFile* mymodel);
 	
