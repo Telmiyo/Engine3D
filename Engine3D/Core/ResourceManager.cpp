@@ -1,5 +1,12 @@
 #include "ResourceManager.h"
+#include "Application.h"
+#include "ModuleFileSystem.h"
+#include "ModuleImport.h"
+
+#include <random>
+#include <sstream>
 #include <fstream>
+
 
 ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -11,6 +18,61 @@ ResourceManager::~ResourceManager()
 	{
 		DestroyMeshFile(models[i]);
 	}
+}
+
+bool ResourceManager::Init()
+{
+	dir = "Library/";
+	CheckMeshFiles();
+	return true;
+}
+
+void ResourceManager::CheckMeshFiles()
+{
+	std::vector<std::string> filesToLoad;
+	App->fileSystem->GetAllFilesWithExtension("Library/Models/", "fbx", filesToLoad);
+
+	for (auto m : filesToLoad)
+	{
+		std::string path = dir + "Models/" + m;
+		App->import->LoadGeometry(path.c_str());
+	}
+
+}
+
+UID ResourceManager::generateNewUID()
+{
+	static std::random_device              rd;
+	static std::mt19937                    gen(rd());
+	static std::uniform_int_distribution<> dis(0, 15);
+	static std::uniform_int_distribution<> dis2(8, 11);
+
+
+	std::stringstream ss;
+	int i;
+	ss << std::hex;
+	for (i = 0; i < 8; i++) {
+		ss << dis(gen);
+	}
+	ss << "-";
+	for (i = 0; i < 4; i++) {
+		ss << dis(gen);
+	}
+	ss << "-4";
+	for (i = 0; i < 3; i++) {
+		ss << dis(gen);
+	}
+	ss << "-";
+	ss << dis2(gen);
+	for (i = 0; i < 3; i++) {
+		ss << dis(gen);
+	}
+	ss << "-";
+	for (i = 0; i < 12; i++) {
+		ss << dis(gen);
+	};
+	return ss.str();
+
 }
 
 bool ResourceManager::CreateModelFile(const aiMesh* m, const char* path, std::string name)
@@ -27,14 +89,16 @@ bool ResourceManager::CreateModelFile(const aiMesh* m, const char* path, std::st
 	memcpy(file->normals_, m->mNormals, file->normalsSizeBytes);
 
 	// Text Coord Data
-	file->textCoordSizeBytes = m->mNumVertices * sizeof(float) * 2;
-	file->textCoords_ = (float*)malloc(file->textCoordSizeBytes);
-	for (int i = 0; i < m->mNumVertices; i++)
+	if (m->HasTextureCoords(0))
 	{
-		*(file->textCoords_ + i * 2) = m->mTextureCoords[0][i].x;
-		*(file->textCoords_ + i * 2 + 1) = m->mTextureCoords[0][i].y; //this coord image is inverted
+		file->textCoordSizeBytes = m->mNumVertices * sizeof(float) * 2;
+		file->textCoords_ = (float*)malloc(file->textCoordSizeBytes);
+		for (int i = 0; i < m->mNumVertices; i++)
+		{
+			*(file->textCoords_ + i * 2) = m->mTextureCoords[0][i].x;
+			*(file->textCoords_ + i * 2 + 1) = m->mTextureCoords[0][i].y; //this coord image is inverted
+		}
 	}
-
 	// Indices Data
 	file->indiceSizeBytes = m->mNumFaces * sizeof(unsigned int) * 3;
 	file->indices_ = (unsigned*)malloc(file->indiceSizeBytes);
@@ -48,6 +112,8 @@ bool ResourceManager::CreateModelFile(const aiMesh* m, const char* path, std::st
 
 	file->name = name;
 	models.push_back(file);
+	UID d = generateNewUID();
+	resources.emplace(d, file);
 
 	return saveModelFile(file, path, name);
 }
@@ -55,7 +121,7 @@ bool ResourceManager::CreateModelFile(const aiMesh* m, const char* path, std::st
 //LOAD IN BINARY THE FILE
 bool ResourceManager::saveModelFile(MeshFile* file, const char* path, std::string name)
 {
-	std::string fileName = "Assets/Files/" + name + ".amapola";
+	std::string fileName = "Assets/Models/" + name + ".amapola";
 	std::ofstream myfile;
 	myfile.open(fileName, std::ios::binary);
 	if (myfile.is_open())
@@ -79,7 +145,7 @@ bool ResourceManager::saveModelFile(MeshFile* file, const char* path, std::strin
 
 MeshFile* ResourceManager::LoadMeshFile(std::string name)
 {
-	std::string fullName = "Assets/Files/" + name + ".amapola";
+	std::string fullName = "Assets/Models/" + name + ".amapola";
 
 	std::ifstream myfile;
 	myfile.open(fullName, std::ios::binary);
@@ -149,7 +215,7 @@ std::vector<float3> ResourceManager::FloatArray2VecFloat3(float* array, unsigned
 	std::vector<float3> dest;
 	for (unsigned int i = 0; i < n; i += 3)
 	{
-		dest.push_back({ array[i], array[i + 1], array[i + 2]});
+		dest.push_back({ array[i], array[i + 1], array[i + 2] });
 	}
 	return dest;
 }
@@ -159,7 +225,7 @@ std::vector<float2> ResourceManager::FloatArray2VecFloat2(float* array, unsigned
 	std::vector<float2> dest;
 	for (unsigned int i = 0; i < n; i += 2)
 	{
-		dest.push_back({ array[i], array[i + 1]});
+		dest.push_back({ array[i], array[i + 1] });
 	}
 	return dest;
 }
