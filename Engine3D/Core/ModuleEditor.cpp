@@ -349,11 +349,11 @@ void ModuleEditor::MenuBar() {
 
 		/* ---- FILE ---- */
 		if (ImGui::BeginMenu("File")) {
-			if (ImGui::MenuItem("Save Scene", "(Ctrl + S)")) //DO SOMETHING
+			if (ImGui::MenuItem("Save Scene", "(Ctrl+S)")) //DO SOMETHING
 			{
 				App->scene->OnSave("scene1.scene");
 			}
-			if (ImGui::MenuItem("Load Scene", "(Ctrl + L)")) //DO SOMETHING
+			if (ImGui::MenuItem("Load Scene", "(Ctrl+L)")) //DO SOMETHING
 			{
 				App->scene->OnLoad("scene1.scene");
 			}
@@ -649,7 +649,7 @@ void ModuleEditor::UpdateWindowStatus() {
 
 	if (showSceneWindow) {
 
-		ImGui::Begin("Scene", &showSceneWindow, ImGuiWindowFlags_NoScrollbar);
+		ImGui::Begin("Scene", &showSceneWindow, ImGuiWindowFlags_NoScrollWithMouse);
 
 		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
 		if (viewportSize.x != lastViewportSize.x || viewportSize.y != lastViewportSize.y)
