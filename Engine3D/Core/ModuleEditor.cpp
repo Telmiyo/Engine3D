@@ -615,15 +615,26 @@ void ModuleEditor::UpdateWindowStatus() {
 						ImGui::EndDragDropTarget();
 					}
 				}
-				if (gameobjectSelected != nullptr) gameobjectSelected->isSelected = true;
+				if (gameobjectSelected != nullptr)
+				{
+					gameobjectSelected->isSelected = true;
+					for (GameObject* o : App->scene->gameObjectList)
+					{
+						if (o != gameobjectSelected)
+							o->isSelected = false;
+					}
+
+				}
 
 				if (ImGui::IsItemClicked()) {
 					gameobjectSelected ? gameobjectSelected->isSelected = !gameobjectSelected->isSelected : 0;
 					gameobjectSelected = go;
+
 					//gameobjectSelected->isSelected = !gameobjectSelected->isSelected;
 					if (gameobjectSelected->isSelected)
 					{
 						LOG("GameObject selected name: %s", gameobjectSelected->name.c_str());
+
 					}
 					else
 					{
