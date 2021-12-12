@@ -180,37 +180,22 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 		if (itemComponents.HasMember("Transform"))
 		{
 			const rapidjson::Value& itemTransform = itemComponents["Transform"];
-			for (auto c : components)
-			{
-				if (c->componentType == ComponentType::COMPONENT_TRANSFORM)
-				{
-					c->OnLoad(itemTransform);
-				}
-			}
+
+			GetComponent<ComponentTransform>()->OnLoad(itemTransform);
+
 		}
 		if (itemComponents.HasMember("Material"))
 		{
 			const rapidjson::Value& itemMaterial = itemComponents["Material"];
 			CreateComponent<ComponentMaterial>();
-			for (auto c : components)
-			{
-				if (c->componentType == ComponentType::COMPONENT_MATERIAL)
-				{
-					c->OnLoad(itemMaterial);
-				}
-			}
+			GetComponent<ComponentMaterial>()->OnLoad(itemMaterial);
 		}
 		if (itemComponents.HasMember("Mesh"))
 		{
 			const rapidjson::Value& itemMesh = itemComponents["Mesh"];
 			CreateComponent<ComponentMesh>();
-			for (auto c : components)
-			{
-				if (c->componentType == ComponentType::COMPONENT_MESH)
-				{
-					c->OnLoad(itemMesh);
-				}
-			}
+			GetComponent<ComponentMesh>()->OnLoad(itemMesh);
+
 		}
 	}
 
@@ -221,9 +206,9 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 		{
 			const rapidjson::Value& attribute = *it;
 			assert(attribute.IsObject());
-	
+
 			GameObject* child = new GameObject();
-			AttachChild(child);	
+			AttachChild(child);
 			child->OnLoad(attribute.GetObjectJSON());
 
 		}

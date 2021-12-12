@@ -121,9 +121,9 @@ void ComponentTransform::OnSave(JSONWriter& writer) const
 		writer.EndArray();
 		writer.String("Rotation");
 		writer.StartArray();
-			writer.Double(rotation.x);
-			writer.Double(rotation.y);
-			writer.Double(rotation.z);
+			writer.Double(GetRotation().x);
+			writer.Double(GetRotation().y);
+			writer.Double(GetRotation().z);
 		writer.EndArray();
 		writer.String("Scale");
 		writer.StartArray();
@@ -150,23 +150,21 @@ void ComponentTransform::OnLoad(const JSONReader& reader)
 			else if (i == 2) posZ = it->GetDouble();
 			i++;
 		}
-		position = { posX, posY, posZ };
+		SetPosition(float3(posX, posY, posZ));
 	}
 	if (reader.HasMember("Rotation"))
 	{
 		const rapidjson::Value& itemRotation = reader["Rotation"];
-		float rotX = 0.0f;
-		float rotY = 0.0f;
-		float rotZ = 0.0f;
+		float3 newRotation;
 		int i = 0;
 		for (rapidjson::Value::ConstValueIterator it = itemRotation.Begin(); it != itemRotation.End(); ++it)
 		{
-			if (i == 0) rotX = it->GetDouble();
-			else if (i == 1) rotY = it->GetDouble();
-			else if (i == 2) rotZ = it->GetDouble();
+			if (i == 0) newRotation.x = it->GetDouble();
+			else if (i == 1) newRotation.y = it->GetDouble();
+			else if (i == 2) newRotation.z = it->GetDouble();
 			i++;
 		}
-		rotation = { rotX, rotY, rotZ, rotation.w };
+		SetRotation(float3(newRotation.x, newRotation.y, newRotation.z));
 	}
 	if (reader.HasMember("Scale"))
 	{
@@ -182,6 +180,6 @@ void ComponentTransform::OnLoad(const JSONReader& reader)
 			else if (i == 2) scaleZ = it->GetDouble();
 			i++;
 		}
-		scale = { scaleX, scaleY, scaleZ };
+		SetScale(float3(scaleX, scaleY, scaleZ));
 	}
 }
