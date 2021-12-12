@@ -245,11 +245,11 @@ void ComponentMesh::DrawAABB()
 
 bool ComponentMesh::Update(float dt)
 {
-	DrawAABB();
 	
 	//Update AABB Position
 	GenerateBounds();
 	UpdateBounds();
+	DrawAABB();
 
 
 	if (render)
