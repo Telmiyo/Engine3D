@@ -615,11 +615,12 @@ void ModuleEditor::UpdateWindowStatus() {
 						ImGui::EndDragDropTarget();
 					}
 				}
+				if (gameobjectSelected != nullptr) gameobjectSelected->isSelected = true;
 
 				if (ImGui::IsItemClicked()) {
 					gameobjectSelected ? gameobjectSelected->isSelected = !gameobjectSelected->isSelected : 0;
 					gameobjectSelected = go;
-					gameobjectSelected->isSelected = !gameobjectSelected->isSelected;
+					//gameobjectSelected->isSelected = !gameobjectSelected->isSelected;
 					if (gameobjectSelected->isSelected)
 					{
 						LOG("GameObject selected name: %s", gameobjectSelected->name.c_str());

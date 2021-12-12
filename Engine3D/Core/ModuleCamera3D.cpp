@@ -52,7 +52,18 @@ update_status ModuleCamera3D::Update(float dt)
 	if (App->editor->isMouseOnScene())
 	{
 		if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
-			App->editor->gameobjectSelected = GetGameObjectMousePicked();
+		{
+			GameObject* gObj = GetGameObjectMousePicked();
+			if (gObj != nullptr)
+			{
+				App->editor->gameobjectSelected = gObj;
+			}
+			else
+			{
+				App->editor->gameobjectSelected = nullptr;
+			}
+		}
+			
 
 		float3 newPos(0, 0, 0);
 		float speed = cameraSpeed * dt;
