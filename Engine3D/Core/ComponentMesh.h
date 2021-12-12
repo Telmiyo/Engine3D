@@ -4,6 +4,7 @@
 #include <string.h>
 #include "Math/float3.h"
 #include "Math/float2.h"
+#include "MathGeoLib.h"
 #include "Geometry/AABB.h"
 #include "par_shapes.h"
 #include "MeshFile.h"
@@ -28,6 +29,7 @@ public:
 	void GenerateBuffers();
 	void ComputeNormals();
 	void GenerateBounds();
+	void UpdateBounds();
 	void DrawNormals() const;
 	float3 GetCenterPointInWorldCoords() const;
 	inline float GetSphereRadius() const { return radius; }
@@ -65,6 +67,7 @@ public:
 
 	//Local coords AABB
 	AABB localAABB;
+	OBB obb;
 
 	bool render = true;
 private:
