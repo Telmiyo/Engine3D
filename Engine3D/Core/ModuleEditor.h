@@ -57,12 +57,12 @@ public:
 	bool showAnotherWindow;
 	bool showAboutWindow;
 	bool showConfWindow;
-	bool showImportedMeshes;
 	bool showInspectorWindow;
 	bool showHierarchyWindow;
 	bool showSceneWindow;
 	bool showGameWindow;
 	bool showTextures;
+	bool showMeshes;
 	bool showConsoleWindow;
 
 	ImGuiTextBuffer consoleText;

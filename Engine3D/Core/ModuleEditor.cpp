@@ -37,12 +37,12 @@ ModuleEditor::ModuleEditor(Application* app, bool start_enabled) : Module(app, s
 	showConfWindow = true;
 
 	showConsoleWindow = true;
-	showImportedMeshes = true;
 	showHierarchyWindow = true;
 	showInspectorWindow = true;
 	showGameWindow = true;
 	showSceneWindow = true;
 	showTextures = true;
+	showMeshes = true;
 
 	currentColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 
@@ -368,7 +368,9 @@ void ModuleEditor::MenuBar() {
 			if (ImGui::MenuItem("Create empty GameObject")) {
 				App->scene->CreateEmptyGameObject();
 			}
-
+			if (ImGui::MenuItem("Create Camera")) {
+				App->scene->CreateCamera();
+			}
 			if (ImGui::BeginMenu("3D Objects")) {
 				if (ImGui::MenuItem("Cube")) {
 					GameObject* newGameObject = App->scene->CreateGameObjectByName("Cube");
@@ -419,6 +421,8 @@ void ModuleEditor::MenuBar() {
 				showConsoleWindow = !showConsoleWindow;
 			if (ImGui::MenuItem("Textures"))
 				showTextures = !showTextures;
+			if (ImGui::MenuItem("Meshes"))
+				showMeshes = !showMeshes;
 
 			ImGui::Separator();
 			if (ImGui::MenuItem("Configuration"))
@@ -492,8 +496,8 @@ void ModuleEditor::UpdateWindowStatus() {
 	}
 
 	//Imported Meshes
-	if (showImportedMeshes) {
-		ImGui::Begin("Meshes", &showImportedMeshes);
+	if (showMeshes) {
+		ImGui::Begin("Meshes", &showMeshes);
 		for (auto m : App->resources->models)
 		{
 			std::string tmp = ICON_FA_CUBE + std::string(m->name);
