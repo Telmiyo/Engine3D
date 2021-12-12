@@ -24,6 +24,8 @@ public:
 	GameObject* CreateGameObjectByName(const std::string name, GameObject* parent = nullptr);
 	GameObject* CreateEmptyGameObject(GameObject* parent = nullptr);
 	GameObject* CreateChildrenGameObject(GameObject* parent = nullptr);
+	GameObject* CreateCamera(GameObject* parent = nullptr);
+
 	void DuplicateGameObject(GameObject* parent = nullptr);
 	void CreateRoot();
 	

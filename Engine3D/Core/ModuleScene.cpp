@@ -25,10 +25,8 @@ bool ModuleScene::Start()
 	bool ret = true;
 	
 	CreateRoot();
-	GameObject* camera = CreateGameObjectByName("Camera", root);
-	camera->CreateComponent<ComponentCamera>();
-	ComponentMesh* m = new ComponentMesh(camera, ComponentMesh::Shape::CUBE);
-	//camera->AddComponent(m);
+	
+	
 	//Loading house and textures since beginning
 	App->import->LoadGeometry("Assets/Models/BakerHouse.fbx");
 	
@@ -260,6 +258,15 @@ GameObject* ModuleScene::CreateChildrenGameObject(GameObject* selectedGameObject
 	
 
 	return temp;
+}
+
+GameObject* ModuleScene::CreateCamera(GameObject* parent)
+{
+	GameObject* camera = CreateGameObjectByName("Camera", root);
+	camera->CreateComponent<ComponentCamera>();
+	ComponentMesh* m = new ComponentMesh(camera, ComponentMesh::Shape::CUBE);
+	
+	return camera;
 }
 
 bool ModuleScene::DeleteAllGameObjects()
