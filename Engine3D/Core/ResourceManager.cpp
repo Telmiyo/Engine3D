@@ -7,6 +7,10 @@ ResourceManager::ResourceManager(Application* app, bool start_enabled) : Module(
 
 ResourceManager::~ResourceManager()
 {
+	for (unsigned int i = 0; i < models.size(); ++i)
+	{
+		DestroyMeshFile(models[i]);
+	}
 }
 
 bool ResourceManager::CreateModelFile(const aiMesh* m, const char* path, std::string name)
@@ -107,6 +111,29 @@ MeshFile* ResourceManager::LoadMeshFile(std::string name)
 		LOG("Error loading MontuMeshFile from '%s'", fullName);
 		return nullptr;
 	}
+}
+
+void ResourceManager::DestroyMeshFile(MeshFile* mesh)
+{
+
+	free(mesh->vertices_);
+	free(mesh->normals_);
+	free(mesh->textCoords_);
+	free(mesh->indices_);
+
+	mesh->vecVertices.clear();
+	mesh->vecVertices.swap(std::vector<float3>());
+	mesh->vecNormals.clear();
+	mesh->vecNormals.swap(std::vector<float3>());
+	mesh->vecTextCoords.clear();
+	mesh->vecTextCoords.swap(std::vector<float2>());
+	mesh->vecIndices.clear();
+	mesh->vecIndices.swap(std::vector<unsigned int>());
+
+	mesh->name.clear();
+	mesh->texturePath.clear();
+
+	free(mesh);
 }
 
 void ResourceManager::ArrayToVectorConversion(MeshFile* mymodel)
