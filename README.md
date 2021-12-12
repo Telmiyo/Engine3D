@@ -8,8 +8,9 @@
 
 ## New features
 
-Drag & Drop resources to import them as a custom format in the resource manager folder (called Meshes).
+Drag & Drop resources to import them as a custom format in the resource manager folder (called Meshes)
 Mouse picking
+Serialization
 
 ## Camera controls
  - Right Click: Rotate the camera freely
