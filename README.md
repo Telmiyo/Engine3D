@@ -8,8 +8,10 @@
 
 ## New features
 
-Drag & Drop resources to import them as a custom format in the resource manager folder (called Meshes)
-
+- Drag & Drop resources to import them as a custom format in the resource manager folder (called Meshes)
+- Object Selection my mouse.
+- A camera component that uses frustum culling.
+- Scenes can be serialized to a file that can be loaded.
 Mouse picking
 
 Serialization
