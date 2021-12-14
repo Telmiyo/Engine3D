@@ -11,6 +11,7 @@
 - Drag & Drop resources to import them as a custom format in the resource manager folder (called Meshes)
 - Object Selection my mouse.
 - A camera component that uses frustum culling.
+- A camera ca be created in game object imgui window
 - Scenes can be serialized to a file that can be loaded.
 
 ## Camera controls
