@@ -4,7 +4,7 @@
 ## Members
  - David Montufo: ([Montuuh](https://github.com/Montuuh))
  - Telmo Beroiz: ([Telmiyo](https://github.com/Telmiyo))
- - Marc San José: ([marcsjm19](https://github.com/marcsjm19))
+ - Oscar Cuatrecasas: ([OCA99](https://github.com/OCA99))
 
 ## New features
 
