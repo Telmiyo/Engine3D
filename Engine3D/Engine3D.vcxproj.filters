@@ -185,6 +185,9 @@
     <ClCompile Include="Core\ResourceManager.cpp">
       <Filter>Engine\Files</Filter>
     </ClCompile>
+    <ClCompile Include="Core\ModuleUI.cpp">
+      <Filter>Engine\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\ImGui\imconfig.h">
@@ -726,6 +729,9 @@
     </ClInclude>
     <ClInclude Include="Core\ResourceManager.h">
       <Filter>Engine\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ModuleUI.h">
+      <Filter>Engine\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

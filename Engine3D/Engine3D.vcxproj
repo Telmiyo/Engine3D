@@ -66,6 +66,7 @@
     <ClCompile Include="Core\ModuleRenderer3D.cpp" />
     <ClCompile Include="Core\ModuleScene.cpp" />
     <ClCompile Include="Core\ModuleTextures.cpp" />
+    <ClCompile Include="Core\ModuleUI.cpp" />
     <ClCompile Include="Core\ModuleWindow.cpp" />
     <ClCompile Include="Core\par_shapes.cpp" />
     <ClCompile Include="Core\PerfTimer.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="Core\ModuleRenderer3D.h" />
     <ClInclude Include="Core\ModuleScene.h" />
     <ClInclude Include="Core\ModuleTextures.h" />
+    <ClInclude Include="Core\ModuleUI.h" />
     <ClInclude Include="Core\ModuleWindow.h" />
     <ClInclude Include="Core\p2Defs.h" />
     <ClInclude Include="Core\par_shapes.h" />
