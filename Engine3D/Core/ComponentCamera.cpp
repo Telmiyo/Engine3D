@@ -102,6 +102,16 @@ void ComponentCamera::UpdateVerticalFov()
 
 }
 
+void ComponentCamera::LookAt(const float3& position)
+{
+	float3 v = position - cameraFrustum.pos;
+
+	float3x3 m = float3x3::LookAt(cameraFrustum.front, v.Normalized(), cameraFrustum.up, float3::unitY);
+
+	cameraFrustum.front = m.MulDir(cameraFrustum.front).Normalized();
+	cameraFrustum.up = m.MulDir(cameraFrustum.up).Normalized();
+}
+
 void ComponentCamera::CheckObjects()
 {
 	//BY POSITION

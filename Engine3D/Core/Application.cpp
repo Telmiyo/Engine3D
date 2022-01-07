@@ -13,6 +13,7 @@
 #include "ModuleFileSystem.h"
 #include "ModuleTextures.h"
 #include "ResourceManager.h"
+#include "ModuleUI.h"
 #include "Globals.h"
 
 
@@ -31,6 +32,7 @@ Application::Application()
 	fileSystem = new ModuleFileSystem(this);
 	textures = new ModuleTextures(this);
 	resources = new ResourceManager(this);
+	ui = new ModuleUI(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -49,6 +51,7 @@ Application::Application()
 	AddModule(viewportBuffer);
 	AddModule(scene);
 	AddModule(editor);
+	AddModule(ui);
 
 	// Renderer last!
 	AddModule(renderer3D);

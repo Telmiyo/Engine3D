@@ -29,6 +29,8 @@ public:
 	void UpdateHorizontalFov();
 	void UpdateVerticalFov();
 
+	void LookAt(const float3& position);
+
 	void CheckObjects();
 
 	void DrawCamera();
