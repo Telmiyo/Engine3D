@@ -21,6 +21,7 @@ class ModuleImport;
 class ModuleFileSystem;
 class ModuleTextures;
 class ResourceManager;
+class ModuleUI;
 
 class Application
 {
@@ -37,6 +38,7 @@ public:
 	ModuleFileSystem* fileSystem { nullptr };
 	ModuleTextures* textures { nullptr };
 	ResourceManager* resources{ nullptr };
+	ModuleUI* ui{ nullptr };
 
 	Application();
 	~Application();

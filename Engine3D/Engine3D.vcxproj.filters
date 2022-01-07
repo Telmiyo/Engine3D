@@ -188,6 +188,9 @@
     <ClCompile Include="Core\ModuleUI.cpp">
       <Filter>Engine\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Core\ComponentTransform2D.cpp">
+      <Filter>Engine\GameObjects - Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\ImGui\imconfig.h">
@@ -732,6 +735,9 @@
     </ClInclude>
     <ClInclude Include="Core\ModuleUI.h">
       <Filter>Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ComponentTransform2D.h">
+      <Filter>Engine\GameObjects - Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,8 @@
 #include "Globals.h"
 #include "Light.h"
 
+class ComponentCamera;
+
 class ModuleUI : public Module
 {
 public:
@@ -20,4 +22,5 @@ public:
 	void OnSave(JSONWriter& writer) const override;
 
 public:
+	ComponentCamera* uiCamera;
 };
