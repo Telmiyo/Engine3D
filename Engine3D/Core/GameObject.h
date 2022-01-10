@@ -15,8 +15,8 @@ class GameObject {
 
 public:
 
-	GameObject();
-	GameObject(const std::string name);
+	GameObject(bool is3D = true);
+	GameObject(const std::string name, bool is3D = true);
 
 	~GameObject();
 

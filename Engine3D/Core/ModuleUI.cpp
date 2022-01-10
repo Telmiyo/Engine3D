@@ -25,6 +25,8 @@ bool ModuleUI::Start()
 	float fov = 60.f * DEGTORAD;
 	uiCamera->cameraFrustum.verticalFov = fov;
 	uiCamera->cameraFrustum.horizontalFov = 2.f * Atan(Tan(fov * 0.5f) * uiCamera->cameraFrustum.AspectRatio());
+	uiCamera->cameraFrustum.nearPlaneDistance = uiCamera->nearPlaneDistance;
+	uiCamera->cameraFrustum.farPlaneDistance = uiCamera->farPlaneDistance;
 	uiCamera->LookAt({ 0.f, 0.f, 0.f });
 
 	return true;
@@ -55,7 +57,7 @@ update_status ModuleUI::PostUpdate(float dt)
 
 	glLoadMatrixf(uiCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 
-
+	// Draw all elements
 
 	glPopMatrix();
 

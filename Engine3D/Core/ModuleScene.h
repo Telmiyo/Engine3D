@@ -21,7 +21,7 @@ public:
 	bool DeleteAllGameObjects();
 	bool DeleteSelectedGameObject(GameObject* selectedGameObject);
 
-	GameObject* CreateGameObjectByName(const std::string name, GameObject* parent = nullptr);
+	GameObject* CreateGameObjectByName(const std::string name, GameObject* parent = nullptr, bool is3D = true);
 	GameObject* CreateEmptyGameObject(GameObject* parent = nullptr);
 	GameObject* CreateChildrenGameObject(GameObject* parent = nullptr);
 	GameObject* CreateCamera(GameObject* parent = nullptr);

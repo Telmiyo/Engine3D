@@ -21,15 +21,16 @@ ComponentCamera::ComponentCamera(GameObject* parent) : Component(parent)
 	componentType = ComponentType::COMPONENT_CAMERA;
 
 	cameraFrustum.type = FrustumType::PerspectiveFrustum;
-	cameraFrustum.pos = parent->GetComponent<ComponentTransform>()->GetPosition();
-	cameraFrustum.front = parent->GetComponent<ComponentTransform>()->Front().Normalized();
-	cameraFrustum.up = parent->GetComponent<ComponentTransform>()->Up().Normalized();
+	if (parent) {
+		cameraFrustum.pos = parent->GetComponent<ComponentTransform>()->GetPosition();
+		cameraFrustum.front = parent->GetComponent<ComponentTransform>()->Front().Normalized();
+		cameraFrustum.up = parent->GetComponent<ComponentTransform>()->Up().Normalized();
 
-	cameraFrustum.horizontalFov = horizontalFOV;
-	cameraFrustum.verticalFov = verticalFOV;
-	cameraFrustum.nearPlaneDistance = nearPlaneDistance;
-	cameraFrustum.farPlaneDistance = farPlaneDistance;
-
+		cameraFrustum.horizontalFov = horizontalFOV;
+		cameraFrustum.verticalFov = verticalFOV;
+		cameraFrustum.nearPlaneDistance = nearPlaneDistance;
+		cameraFrustum.farPlaneDistance = farPlaneDistance;
+	}
 }
 
 ComponentCamera::~ComponentCamera()
