@@ -8,19 +8,25 @@
 
 #include "ImGui/imgui.h"
 
-GameObject::GameObject() {
+GameObject::GameObject(bool is3D) {
 
 	name = name + ("GameObject");
 	parent = nullptr;
 
-	transform = CreateComponent<ComponentTransform>();
+	if (is3D)
+		transform = CreateComponent<ComponentTransform>();
+	else
+		transform = nullptr;
 
 	active = true;
 }
 
-GameObject::GameObject(const std::string name) : name(name)
+GameObject::GameObject(const std::string name, bool is3D) : name(name)
 {
-	transform = CreateComponent<ComponentTransform>();
+	if (is3D)
+		transform = CreateComponent<ComponentTransform>();
+	else
+		transform = nullptr;
 
 	active = true;
 }
@@ -89,8 +95,10 @@ void GameObject::AttachChild(GameObject* child)
 {
 	child->parent = this;
 	children.push_back(child);
-	child->transform->NewAttachment();
-	child->PropagateTransform();
+	if (child->transform != nullptr) {
+		child->transform->NewAttachment();
+		child->PropagateTransform();
+	}
 	App->scene->gameObjectList.push_back(child);
 }
 

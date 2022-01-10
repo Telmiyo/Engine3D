@@ -9,6 +9,7 @@
 #include "ModuleEditor.h"
 #include "Component.h"
 #include "ComponentTransform.h"
+#include "ComponentTransform2D.h"
 #include "ComponentCamera.h"
 #include "ComponentMesh.h"
 #include "ModuleFileSystem.h"
@@ -58,21 +59,23 @@ update_status ModuleScene::Update(float dt)
 
 		if (App->editor->gameobjectSelected)
 		{
-			ComponentTransform* transform = App->editor->gameobjectSelected->GetComponent<ComponentTransform>();
-			float3 pos = transform->GetPosition();
-			glLineWidth(10.f);
-			glBegin(GL_LINES);
-			glColor3f(1.f, 0.f, 0.f);
-			glVertex3f(pos.x, pos.y, pos.z);
-			glVertex3f(pos.x + transform->Right().x, pos.y + transform->Right().y, pos.z + transform->Right().z);
-			glColor3f(0.f, 0.f, 1.f);
-			glVertex3f(pos.x, pos.y, pos.z);
-			glVertex3f(pos.x + transform->Front().x, pos.y + transform->Front().y, pos.z + transform->Front().z);
-			glColor3f(0.f, 1.f, 0.f);
-			glVertex3f(pos.x, pos.y, pos.z);
-			glVertex3f(pos.x + transform->Up().x, pos.y + transform->Up().y, pos.z + transform->Up().z);
-			glEnd();
-			glLineWidth(1.f);
+			if (App->editor->gameobjectSelected->GetComponent<ComponentTransform2D>() == nullptr) {
+				ComponentTransform* transform = App->editor->gameobjectSelected->GetComponent<ComponentTransform>();
+				float3 pos = transform->GetPosition();
+				glLineWidth(10.f);
+				glBegin(GL_LINES);
+				glColor3f(1.f, 0.f, 0.f);
+				glVertex3f(pos.x, pos.y, pos.z);
+				glVertex3f(pos.x + transform->Right().x, pos.y + transform->Right().y, pos.z + transform->Right().z);
+				glColor3f(0.f, 0.f, 1.f);
+				glVertex3f(pos.x, pos.y, pos.z);
+				glVertex3f(pos.x + transform->Front().x, pos.y + transform->Front().y, pos.z + transform->Front().z);
+				glColor3f(0.f, 1.f, 0.f);
+				glVertex3f(pos.x, pos.y, pos.z);
+				glVertex3f(pos.x + transform->Up().x, pos.y + transform->Up().y, pos.z + transform->Up().z);
+				glEnd();
+				glLineWidth(1.f);
+			}
 		}
 
 		glEnable(GL_DEPTH_TEST);
@@ -192,9 +195,9 @@ void ModuleScene::OnLoad(std::string scene)
 	RELEASE_ARRAY(buffer);
 }
 
-GameObject* ModuleScene::CreateGameObjectByName(const std::string name, GameObject* parent)
+GameObject* ModuleScene::CreateGameObjectByName(const std::string name, GameObject* parent, bool is3D)
 {
-	GameObject* temp = new GameObject(name);
+	GameObject* temp = new GameObject(name, is3D);
 
 	if (name.empty())
 		LOG("A name must be sent to CreateGameObjectByName")
