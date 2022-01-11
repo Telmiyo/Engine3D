@@ -189,7 +189,10 @@
       <Filter>Engine\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Core\ComponentTransform2D.cpp">
-      <Filter>Engine\GameObjects - Components</Filter>
+      <Filter>Engine\GameObjects - Components\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ComponentImage.cpp">
+      <Filter>Engine\GameObjects - Components\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -737,7 +740,10 @@
       <Filter>Engine\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Core\ComponentTransform2D.h">
-      <Filter>Engine\GameObjects - Components</Filter>
+      <Filter>Engine\GameObjects - Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ComponentImage.h">
+      <Filter>Engine\GameObjects - Components\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -803,6 +809,9 @@
     </Filter>
     <Filter Include="ExternalLibraries\ImGuizmo">
       <UniqueIdentifier>{32ccaabe-48c3-41c0-82ab-bf4dcd4c3026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObjects - Components\UI">
+      <UniqueIdentifier>{710c8aa3-3a9e-4b18-9c53-e225f0e48c30}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

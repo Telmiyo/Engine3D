@@ -14,6 +14,7 @@
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\Color.cpp" />
     <ClCompile Include="Core\ComponentCamera.cpp" />
+    <ClCompile Include="Core\ComponentImage.cpp" />
     <ClCompile Include="Core\ComponentMaterial.cpp" />
     <ClCompile Include="Core\ComponentMesh.cpp" />
     <ClCompile Include="Core\ComponentTransform2D.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="Core\Color.h" />
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\ComponentCamera.h" />
+    <ClInclude Include="Core\ComponentImage.h" />
     <ClInclude Include="Core\ComponentMaterial.h" />
     <ClInclude Include="Core\ComponentMesh.h" />
     <ClInclude Include="Core\ComponentTransform2D.h" />
