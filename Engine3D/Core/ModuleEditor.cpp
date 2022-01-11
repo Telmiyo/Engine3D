@@ -14,6 +14,7 @@
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
+#include "ComponentImage.h"
 #include "ComponentTransform2D.h"
 #include "iconcpp.h"
 #include "icons.h"
@@ -391,6 +392,7 @@ void ModuleEditor::MenuBar() {
 				if (ImGui::MenuItem("Image")) {
 					GameObject* newGameObject = App->scene->CreateGameObjectByName("Image", nullptr, false);
 					ComponentTransform2D* newTransform2D = new ComponentTransform2D(newGameObject);
+					ComponentImage* newImage = new ComponentImage(newGameObject);
 				}
 				ImGui::EndMenu();
 			}
