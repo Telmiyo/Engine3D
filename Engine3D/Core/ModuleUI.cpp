@@ -56,6 +56,15 @@ update_status ModuleUI::Update(float dt)
 	glLoadIdentity();
 	glOrtho(viewport[0], viewport[2], viewport[1], viewport[3], 1, -1);
 
+	glPushAttrib(GL_LIST_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT | GL_TRANSFORM_BIT);
+	glMatrixMode(GL_MODELVIEW);
+	glDisable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
+	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	std::queue<GameObject*> S;
 	for (GameObject* child : App->scene->root->children)
 	{
@@ -65,7 +74,7 @@ update_status ModuleUI::Update(float dt)
 	while (!S.empty())
 	{
 		GameObject* go = S.front();
-		if (go->GetComponent<ComponentTransform2D>() != nullptr) {
+		if (go->GetComponent<ComponentTransform2D>() == nullptr) {
 			go->Update(dt);
 		}
 		S.pop();
@@ -74,6 +83,13 @@ update_status ModuleUI::Update(float dt)
 			S.push(child);
 		}
 	}
+
+	glPopAttrib();
+
+	glPopMatrix();
+	glEnable(GL_CULL_FACE);
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
 
 	glPopMatrix();
 	

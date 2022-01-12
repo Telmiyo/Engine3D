@@ -47,7 +47,7 @@ update_status ModuleScene::Update(float dt)
 		while (!S.empty())
 		{
 			GameObject* go = S.front();
-			if (go->GetComponent<ComponentTransform2D>() != nullptr) {
+			if (go->GetComponent<ComponentTransform2D>() == nullptr) {
 				go->Update(dt);
 			}
 			S.pop();
