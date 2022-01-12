@@ -24,6 +24,8 @@ ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 
 bool ComponentImage::Update(float dt)
 {
+	//glEnableClientState(GL_VERTEX_ARRAY);
+
 	glBindTexture(GL_TEXTURE_2D, App->textures->checkers);
 	glDisable(GL_LIGHTING);
 
@@ -49,6 +51,8 @@ bool ComponentImage::Update(float dt)
 
 	glEnable(GL_LIGHTING);
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	//glDisableClientState(GL_VERTEX_ARRAY);
 
 	return true;
 }
