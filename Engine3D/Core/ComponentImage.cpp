@@ -24,10 +24,11 @@ ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 
 bool ComponentImage::Update(float dt)
 {
-	//glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
 
-	glBindTexture(GL_TEXTURE_2D, App->textures->checkers);
-	glDisable(GL_LIGHTING);
+	glBindBuffer(GL_ARRAY_BUFFER, plane->vertexBufferId);
+	glVertexPointer(3, GL_FLOAT, 0, NULL);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, plane->indexBufferId);
 
 	ComponentTransform2D* cTransform = owner->GetComponent<ComponentTransform2D>();
 
@@ -42,17 +43,15 @@ bool ComponentImage::Update(float dt)
 
 	glPushMatrix();
 	glMultMatrixf(transform.Transposed().ptr());
-
-	glBindVertexArray(plane->vertexBufferId);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, plane->indexBufferId);
 	glDrawElements(GL_TRIANGLES, plane->numIndices, GL_UNSIGNED_INT, NULL);
+	glPopMatrix();
 
-	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glEnable(GL_LIGHTING);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	//glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
 
 	return true;
 }

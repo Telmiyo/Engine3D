@@ -28,7 +28,7 @@ bool ModuleUI::Start()
 {
 	uiCamera = new ComponentCamera(nullptr);
 
-	uiCamera->cameraFrustum.pos = float3(0.f, 0.f, 1.f);
+	uiCamera->cameraFrustum.pos = float3(0.f, 0.f, 5.f);
 	uiCamera->cameraFrustum.type = PerspectiveFrustum;
 	float fov = 60.f * DEGTORAD;
 	uiCamera->cameraFrustum.verticalFov = fov;
@@ -36,6 +36,8 @@ bool ModuleUI::Start()
 	uiCamera->cameraFrustum.nearPlaneDistance = uiCamera->nearPlaneDistance;
 	uiCamera->cameraFrustum.farPlaneDistance = uiCamera->farPlaneDistance;
 	uiCamera->LookAt({ 0.f, 0.f, 0.f });
+
+	uiCamera->viewMatrix = uiCamera->cameraFrustum.ViewMatrix();
 
 	return true;
 }
@@ -47,6 +49,13 @@ update_status ModuleUI::PreUpdate(float dt)
 
 update_status ModuleUI::Update(float dt)
 {
+	GLUquadric* quad = gluNewQuadric();
+	glTranslatef(uiCamera->cameraFrustum.pos.x, uiCamera->cameraFrustum.pos.y, uiCamera->cameraFrustum.pos.z);
+	glColor3f(1, 0, 0);
+	gluSphere(quad, 2, 100, 20);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(uiCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(uiCamera->viewMatrix.Transposed().ptr());
 
@@ -74,7 +83,7 @@ update_status ModuleUI::Update(float dt)
 	while (!S.empty())
 	{
 		GameObject* go = S.front();
-		if (go->GetComponent<ComponentTransform2D>() == nullptr) {
+		if (go->GetComponent<ComponentTransform2D>() != nullptr) {
 			go->Update(dt);
 		}
 		S.pop();
@@ -90,8 +99,6 @@ update_status ModuleUI::Update(float dt)
 	glEnable(GL_CULL_FACE);
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
-
-	glPopMatrix();
 	
 	App->camera->CalculateViewMatrix();
 
