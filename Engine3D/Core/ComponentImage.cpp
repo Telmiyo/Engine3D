@@ -8,17 +8,22 @@
 #include "ModuleEditor.h"
 #include "Math/float3.h"
 #include "Math/float4x4.h"
+#include "ModuleScene.h"
 #include "Math/Quat.h"
+#include "ComponentMesh.h"
 #include "glew.h"
+#include <vector>
 
 ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 {
 	componentType = ComponentType::COMPONENT_IMAGE;
+
+	plane = new ComponentMesh(nullptr);
+	App->scene->CreatePlane(plane);
 }
 
 bool ComponentImage::Update(float dt)
 {
-	/*glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, App->textures->checkers);
 	glDisable(GL_LIGHTING);
 
@@ -28,14 +33,22 @@ bool ComponentImage::Update(float dt)
 	glGetIntegerv(GL_VIEWPORT, viewport);
 
 	float3 pos = { cTransform->position, App->camera->nearPlaneDistance + 0.1f };
-	float3 size = { cTransform->size.x / viewport[2], cTransform->size.y / viewport[3], 1.0f };
+	float3 size = {  (float)viewport[2], (float)viewport[3], 1.0f };
 
 	float4x4 transform;
 	transform = transform.FromTRS(pos, Quat::identity, size);
 
-	glDisable(GL_TEXTURE_2D);
+	glPushMatrix();
+	glMultMatrixf(transform.Transposed().ptr());
+
+	glBindVertexArray(plane->vertexBufferId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, plane->indexBufferId);
+	glDrawElements(GL_TRIANGLES, plane->numIndices, GL_UNSIGNED_INT, NULL);
+
+	glBindVertexArray(0);
+
 	glEnable(GL_LIGHTING);
-	glBindTexture(GL_TEXTURE_2D, 0);*/
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	return true;
 }

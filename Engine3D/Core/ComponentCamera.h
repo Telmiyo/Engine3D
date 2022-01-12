@@ -16,7 +16,7 @@ public:
 
 	bool Update(float dt) override;
 
-	void CalculateViewMatrix();
+	void CalculateViewMatrix(float3 pos = { 0, 0, 0 }, float3 front = { 0, 0, 0 }, float3 up = { 0, 0, 0 });
 	void RecalculateProjection();
 	//Formulas from the power point
 	void SetHorizontalFov(float value);
