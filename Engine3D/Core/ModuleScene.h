@@ -25,6 +25,7 @@ public:
 	GameObject* CreateEmptyGameObject(GameObject* parent = nullptr);
 	GameObject* CreateChildrenGameObject(GameObject* parent = nullptr);
 	GameObject* CreateCamera(GameObject* parent = nullptr);
+	void CreatePlane(ComponentMesh* mesh);
 
 	void DuplicateGameObject(GameObject* parent = nullptr);
 	void CreateRoot();

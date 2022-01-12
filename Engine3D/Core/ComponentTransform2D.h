@@ -22,6 +22,8 @@ public:
 	bool Update(float dt) override;
 	void OnGui() override;
 
+	void GetScreenRect(float2& a, float2& b);
+
 	float2 position = { 0, 0 };
 	float2 pivot = { 0, 0 };
 	float rotation = 0.0f;

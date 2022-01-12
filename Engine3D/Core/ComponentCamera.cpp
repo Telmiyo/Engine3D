@@ -45,15 +45,21 @@ bool ComponentCamera::Update(float dt)
 	return true;
 }
 
-void ComponentCamera::CalculateViewMatrix()
+void ComponentCamera::CalculateViewMatrix(float3 pos, float3 front, float3 up)
 {
 	if (projectionIsDirty)
 		RecalculateProjection();
 
-	cameraFrustum.pos = owner->GetComponent<ComponentTransform>()->GetPosition();
-	cameraFrustum.front = owner->GetComponent<ComponentTransform>()->Front().Normalized();
-	cameraFrustum.up = owner->GetComponent<ComponentTransform>()->Up().Normalized();
-
+	if (owner != nullptr) {
+		cameraFrustum.pos = owner->GetComponent<ComponentTransform>()->GetPosition();
+		cameraFrustum.front = owner->GetComponent<ComponentTransform>()->Front().Normalized();
+		cameraFrustum.up = owner->GetComponent<ComponentTransform>()->Up().Normalized();
+	}
+	else {
+		cameraFrustum.pos = pos;
+		cameraFrustum.front = front;
+		cameraFrustum.up = up;
+	}
 }
 
 void ComponentCamera::RecalculateProjection()

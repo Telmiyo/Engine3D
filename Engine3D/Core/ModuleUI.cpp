@@ -26,7 +26,7 @@ bool ModuleUI::Init()
 
 bool ModuleUI::Start()
 {
-	/*uiCamera = new ComponentCamera(nullptr);
+	uiCamera = new ComponentCamera(nullptr);
 
 	uiCamera->cameraFrustum.pos = float3(0.f, 0.f, 1.f);
 	uiCamera->cameraFrustum.type = PerspectiveFrustum;
@@ -35,7 +35,7 @@ bool ModuleUI::Start()
 	uiCamera->cameraFrustum.horizontalFov = 2.f * Atan(Tan(fov * 0.5f) * uiCamera->cameraFrustum.AspectRatio());
 	uiCamera->cameraFrustum.nearPlaneDistance = uiCamera->nearPlaneDistance;
 	uiCamera->cameraFrustum.farPlaneDistance = uiCamera->farPlaneDistance;
-	uiCamera->LookAt({ 0.f, 0.f, 0.f });*/
+	uiCamera->LookAt({ 0.f, 0.f, 0.f });
 
 	return true;
 }
@@ -47,11 +47,14 @@ update_status ModuleUI::PreUpdate(float dt)
 
 update_status ModuleUI::Update(float dt)
 {
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(uiCamera->viewMatrix.Transposed().ptr());
+
 	GLint viewport[4];
-	//glGetIntegerv(GL_VIEWPORT, viewport);
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	//glOrtho(viewport[0], viewport[2], viewport[1], viewport[3], 1, -1);
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(viewport[0], viewport[2], viewport[1], viewport[3], 1, -1);
 
 	std::queue<GameObject*> S;
 	for (GameObject* child : App->scene->root->children)
@@ -72,8 +75,14 @@ update_status ModuleUI::Update(float dt)
 		}
 	}
 
-	//glPopMatrix();
-	//glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+	
+	App->camera->CalculateViewMatrix();
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixf(App->camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixf(App->camera->viewMatrix.Transposed().ptr());
 
 	return UPDATE_CONTINUE;
 }

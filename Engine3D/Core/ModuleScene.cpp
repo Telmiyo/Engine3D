@@ -47,7 +47,7 @@ update_status ModuleScene::Update(float dt)
 		while (!S.empty())
 		{
 			GameObject* go = S.front();
-			if (go->GetComponent<ComponentTransform2D>() == nullptr) {
+			if (go->GetComponent<ComponentTransform2D>() != nullptr) {
 				go->Update(dt);
 			}
 			S.pop();
@@ -272,6 +272,13 @@ GameObject* ModuleScene::CreateCamera(GameObject* parent)
 	ComponentMesh* m = new ComponentMesh(camera, ComponentMesh::Shape::CUBE);
 	
 	return camera;
+}
+
+void ModuleScene::CreatePlane(ComponentMesh* mesh)
+{
+	par_shapes_mesh* plane = par_shapes_create_plane(1, 1);
+	par_shapes_translate(plane, -0.5f, -0.5f, 0);
+	mesh->CopyParMesh(plane);
 }
 
 bool ModuleScene::DeleteAllGameObjects()

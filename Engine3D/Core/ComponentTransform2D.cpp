@@ -37,3 +37,9 @@ void ComponentTransform2D::OnGui()
 		}
 	}
 }
+
+void ComponentTransform2D::GetScreenRect(float2& a, float2& b)
+{
+	a = { 0, 0 };
+	b = { 100, 100 };
+}
