@@ -39,7 +39,6 @@ ComponentCamera::~ComponentCamera()
 
 bool ComponentCamera::Update(float dt)
 {
-	CalculateViewMatrix();
 	CheckObjects();
 	DrawCamera();
 	return true;
@@ -60,6 +59,8 @@ void ComponentCamera::CalculateViewMatrix(float3 pos, float3 front, float3 up)
 		cameraFrustum.front = front;
 		cameraFrustum.up = up;
 	}
+
+	viewMatrix = cameraFrustum.ViewMatrix();
 }
 
 void ComponentCamera::RecalculateProjection()
