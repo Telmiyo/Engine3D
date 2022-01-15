@@ -50,8 +50,8 @@ Application::Application()
 	// Scenes
 	AddModule(viewportBuffer);
 	AddModule(scene);
-	AddModule(ui);
 	AddModule(editor);
+	AddModule(ui);
 
 	// Renderer last!
 	AddModule(renderer3D);
