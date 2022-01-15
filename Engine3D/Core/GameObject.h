@@ -10,6 +10,7 @@ typedef rapidjson::Value JSONReader;
 
 class Component;
 class ComponentTransform;
+class ComponentTransform2D;
 
 class GameObject {
 
@@ -55,6 +56,7 @@ public:
 	unsigned int parentUuid;
 	GameObject* parent = nullptr;
 	ComponentTransform* transform = nullptr;
+	ComponentTransform2D* transform2d = nullptr;
 	std::vector<GameObject*> children;
 	std::vector<Component*> components;
 	
