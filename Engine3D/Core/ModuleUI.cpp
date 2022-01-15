@@ -26,18 +26,22 @@ bool ModuleUI::Init()
 
 bool ModuleUI::Start()
 {
-	uiCamera = new ComponentCamera(nullptr);
-
-	uiCamera->cameraFrustum.pos = float3(0.f, 0.f, 5.f);
+	/*uiCamera = new ComponentCamera(nullptr);
+	
+	uiCamera->cameraFrustum.pos = float3(0.f, 30.f, 0.f);
 	uiCamera->cameraFrustum.type = PerspectiveFrustum;
-	float fov = 60.f * DEGTORAD;
-	uiCamera->cameraFrustum.verticalFov = fov;
-	uiCamera->cameraFrustum.horizontalFov = 2.f * Atan(Tan(fov * 0.5f) * uiCamera->cameraFrustum.AspectRatio());
+	uiCamera->cameraFrustum.verticalFov = uiCamera->horizontalFOV;
+	uiCamera->cameraFrustum.horizontalFov = uiCamera->verticalFOV;
 	uiCamera->cameraFrustum.nearPlaneDistance = uiCamera->nearPlaneDistance;
 	uiCamera->cameraFrustum.farPlaneDistance = uiCamera->farPlaneDistance;
 	uiCamera->LookAt({ 0.f, 0.f, 0.f });
+	uiCamera->projectionIsDirty = true;
 
-	uiCamera->viewMatrix = uiCamera->cameraFrustum.ViewMatrix();
+	uiCamera->CalculateViewMatrix(uiCamera->cameraFrustum.pos, uiCamera->cameraFrustum.front, uiCamera->cameraFrustum.up);
+	*/
+	//uiCamera->viewMatrix = uiCamera->cameraFrustum.ViewMatrix();
+
+	//uiCamera->CalculateViewMatrix();
 
 	return true;
 }
@@ -49,21 +53,32 @@ update_status ModuleUI::PreUpdate(float dt)
 
 update_status ModuleUI::Update(float dt)
 {
-	GLUquadric* quad = gluNewQuadric();
+	/*GLUquadric* quad = gluNewQuadric();
 	glTranslatef(uiCamera->cameraFrustum.pos.x, uiCamera->cameraFrustum.pos.y, uiCamera->cameraFrustum.pos.z);
 	glColor3f(1, 0, 0);
-	gluSphere(quad, 2, 100, 20);
+	gluSphere(quad, 2, 100, 20);*/
+
+	float3 right = App->camera->right;
+	float3 up = App->camera->up;
+	float3 front = App->camera->front;
+	float3 position = App->camera->position;
+
+	App->camera->position = { 0, 0, 40 };
+	App->camera->LookAt({ 0, 0, 0 });
+
+	App->camera->projectionIsDirty = true;
+	App->camera->CalculateViewMatrix();
 
 	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf(uiCamera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
+	glLoadMatrixf(App->camera->cameraFrustum.ProjectionMatrix().Transposed().ptr());
 	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf(uiCamera->viewMatrix.Transposed().ptr());
+	glLoadMatrixf(App->camera->viewMatrix.Transposed().ptr());
 
 	GLint viewport[4];
 	glGetIntegerv(GL_VIEWPORT, viewport);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(viewport[0], viewport[2], viewport[1], viewport[3], 1, -1);
+	glOrtho(viewport[0], viewport[2], viewport[1], viewport[3], 1, 1000);
 
 	glPushAttrib(GL_LIST_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT | GL_TRANSFORM_BIT);
 	glMatrixMode(GL_MODELVIEW);
@@ -99,7 +114,13 @@ update_status ModuleUI::Update(float dt)
 	glEnable(GL_CULL_FACE);
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
-	
+
+	App->camera->right = right;
+	App->camera->up = up;
+	App->camera->front = front;
+	App->camera->position = position;
+
+	App->camera->projectionIsDirty = true;
 	App->camera->CalculateViewMatrix();
 
 	glMatrixMode(GL_PROJECTION);
