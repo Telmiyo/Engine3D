@@ -391,8 +391,7 @@ void ModuleEditor::MenuBar() {
 			if (ImGui::BeginMenu("UI Objects")) {
 				if (ImGui::MenuItem("Image")) {
 					GameObject* newGameObject = App->scene->CreateGameObjectByName("Image", nullptr, false);
-					ComponentTransform2D* newTransform2D = new ComponentTransform2D(newGameObject);
-					ComponentImage* newImage = new ComponentImage(newGameObject);
+					ComponentImage* defaultImage = new ComponentImage(newGameObject);
 				}
 				ImGui::EndMenu();
 			}

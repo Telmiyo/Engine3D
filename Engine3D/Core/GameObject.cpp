@@ -5,6 +5,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMaterial.h"
 #include "ComponentMesh.h"
+#include "ComponentTransform2D.h"
 
 #include "ImGui/imgui.h"
 
@@ -24,9 +25,17 @@ GameObject::GameObject(bool is3D) {
 GameObject::GameObject(const std::string name, bool is3D) : name(name)
 {
 	if (is3D)
+	{
 		transform = CreateComponent<ComponentTransform>();
+		transform2d = nullptr;
+	}
+		
 	else
+	{
 		transform = nullptr;
+		transform2d = CreateComponent<ComponentTransform2D>();
+	}
+	
 
 	active = true;
 }
