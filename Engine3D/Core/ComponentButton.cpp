@@ -13,7 +13,7 @@ ComponentButton::~ComponentButton()
 
 bool ComponentButton::Update(float dt)
 {
-
+	return true;
 }
 
 void ComponentButton::OnGui()

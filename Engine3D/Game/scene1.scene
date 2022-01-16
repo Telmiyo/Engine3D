@@ -471,16 +471,16 @@
                             ]
                         },
                         "Image": {
-                            "Texture name": "WHITE_BALLBACK",
+                            "Texture name": "WHITE_FALLBACK",
                             "Size": [
                                 1,
                                 1
                             ],
                             "Texture ID": 1,
                             "Image color": [
-                                0.7466063499450684,
-                                0.18918530642986298,
-                                0.18918530642986298,
+                                1.0,
+                                0.9999899864196777,
+                                0.9999899864196777,
                                 1.0
                             ]
                         }
