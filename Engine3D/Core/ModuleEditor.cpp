@@ -488,6 +488,11 @@ void ModuleEditor::UpdateWindowStatus() {
 					{
 						material->SetTexture(t.second);
 					}
+					ComponentImage* uiImage = gameobjectSelected->GetComponent<ComponentImage>();
+					if (uiImage)
+					{
+						uiImage->SetTexture(t.second);
+					}
 				}
 			}
 			ImGui::PopID();

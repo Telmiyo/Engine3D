@@ -49,7 +49,14 @@ void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
 	vertices.resize(numVertices);
 	normals.resize(numVertices);
 	indices.resize(numIndices);
+	//texCoords = parMesh->tcoords;
 	par_shapes_compute_normals(parMesh);
+	auto* a = parMesh->tcoords;
+	//for (float t = 0; parMesh->tcoords[t] != nullptr; ++t)
+	//{
+
+	//}
+		
 	for (size_t i = 0; i < numVertices; ++i)
 	{
 		memcpy(&vertices[i], &parMesh->points[i * 3], sizeof(float) * 3);
@@ -127,7 +134,7 @@ void ComponentMesh::GenerateBounds()
 	sphere.pos = localAABB.CenterPoint();
 	sphere.Enclose(localAABB);
 
-	
+
 
 	radius = sphere.r;
 	centerPoint = sphere.pos;
@@ -209,16 +216,16 @@ void ComponentMesh::DrawAABB()
 
 	glVertex3f(corners[1].x, corners[1].y, corners[1].z);
 	glVertex3f(corners[3].x, corners[3].y, corners[3].z);
-	
+
 	glVertex3f(corners[0].x, corners[0].y, corners[0].z);
 	glVertex3f(corners[2].x, corners[2].y, corners[2].z);
 
 	glVertex3f(corners[2].x, corners[2].y, corners[2].z);
 	glVertex3f(corners[3].x, corners[3].y, corners[3].z);
-	
+
 	glVertex3f(corners[4].x, corners[4].y, corners[4].z);
 	glVertex3f(corners[5].x, corners[5].y, corners[5].z);
-	
+
 	glVertex3f(corners[0].x, corners[0].y, corners[0].z);
 	glVertex3f(corners[4].x, corners[4].y, corners[4].z);
 
@@ -245,7 +252,7 @@ void ComponentMesh::DrawAABB()
 
 bool ComponentMesh::Update(float dt)
 {
-	
+
 	//Update AABB Position
 	GenerateBounds();
 	UpdateBounds();

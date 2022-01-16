@@ -8,6 +8,7 @@
 #include "ModuleEditor.h"
 #include "ModuleFileSystem.h"
 #include "ComponentMaterial.h"
+#include "ComponentImage.h"
 #include "ImGui/imgui_impl_sdl.h"
 
 #define MAX_KEYS 300
@@ -149,6 +150,10 @@ update_status ModuleInput::PreUpdate(float dt)
 							{
 								material->SetTexture(texture);
 							}
+							if (ComponentImage* uiImage = App->editor->gameobjectSelected->GetComponent<ComponentImage>())
+							{
+								uiImage->SetTexture(texture);
+							}
 
 						}
 					}
@@ -160,6 +165,10 @@ update_status ModuleInput::PreUpdate(float dt)
 							if (ComponentMaterial* material = App->editor->gameobjectSelected->GetComponent<ComponentMaterial>())
 							{
 								material->SetTexture(texture);
+							}
+							if (ComponentImage* uiImage = App->editor->gameobjectSelected->GetComponent<ComponentImage>())
+							{
+								uiImage->SetTexture(texture);
 							}
 
 						}
