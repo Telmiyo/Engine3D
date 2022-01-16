@@ -19,6 +19,7 @@ struct TextureObject;
 class ComponentImage : public Component {
 public:
 	ComponentImage(GameObject* parent);
+	~ComponentImage();
 
 	bool Update(float dt) override;
 	void OnGui() override;
@@ -39,7 +40,7 @@ private:
 	//std::string textureName;
 	//uint textureId = 0, width = 0, height = 0;
 
-	float4 imageColor = { 1.000f,1.000f, 1.000f, 1.000f };;
+	float4 imageColor = { 1.000f,1.000f, 1.000f, 1.000f };
 
 	TextureObject texture;
 };
