@@ -22,6 +22,9 @@ public:
 	void SetTexture(const TextureObject& texture);
 	void OnGui() override;
 
+	void OnLoad(const JSONReader& reader) override;
+	void OnSave(JSONWriter& writer) const override;
+
 private:
 	ComponentMesh* plane = nullptr;
 	std::string texturePath;
