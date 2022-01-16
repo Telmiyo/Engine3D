@@ -27,9 +27,11 @@ ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 		glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float2) * plane->texCoords.size(), &plane->texCoords[0], GL_STATIC_DRAW);
 	}
+}
 
-	// Default image color
-	imageColor = { 1.000f,1.000f, 1.000f, 1.000f };
+ComponentImage::~ComponentImage()
+{
+
 }
 
 bool ComponentImage::Update(float dt)
@@ -147,11 +149,14 @@ void ComponentImage::OnGui()
 
 void ComponentImage::OnLoad(const JSONReader& reader)
 {
+	// Loading texture name
 	if (reader.HasMember("Texture name"))
 	{
 		const rapidjson::Value& itemTextureName = reader["Texture name"];
 		texture.name = itemTextureName.GetString();
 	}
+
+	// Loading texture size
 	if (reader.HasMember("Size"))
 	{
 		const rapidjson::Value& itemSize = reader["Size"];
@@ -167,11 +172,15 @@ void ComponentImage::OnLoad(const JSONReader& reader)
 		texture.width = width_;
 		texture.height = height_;
 	}
+
+	// Loading texture Id
 	if (reader.HasMember("Texture ID"))
 	{
 		const rapidjson::Value& itemTextureId = reader["Texture ID"];
 		texture.id = itemTextureId.GetInt();
 	}
+
+	// Loading image color
 	if (reader.HasMember("Image color"))
 	{
 		const rapidjson::Value& itemSize = reader["Image color"];
@@ -193,15 +202,23 @@ void ComponentImage::OnSave(JSONWriter& writer) const
 {
 	writer.String("Image");
 	writer.StartObject();
+
+	// Saving texture name
 	writer.String("Texture name");
 	writer.String(texture.name.c_str());
+
+	// Saving texture size
 	writer.String("Size");
 	writer.StartArray();
 	writer.Int(texture.width);
 	writer.Int(texture.height);
 	writer.EndArray();
+
+	// Saving texture id
 	writer.String("Texture ID");
 	writer.Int(texture.id);
+
+	// Saving image color
 	writer.String("Image color");
 	writer.StartArray();
 	writer.Double(imageColor.x);
@@ -209,5 +226,6 @@ void ComponentImage::OnSave(JSONWriter& writer) const
 	writer.Double(imageColor.z);
 	writer.Double(imageColor.w);
 	writer.EndArray();
+
 	writer.EndObject();
 }

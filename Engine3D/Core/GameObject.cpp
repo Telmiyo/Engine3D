@@ -7,6 +7,7 @@
 #include "ComponentMesh.h"
 #include "ComponentTransform2D.h"
 #include "ComponentImage.h"
+#include "ComponentButton.h"
 
 #include "ImGui/imgui.h"
 
@@ -233,6 +234,12 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 			const rapidjson::Value& itemImage = itemComponents["Image"];
 			CreateComponent<ComponentImage>();
 			GetComponent<ComponentImage>()->OnLoad(itemImage);
+		}
+		if (itemComponents.HasMember("Button"))
+		{
+			const rapidjson::Value& itemButton = itemComponents["Button"];
+			CreateComponent<ComponentButton>();
+			GetComponent<ComponentButton>()->OnLoad(itemButton);
 		}
 	}
 
