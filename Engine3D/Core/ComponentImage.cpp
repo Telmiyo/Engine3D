@@ -27,6 +27,9 @@ ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 		glBindBuffer(GL_ARRAY_BUFFER, textureBufferId);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(float2) * plane->texCoords.size(), &plane->texCoords[0], GL_STATIC_DRAW);
 	}
+
+	// Default image color
+	imageColor = { 1.000f,1.000f, 1.000f, 1.000f };
 }
 
 bool ComponentImage::Update(float dt)
@@ -59,11 +62,14 @@ bool ComponentImage::Update(float dt)
 	}
 
 	
-	if (textureId != 0) glBindTexture(GL_TEXTURE_2D, textureId);
+	if (texture.id != 0)
+	{
+		glBindTexture(GL_TEXTURE_2D, texture.id);
+	}
 	else // Called once when created an object. Set white fallback as a default texture
 	{ 
 		glBindTexture(GL_TEXTURE_2D, App->textures->whiteFallback);
-		SetTexture(App->textures->textures.at("WHITE_BALLBACK"));
+		SetTexture(App->textures->textures.at("WHITE_FALLBACK"));
 	}
 
 	glPushMatrix();
@@ -90,29 +96,52 @@ bool ComponentImage::Update(float dt)
 	return true;
 }
 
-void ComponentImage::SetTexture(const TextureObject& texture)
+
+void ComponentImage::SetTextureById(const int id)
 {
-	textureName = texture.name;
-	textureId = texture.id;
-	width = texture.width;
-	height = texture.height;
+	for (auto i = App->textures->textures.begin(); i != App->textures->textures.end(); ++i)
+	{
+		if (i->second.id == id)
+		{
+			texture = App->textures->Get(i->second.name);
+		}
+	}
 }
 
 void ComponentImage::OnGui()
 {
 	if (ImGui::CollapsingHeader("Image")) {
+		// Texture display
 		ImGui::Text("Texture: ");
 		ImGui::SameLine();
-		if (textureId == 0) // Supposedly there is no textureId = 0 in textures array
+		if (texture.id == 0) // Supposedly there is no textureId = 0 in textures array
 		{
 			ImGui::Text("None");
 		}
 		else
 		{
-			ImGui::Text(textureName.c_str());
-			ImGui::Image((ImTextureID)textureId, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
+			ImGui::Text(texture.name.c_str());
+			ImGui::Image((ImTextureID)texture.id, ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0));
 		}
-			
+
+		// Texture selector settings
+		ImGui::Separator();
+		if (ImGui::Button("Set default texture"))
+		{
+			texture.id = 0;
+		}
+		int newTextureId = (int)texture.id;
+		if (ImGui::Combo("Set texture", &newTextureId, " \0WHITE_FALLBACK\0BLACK_FALLBACK\0CHECKERS\0"))
+		{
+			texture.id = newTextureId;
+			SetTextureById(texture.id);
+		}
+
+		// Image color button
+		ImGui::Separator();
+		ImGui::ColorEdit4("##Image color", (float*)&imageColor, ImGuiColorEditFlags_AlphaBar | ImGuiColorEditFlags_InputRGB | ImGuiColorEditFlags_NoBorder | ImGuiColorEditFlags_AlphaPreviewHalf);
+		ImGui::SameLine();
+		ImGui::Text("Image color");
 	}
 }
 
@@ -121,7 +150,7 @@ void ComponentImage::OnLoad(const JSONReader& reader)
 	if (reader.HasMember("Texture name"))
 	{
 		const rapidjson::Value& itemTextureName = reader["Texture name"];
-		textureName = itemTextureName.GetString();
+		texture.name = itemTextureName.GetString();
 	}
 	if (reader.HasMember("Size"))
 	{
@@ -135,13 +164,28 @@ void ComponentImage::OnLoad(const JSONReader& reader)
 			else if (i == 1) height_ = it->GetInt();
 			i++;
 		}
-		width = width_;
-		height = height_;
+		texture.width = width_;
+		texture.height = height_;
 	}
 	if (reader.HasMember("Texture ID"))
 	{
 		const rapidjson::Value& itemTextureId = reader["Texture ID"];
-		textureId = itemTextureId.GetInt();
+		texture.id = itemTextureId.GetInt();
+	}
+	if (reader.HasMember("Image color"))
+	{
+		const rapidjson::Value& itemSize = reader["Image color"];
+		float x_ = 0.000f, y_ = 0.000f, z_ = 0.000f, w_ = 0.000f;
+		int i = 0;
+		for (rapidjson::Value::ConstValueIterator it = itemSize.Begin(); it != itemSize.End(); ++it)
+		{
+			if (i == 0) x_ = it->GetDouble();
+			else if (i == 1) y_ = it->GetDouble();
+			else if (i == 2) z_ = it->GetDouble();
+			else if (i == 3) w_ = it->GetDouble();
+			i++;
+		}
+		imageColor = { x_, y_, z_, w_ };
 	}
 }
 
@@ -150,13 +194,20 @@ void ComponentImage::OnSave(JSONWriter& writer) const
 	writer.String("Image");
 	writer.StartObject();
 	writer.String("Texture name");
-	writer.String(textureName.c_str());
+	writer.String(texture.name.c_str());
 	writer.String("Size");
 	writer.StartArray();
-	writer.Int(width);
-	writer.Int(height);
+	writer.Int(texture.width);
+	writer.Int(texture.height);
 	writer.EndArray();
 	writer.String("Texture ID");
-	writer.Int(textureId);
+	writer.Int(texture.id);
+	writer.String("Image color");
+	writer.StartArray();
+	writer.Double(imageColor.x);
+	writer.Double(imageColor.y);
+	writer.Double(imageColor.z);
+	writer.Double(imageColor.w);
+	writer.EndArray();
 	writer.EndObject();
 }

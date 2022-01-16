@@ -72,7 +72,7 @@ bool ModuleTextures::Start()
 
 	if (blackFallback != 0u && whiteFallback != 0u && checkers != 0u)
 	{
-		textures.insert(std::make_pair("WHITE_BALLBACK", TextureObject("WHITE_BALLBACK", static_cast<uint>(whiteFallback), 1, 1))); // Texture ID 1 in textures array
+		textures.insert(std::make_pair("WHITE_FALLBACK", TextureObject("WHITE_FALLBACK", static_cast<uint>(whiteFallback), 1, 1))); // Texture ID 1 in textures array
 		textures.insert(std::make_pair("BLACK_FALLBACK", TextureObject("BLACK_FALLBACK", static_cast<uint>(blackFallback), 1, 1))); // Texture ID 2 in textures array
 		textures.insert(std::make_pair("CHECKERS", TextureObject("CHECKERS", static_cast<uint>(checkers), CHECKERS_WIDTH, CHECKERS_HEIGHT))); // Texture ID 3 in textures array
 		return true;

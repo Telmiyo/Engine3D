@@ -3,10 +3,12 @@
 
 #include "Component.h"
 #include "ComponentTransform2D.h"
+#include "ModuleTextures.h"
 
 #include "glew.h"
 
 #include "Math/float2.h"
+#include "Math/float4.h"
 #include "Globals.h"
 #include <string.h>
 #include <vector>
@@ -19,8 +21,11 @@ public:
 	ComponentImage(GameObject* parent);
 
 	bool Update(float dt) override;
-	void SetTexture(const TextureObject& texture);
 	void OnGui() override;
+
+	inline void SetTexture(const TextureObject& newTexture) { texture = newTexture; };
+	inline TextureObject GetTexture() const { return texture; };
+	void SetTextureById(const int id);
 
 	void OnLoad(const JSONReader& reader) override;
 	void OnSave(JSONWriter& writer) const override;
@@ -31,8 +36,12 @@ private:
 	uint textureBufferId = 0;
 
 
-	std::string textureName;
-	uint textureId = 0, width = 0, height = 0;
+	//std::string textureName;
+	//uint textureId = 0, width = 0, height = 0;
+
+	float4 imageColor = { 1.000f,1.000f, 1.000f, 1.000f };;
+
+	TextureObject texture;
 };
 
 #endif
