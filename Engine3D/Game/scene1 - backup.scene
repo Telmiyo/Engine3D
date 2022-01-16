@@ -69,6 +69,7 @@
                                         1.000000238418579
                                     ]
                                 },
+                                "Mesh": {},
                                 "Material": {
                                     "Texture path": "CHECKERS",
                                     "Size": [
@@ -76,8 +77,7 @@
                                         64
                                     ],
                                     "Texture ID": 3
-                                },
-                                "Mesh": {}
+                                }
                             }
                         },
                         {
@@ -102,6 +102,7 @@
                                         1.0000004768371583
                                     ]
                                 },
+                                "Mesh": {},
                                 "Material": {
                                     "Texture path": "CHECKERS",
                                     "Size": [
@@ -109,8 +110,7 @@
                                         64
                                     ],
                                     "Texture ID": 3
-                                },
-                                "Mesh": {}
+                                }
                             }
                         },
                         {
@@ -135,6 +135,7 @@
                                         1.000003695487976
                                     ]
                                 },
+                                "Mesh": {},
                                 "Material": {
                                     "Texture path": "CHECKERS",
                                     "Size": [
@@ -142,8 +143,7 @@
                                         64
                                     ],
                                     "Texture ID": 3
-                                },
-                                "Mesh": {}
+                                }
                             }
                         },
                         {
@@ -168,6 +168,7 @@
                                         1.0000011920928956
                                     ]
                                 },
+                                "Mesh": {},
                                 "Material": {
                                     "Texture path": "CHECKERS",
                                     "Size": [
@@ -175,8 +176,7 @@
                                         64
                                     ],
                                     "Texture ID": 3
-                                },
-                                "Mesh": {}
+                                }
                             }
                         },
                         {
@@ -201,6 +201,7 @@
                                         1.0000009536743165
                                     ]
                                 },
+                                "Mesh": {},
                                 "Material": {
                                     "Texture path": "CHECKERS",
                                     "Size": [
@@ -208,8 +209,7 @@
                                         64
                                     ],
                                     "Texture ID": 3
-                                },
-                                "Mesh": {}
+                                }
                             }
                         },
                         {
@@ -234,6 +234,7 @@
                                         1.0000003576278687
                                     ]
                                 },
+                                "Mesh": {},
                                 "Material": {
                                     "Texture path": "CHECKERS",
                                     "Size": [
@@ -241,8 +242,7 @@
                                         64
                                     ],
                                     "Texture ID": 3
-                                },
-                                "Mesh": {}
+                                }
                             }
                         },
                         {
@@ -267,6 +267,7 @@
                                         1.0
                                     ]
                                 },
+                                "Mesh": {},
                                 "Material": {
                                     "Texture path": "CHECKERS",
                                     "Size": [
@@ -274,8 +275,7 @@
                                         64
                                     ],
                                     "Texture ID": 3
-                                },
-                                "Mesh": {}
+                                }
                             }
                         },
                         {
@@ -300,6 +300,7 @@
                                         1.000002384185791
                                     ]
                                 },
+                                "Mesh": {},
                                 "Material": {
                                     "Texture path": "WHITE_BALLBACK",
                                     "Size": [
@@ -307,8 +308,7 @@
                                         1
                                     ],
                                     "Texture ID": 1
-                                },
-                                "Mesh": {}
+                                }
                             }
                         },
                         {
@@ -333,6 +333,7 @@
                                         1.0000017881393433
                                     ]
                                 },
+                                "Mesh": {},
                                 "Material": {
                                     "Texture path": "WHITE_BALLBACK",
                                     "Size": [
@@ -340,8 +341,7 @@
                                         1
                                     ],
                                     "Texture ID": 1
-                                },
-                                "Mesh": {}
+                                }
                             }
                         },
                         {
@@ -366,6 +366,7 @@
                                         1.000001311302185
                                     ]
                                 },
+                                "Mesh": {},
                                 "Material": {
                                     "Texture path": "CHECKERS",
                                     "Size": [
@@ -373,8 +374,7 @@
                                         64
                                     ],
                                     "Texture ID": 3
-                                },
-                                "Mesh": {}
+                                }
                             }
                         },
                         {
@@ -399,6 +399,7 @@
                                         1.0000007152557374
                                     ]
                                 },
+                                "Mesh": {},
                                 "Material": {
                                     "Texture path": "CHECKERS",
                                     "Size": [
@@ -406,8 +407,7 @@
                                         64
                                     ],
                                     "Texture ID": 3
-                                },
-                                "Mesh": {}
+                                }
                             }
                         },
                         {
@@ -432,6 +432,7 @@
                                         1.000000238418579
                                     ]
                                 },
+                                "Mesh": {},
                                 "Material": {
                                     "Texture path": "CHECKERS",
                                     "Size": [
@@ -439,38 +440,10 @@
                                         64
                                     ],
                                     "Texture ID": 3
-                                },
-                                "Mesh": {}
+                                }
                             }
                         }
                     ]
-                },
-                {
-                    "Name": "Image",
-                    "UUID": 3452816845,
-                    "Parent UUID": 3452816845,
-                    "Components": {
-                        "Transform 2D": {
-                            "Position": [
-                                0.0,
-                                0.0
-                            ],
-                            "Pivot": [
-                                0.5,
-                                0.5
-                            ],
-                            "Rotation": [
-                                0.0
-                            ],
-                            "Size": [
-                                253.0,
-                                200.0
-                            ],
-                            "Anchor": [
-                                0
-                            ]
-                        }
-                    }
                 }
             ]
         }

@@ -677,6 +677,11 @@ void ModuleEditor::UpdateWindowStatus() {
 		ImGui::Begin("Scene", &showSceneWindow, ImGuiWindowFlags_NoScrollWithMouse);
 
 		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
+		viewport.x = ImGui::GetCurrentWindow()->Pos.x;
+		viewport.y = ImGui::GetCurrentWindow()->Pos.y - 23;
+		viewport.w = ImGui::GetCurrentWindow()->Size.x;
+		viewport.z = ImGui::GetCurrentWindow()->Size.y;
+
 		if (viewportSize.x != lastViewportSize.x || viewportSize.y != lastViewportSize.y)
 		{
 			App->camera->aspectRatio = viewportSize.x / viewportSize.y;

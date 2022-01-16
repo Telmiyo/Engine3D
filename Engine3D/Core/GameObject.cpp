@@ -12,12 +12,19 @@
 GameObject::GameObject(bool is3D) {
 
 	name = name + ("GameObject");
-	parent = nullptr;
+	//parent = nullptr;
 
 	if (is3D)
+	{
 		transform = CreateComponent<ComponentTransform>();
+		transform2d = nullptr;
+	}
+
 	else
+	{
 		transform = nullptr;
+		transform2d = CreateComponent<ComponentTransform2D>();
+	}
 
 	active = true;
 }
@@ -36,7 +43,6 @@ GameObject::GameObject(const std::string name, bool is3D) : name(name)
 		transform2d = CreateComponent<ComponentTransform2D>();
 	}
 	
-
 	active = true;
 }
 
@@ -214,6 +220,13 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 			GetComponent<ComponentMesh>()->OnLoad(itemMesh);
 
 		}
+		if (itemComponents.HasMember("Transform 2D"))
+		{
+			const rapidjson::Value& itemTransform2d = itemComponents["Transform 2D"];
+			transform = nullptr;
+			/*CreateComponent<ComponentTransform2D>();*/
+			GetComponent<ComponentTransform2D>()->OnLoad(itemTransform2d);
+		}
 	}
 
 	if (reader.HasMember("Children")) // Load the children
@@ -223,10 +236,24 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 		{
 			const rapidjson::Value& attribute = *it;
 			assert(attribute.IsObject());
+			
+			if (attribute.HasMember("Components"))
+			{
+				const rapidjson::Value& attribute2 = attribute["Components"];
+				if (attribute2.HasMember("Transform 2D"))
+				{
+					GameObject* child = new GameObject(false);
+					AttachChild(child);
+					child->OnLoad(attribute.GetObjectJSON());
+				}
+				else
+				{
+					GameObject* child = new GameObject();
+					AttachChild(child);
+					child->OnLoad(attribute.GetObjectJSON());
+				}
+			}
 
-			GameObject* child = new GameObject();
-			AttachChild(child);
-			child->OnLoad(attribute.GetObjectJSON());
 
 		}
 

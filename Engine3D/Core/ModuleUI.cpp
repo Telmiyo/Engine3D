@@ -63,7 +63,7 @@ update_status ModuleUI::Update(float dt)
 	float3 front = App->camera->front;
 	float3 position = App->camera->position;
 
-	App->camera->position = { 0, 0, 40 };
+	App->camera->position = { 0, 0, 2 };
 	App->camera->LookAt({ 0, 0, 0 });
 
 	App->camera->projectionIsDirty = true;
