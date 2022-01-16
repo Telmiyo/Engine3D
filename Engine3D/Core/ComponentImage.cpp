@@ -3,7 +3,6 @@
 #include "ImGui/imgui.h"
 #include "Application.h"
 #include "ModuleTextures.h"
-#include "ComponentTransform2D.h"
 #include "ModuleCamera3D.h"
 #include "ModuleEditor.h"
 #include "Math/float3.h"
@@ -17,7 +16,6 @@
 ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 {
 	componentType = ComponentType::COMPONENT_IMAGE;
-
 	plane = new ComponentMesh(nullptr);
 	App->scene->CreatePlane(plane);
 }
@@ -35,8 +33,10 @@ bool ComponentImage::Update(float dt)
 	GLint viewport[4];
 	glGetIntegerv(GL_VIEWPORT, viewport);
 
-	float3 pos = { cTransform->position, App->camera->nearPlaneDistance + 0.1f };
-	float3 size = {  (float)viewport[2], (float)viewport[3], 1.0f };
+	/*float3 pos = { cTransform->position, App->camera->nearPlaneDistance + 0.1f };*/
+	/*float3 size = {  (float)viewport[2], (float)viewport[3], 1.0f };*/
+	float3 pos = { cTransform->position.x, cTransform->position.y, App->camera->nearPlaneDistance + 0.1f };
+	float3 size = { cTransform->size.x, cTransform->size.y, 1.0f };
 
 	float4x4 transform;
 	transform = transform.FromTRS(pos, Quat::identity, size);
