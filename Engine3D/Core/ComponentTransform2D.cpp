@@ -25,36 +25,36 @@ bool ComponentTransform2D::Update(float dt)
 
 float2 ComponentTransform2D::GetAnchoredPosition() const
 {
-	float2 temp = {0.0f, 0.0f};
+	float2 temp = {200.0f, 400.0f};
 
 	switch (anchor)
 	{
 		case (Anchor::TOP_LEFT): // temp.x lo he puesto para ver si anchor va cambiando por el imgui nada mas
-			temp.x = 0;
+			temp.x += 0;
 			break;
 		case (Anchor::TOP_CENTER):
-			temp.x = 50;
+			temp.x += 50;
 			break;
 		case (Anchor::TOP_RIGHT):
-			temp.x = 100;
+			temp.x += 100;
 			break;
 		case (Anchor::LEFT):
-			temp.x = 150;
+			temp.x += 150;
 			break;
 		case (Anchor::CENTER):
-			temp.x = 200;
+			temp.x += 200;
 			break;
 		case (Anchor::RIGHT):
-			temp.x = 250;
+			temp.x += 250;
 			break;
 		case (Anchor::BOTTOM_LEFT):
-			temp.x = 300;
+			temp.x += 300;
 			break;
 		case (Anchor::BOTTOM_CENTER):
-			temp.x = 350;
+			temp.x += 350;
 			break;
 		case (Anchor::BOTTOM_RIGHT):
-			temp.x = 400;
+			temp.x += 400;
 			break;
 	}
 

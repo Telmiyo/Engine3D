@@ -452,8 +452,8 @@
                     "Components": {
                         "Transform 2D": {
                             "Position": [
-                                0.0,
-                                0.0
+                                200.0,
+                                400.0
                             ],
                             "Pivot": [
                                 0.5,
