@@ -1,6 +1,8 @@
-#pragma once
+#ifndef _COMPONENT_IMAGE_H_
+#define _COMPONENT_IMAGE_H_
 
 #include "Component.h"
+#include "ComponentTransform2D.h"
 
 #include "glew.h"
 
@@ -16,3 +18,5 @@ public:
 private:
 	ComponentMesh* plane = nullptr;
 };
+
+#endif
