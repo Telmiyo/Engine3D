@@ -74,5 +74,6 @@ public:
 	GameObject* gameobjectSelected;
 
 	ImVec2 lastViewportSize;
+	ImVec4 viewport;
 	ImVec2 onSceneMousePos;
 };

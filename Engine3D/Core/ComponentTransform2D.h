@@ -23,6 +23,9 @@ public:
 	bool Update(float dt) override;
 	void OnGui() override;
 
+	void OnLoad(const JSONReader& reader) override;
+	void OnSave(JSONWriter& writer) const override;
+
 	void GetScreenRect(float2& a, float2& b);
 
 	void SetPosition(const float2& newPosition);
@@ -37,12 +40,12 @@ public:
 	inline float2 GetSize() const { return size; };
 	inline Anchor GetAnchor() const { return anchor; };
 
-
+	float2 GetAnchoredPosition() const;
 
 	float2 position = { 0, 0 };
 	float2 pivot = { 0, 0 };
 	float rotation = 0.0f;
-	float2 size = { 50, 50 };
+	float2 size = { 0, 0 };
 
 	Anchor anchor = Anchor::CENTER;
 };
