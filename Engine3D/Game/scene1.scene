@@ -463,12 +463,20 @@
                                 0.0
                             ],
                             "Size": [
-                                253.0,
+                                200.0,
                                 200.0
                             ],
                             "Anchor": [
                                 0
                             ]
+                        },
+                        "Image": {
+                            "Texture name": "WHITE_BALLBACK",
+                            "Size": [
+                                1,
+                                1
+                            ],
+                            "Texture ID": 1
                         }
                     }
                 }
