@@ -61,9 +61,9 @@ bool ComponentImage::Update(float dt)
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, this->textureBufferId);
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
+		glColor3f(imageColor.x, imageColor.y,imageColor.z);
 	}
 
-	
 	if (texture.id != 0)
 	{
 		glBindTexture(GL_TEXTURE_2D, texture.id);
@@ -91,7 +91,7 @@ bool ComponentImage::Update(float dt)
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
 	}
-	
+	//App->textures->Load(texture.name);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	//--Disables States--//
 	glDisableClientState(GL_VERTEX_ARRAY);
