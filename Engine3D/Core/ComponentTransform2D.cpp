@@ -10,7 +10,7 @@ ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(paren
 	componentType = ComponentType::COMPONENT_TRANSFORM_2D;
 
 	// Set default position, size, pivot, rotation & anchor
-	position = { 0,0 };
+	localPosition = { 0,0 };
 	size = { 200, 200 };
 	pivot = { 0.5f, 0.5f };
 	rotation = 0.0f;
@@ -19,13 +19,17 @@ ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(paren
 
 bool ComponentTransform2D::Update(float dt)
 {
-	position = GetAnchoredPosition();
+	worldPosition = App->editor->GetScenePosition();
+	localPosition = worldPosition;
+	//localPosition.x -= size.x / 2 - 23;
+	localPosition.y += App->editor->GetSceneSize().y - 23;
+	//localPosition = GetAnchoredPosition();
 	return true;
 }
 
-float2 ComponentTransform2D::GetAnchoredPosition() const
+ImVec2 ComponentTransform2D::GetAnchoredPosition() const
 {
-	float2 temp = {200.0f, 400.0f};
+	ImVec2 temp = {0.0f, 0.0f};
 
 	switch (anchor)
 	{
@@ -65,7 +69,7 @@ void ComponentTransform2D::OnGui()
 {
 	if (ImGui::CollapsingHeader("Transform 2D"))
 	{
-		float2 newPosition = GetPosition();
+		ImVec2 newPosition = GetPosition();
 		if (ImGui::DragFloat2("Location", &newPosition[0]))
 		{
 			SetPosition(newPosition);
@@ -99,9 +103,9 @@ void ComponentTransform2D::GetScreenRect(float2& a, float2& b)
 	b = { 100, 100 };
 }
 
-void ComponentTransform2D::SetPosition(const float2& newPosition)
+void ComponentTransform2D::SetPosition(const ImVec2& newPosition)
 {
-	position = newPosition;
+	localPosition = newPosition;
 }
 void ComponentTransform2D::SetPivot(const float2& newPivot)
 {
@@ -175,7 +179,7 @@ void ComponentTransform2D::OnLoad(const JSONReader& reader)
 			else if (i == 1) positionY = it->GetDouble();
 			i++;
 		}
-		SetPosition(float2(positionX, positionY));
+		SetPosition(ImVec2(positionX, positionY));
 	}
 
 	// Loading pivot
@@ -228,7 +232,7 @@ void ComponentTransform2D::OnLoad(const JSONReader& reader)
 	if (reader.HasMember("Anchor"))
 	{
 		const rapidjson::Value& itemAnchor = reader["Anchor"];
-		int newAnchor;
+		int newAnchor = 0;
 		int i = 0;
 		for (rapidjson::Value::ConstValueIterator it = itemAnchor.Begin(); it != itemAnchor.End(); ++it)
 		{

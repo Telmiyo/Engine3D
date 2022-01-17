@@ -52,6 +52,9 @@ public:
 
 	bool isMouseOnScene();
 
+	inline ImVec2 GetScenePosition() const { return { viewport.x, viewport.y }; };
+	inline ImVec2 GetSceneSize() const { return { viewport.z, viewport.w }; };
+
 	//Window status control
 	bool showDemoWindow;
 	bool showAnotherWindow;
