@@ -49,14 +49,21 @@ void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
 	vertices.resize(numVertices);
 	normals.resize(numVertices);
 	indices.resize(numIndices);
-	//texCoords = parMesh->tcoords;
 	par_shapes_compute_normals(parMesh);
-	auto* a = parMesh->tcoords;
-	//for (float t = 0; parMesh->tcoords[t] != nullptr; ++t)
-	//{
 
-	//}
+	for (size_t i = 0; i < numVertices; i +=2)
+	{
+		float u = *(parMesh->tcoords + i);
+		float v = *(parMesh->tcoords + (i + 1));
+		texCoords.push_back((float2(*(parMesh->tcoords + i), *(parMesh->tcoords +( i + 1)))));
 		
+		//*(file->textCoords_ + i * 2) = m->mTextureCoords[0][i].x;
+		//*(file->textCoords_ + i * 2 + 1) = m->mTextureCoords[0][i].y; //this coord image is inverted
+	
+	}
+
+	//TexCoords(u,v|u,v|u,v)
+
 	for (size_t i = 0; i < numVertices; ++i)
 	{
 		memcpy(&vertices[i], &parMesh->points[i * 3], sizeof(float) * 3);

@@ -24,8 +24,8 @@ public:
 	bool Update(float dt) override;
 	void OnGui() override;
 
-	inline void SetTexture(const TextureObject& newTexture) { texture = newTexture; };
 	inline TextureObject GetTexture() const { return texture; };
+	inline void SetTexture(const TextureObject& newTexture) { texture = newTexture; };
 	void SetTextureById(const int id);
 
 	void OnLoad(const JSONReader& reader) override;
