@@ -683,7 +683,7 @@ void ModuleEditor::UpdateWindowStatus() {
 
 		ImVec2 viewportSize = ImGui::GetCurrentWindow()->Size;
 		viewport.x = ImGui::GetCurrentWindow()->Pos.x;
-		viewport.y = ImGui::GetCurrentWindow()->Pos.y - 23;
+		viewport.y = ImGui::GetCurrentWindow()->Pos.y;
 		viewport.w = ImGui::GetCurrentWindow()->Size.x;
 		viewport.z = ImGui::GetCurrentWindow()->Size.y;
 
