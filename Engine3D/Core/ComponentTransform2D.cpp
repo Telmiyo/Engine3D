@@ -5,6 +5,8 @@
 #include "Application.h"
 #include "ModuleEditor.h"
 
+#include "ComponentImage.h"
+
 ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(parent)
 {
 	componentType = ComponentType::COMPONENT_TRANSFORM_2D;
@@ -13,15 +15,12 @@ ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(paren
 	position = { 0,0 };
 	size = { 200, 200 };
 	pivot = { 0.5f, 0.5f };
-	//rotation = 0.0f;
+	rotation = { 0.0f,0.f,0.f };
 	anchor = Anchor::TOP_LEFT;
 }
 
 bool ComponentTransform2D::Update(float dt)
 {
-	position.x = App->editor->GetScenePosition().x;
-	position.y = App->editor->GetScenePosition().y;
-
 	return true;
 }
 
@@ -30,26 +29,26 @@ void ComponentTransform2D::OnGui()
 	if (ImGui::CollapsingHeader("Transform 2D"))
 	{
 		float2 newPosition = GetPosition();
-		if (ImGui::DragFloat2("Location", &newPosition[0]))
+		if (ImGui::DragFloat2("Location", &newPosition[0])) // POSITION
 		{
-		//	SetPosition(newPosition);
+			SetPosition(newPosition);
 		}
 		float2 newPivot = GetPivot();
-		if (ImGui::DragFloat2("Pivot", &newPivot[0]))
+		if (ImGui::DragFloat2("Pivot", &newPivot[0])) // PIVOT
 		{
 			SetPivot(newPivot);
 		}
-		//float newRotation = GetRotation();
-		/*if (ImGui::DragFloat("Rotation", &newRotation))
+		float3 newRotation = GetRotation();
+		if (ImGui::DragFloat3("Rotation", &newRotation[0]))
 		{
 			SetRotation(newRotation);
-		}*/
+		}
 		float2 newSize = GetSize();
-		if (ImGui::DragFloat2("Size", &newSize[0]))
+		if (ImGui::DragFloat2("Size", &newSize[0])) //SIZE
 		{
 			SetSize(newSize);
 		}
-		int newAnchor = (int)GetAnchor();
+		int newAnchor = (int)GetAnchor(); // ANCHOR
 		if (ImGui::Combo("Anchor", &newAnchor, "TOP_LEFT\0TOP_CENTER\0TOP_RIGHT\0LEFT\0CENTER\0RIGHT\0BOTTOM_LEFT\0BOTTOM_CENTER\0BOTTOM_RIGHT\0\0"))
 		{
 			SetAnchor((Anchor)newAnchor);
@@ -63,17 +62,19 @@ void ComponentTransform2D::GetScreenRect(float2& a, float2& b)
 	b = { 100, 100 };
 }
 
-void ComponentTransform2D::SetPosition(const ImVec2& newPosition)
+void ComponentTransform2D::SetPosition(const float2& newPosition)
 {
-	//localPosition = newPosition;
+	position = newPosition;
 }
 void ComponentTransform2D::SetPivot(const float2& newPivot)
 {
 	pivot = newPivot;
 }
-void ComponentTransform2D::SetRotation(const float& newRotation)
+void ComponentTransform2D::SetRotation(const float3& newRotation)
 {
-	//rotation = newRotation;
+	// TODO: UPDATEAR LA MATRIZ
+	rotation = newRotation;
+	//owner->GetComponent<ComponentImage>().
 }
 void ComponentTransform2D::SetSize(const float2& newSize)
 {
@@ -95,7 +96,7 @@ void ComponentTransform2D::OnSave(JSONWriter& writer) const
 	writer.Double(GetPosition().x);
 	writer.Double(GetPosition().y);
 	writer.EndArray();
-	
+
 	// Saving pivot
 	writer.String("Pivot");
 	writer.StartArray();
@@ -132,6 +133,7 @@ void ComponentTransform2D::OnLoad(const JSONReader& reader)
 		const rapidjson::Value& itemPosition = reader["Position"];
 		float positionX = 0.0f;
 		float positionY = 0.0f;
+
 		int i = 0;
 		for (rapidjson::Value::ConstValueIterator it = itemPosition.Begin(); it != itemPosition.End(); ++it)
 		{
@@ -139,7 +141,7 @@ void ComponentTransform2D::OnLoad(const JSONReader& reader)
 			else if (i == 1) positionY = it->GetDouble();
 			i++;
 		}
-		SetPosition(ImVec2(positionX, positionY));
+		SetPosition(float2(positionX, positionY));
 	}
 
 	// Loading pivot
@@ -169,7 +171,7 @@ void ComponentTransform2D::OnLoad(const JSONReader& reader)
 			if (i == 0) newRotation = it->GetDouble();
 			i++;
 		}
-		SetRotation(newRotation);
+		//SetRotation(newRotation);
 	}
 
 	// Loading size
