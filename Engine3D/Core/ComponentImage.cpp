@@ -20,6 +20,7 @@ ComponentImage::ComponentImage(GameObject* parent) : Component(parent)
 	plane = new ComponentMesh(nullptr);
 	App->scene->CreatePlane(plane);
 	plane->GenerateBuffers();
+
 	if (plane->texCoords.size() != 0)
 	{
 		textureBufferId = 0;
