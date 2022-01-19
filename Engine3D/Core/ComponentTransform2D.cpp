@@ -39,7 +39,7 @@ void ComponentTransform2D::OnGui()
 			SetPivot(newPivot);
 		}
 		float3 newRotation = GetRotation();
-		if (ImGui::DragFloat3("Rotation", &newRotation[0]))
+		if (ImGui::DragFloat3("Rotation", &newRotation[0], 0.5f, 0.f, 360.f)) // ROTATION
 		{
 			SetRotation(newRotation);
 		}
