@@ -51,7 +51,7 @@ bool ComponentImage::Update(float dt)
 
 	/*float3 pos = { cTransform->position, App->camera->nearPlaneDistance + 0.1f };*/
 	/*float3 size = {  (float)viewport[2], (float)viewport[3], 1.0f };*/
-	float3 pos = { cTransform->localPosition.x, cTransform->localPosition.y, App->camera->nearPlaneDistance + 0.1f };
+	float3 pos = { cTransform->position.x, cTransform->position.y, App->camera->nearPlaneDistance + 0.1f };
 	float3 size = { cTransform->size.x, cTransform->size.y, 1.0f };
 
 	float4x4 transform;
@@ -62,7 +62,7 @@ bool ComponentImage::Update(float dt)
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glBindBuffer(GL_ARRAY_BUFFER, this->textureBufferId);
 		glTexCoordPointer(2, GL_FLOAT, 0, NULL);
-		glColor3f(imageColor.x, imageColor.y,imageColor.z);
+		glColor4f(imageColor.x, imageColor.y, imageColor.z, imageColor.w);
 	}
 
 	if (texture.id != 0)
