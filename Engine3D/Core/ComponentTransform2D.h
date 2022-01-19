@@ -3,6 +3,7 @@
 
 #include "Component.h"
 #include "Math/float2.h"
+#include "Math/float3.h"
 #include "ImGui/imgui.h"
 
 class ComponentTransform2D : public Component {
@@ -35,18 +36,15 @@ public:
 	void SetSize(const float2& newSize);
 	void SetAnchor(const Anchor& newAnchor);
 
-	inline ImVec2 GetPosition() const { return localPosition; };
+	inline float2 GetPosition() const { return position; };
 	inline float2 GetPivot() const { return pivot; };
-	inline float GetRotation() const { return rotation; };
+	inline float3 GetRotation() const { return rotation; };
 	inline float2 GetSize() const { return size; };
 	inline Anchor GetAnchor() const { return anchor; };
 
-	ImVec2 GetAnchoredPosition() const;
-
-	ImVec2 worldPosition = { 0 , 0 };
-	ImVec2 localPosition = { 0, 0 };
+	float2 position = { 0, 0 };
 	float2 pivot = { 0, 0 };
-	float rotation = 0.0f;
+	float3 rotation = { 0.f,0.f,0.f };
 	float2 size = { 0, 0 };
 
 	Anchor anchor = Anchor::CENTER;

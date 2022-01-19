@@ -10,80 +10,40 @@ ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(paren
 	componentType = ComponentType::COMPONENT_TRANSFORM_2D;
 
 	// Set default position, size, pivot, rotation & anchor
-	localPosition = { 0,0 };
+	position = { 0,0 };
 	size = { 200, 200 };
 	pivot = { 0.5f, 0.5f };
-	rotation = 0.0f;
+	//rotation = 0.0f;
 	anchor = Anchor::TOP_LEFT;
 }
 
 bool ComponentTransform2D::Update(float dt)
 {
-	worldPosition = App->editor->GetScenePosition();
-	localPosition = worldPosition;
-	//localPosition.x -= size.x / 2 - 23;
-	localPosition.y += App->editor->GetSceneSize().y - 23;
-	//localPosition = GetAnchoredPosition();
+	position.x = App->editor->GetScenePosition().x;
+	position.y = App->editor->GetScenePosition().y;
+
 	return true;
-}
-
-ImVec2 ComponentTransform2D::GetAnchoredPosition() const
-{
-	ImVec2 temp = {0.0f, 0.0f};
-
-	switch (anchor)
-	{
-		case (Anchor::TOP_LEFT): // temp.x lo he puesto para ver si anchor va cambiando por el imgui nada mas
-			temp.x += 0;
-			break;
-		case (Anchor::TOP_CENTER):
-			temp.x += 50;
-			break;
-		case (Anchor::TOP_RIGHT):
-			temp.x += 100;
-			break;
-		case (Anchor::LEFT):
-			temp.x += 150;
-			break;
-		case (Anchor::CENTER):
-			temp.x += 200;
-			break;
-		case (Anchor::RIGHT):
-			temp.x += 250;
-			break;
-		case (Anchor::BOTTOM_LEFT):
-			temp.x += 300;
-			break;
-		case (Anchor::BOTTOM_CENTER):
-			temp.x += 350;
-			break;
-		case (Anchor::BOTTOM_RIGHT):
-			temp.x += 400;
-			break;
-	}
-
-	return temp;
 }
 
 void ComponentTransform2D::OnGui()
 {
 	if (ImGui::CollapsingHeader("Transform 2D"))
 	{
-		ImVec2 newPosition = GetPosition();
+		float2 newPosition = GetPosition();
 		if (ImGui::DragFloat2("Location", &newPosition[0]))
 		{
-			SetPosition(newPosition);
+		//	SetPosition(newPosition);
 		}
 		float2 newPivot = GetPivot();
 		if (ImGui::DragFloat2("Pivot", &newPivot[0]))
 		{
 			SetPivot(newPivot);
 		}
-		float newRotation = GetRotation();
-		if (ImGui::DragFloat("Rotation", &newRotation))
+		//float newRotation = GetRotation();
+		/*if (ImGui::DragFloat("Rotation", &newRotation))
 		{
 			SetRotation(newRotation);
-		}
+		}*/
 		float2 newSize = GetSize();
 		if (ImGui::DragFloat2("Size", &newSize[0]))
 		{
@@ -105,7 +65,7 @@ void ComponentTransform2D::GetScreenRect(float2& a, float2& b)
 
 void ComponentTransform2D::SetPosition(const ImVec2& newPosition)
 {
-	localPosition = newPosition;
+	//localPosition = newPosition;
 }
 void ComponentTransform2D::SetPivot(const float2& newPivot)
 {
@@ -113,7 +73,7 @@ void ComponentTransform2D::SetPivot(const float2& newPivot)
 }
 void ComponentTransform2D::SetRotation(const float& newRotation)
 {
-	rotation = newRotation;
+	//rotation = newRotation;
 }
 void ComponentTransform2D::SetSize(const float2& newSize)
 {
@@ -146,7 +106,7 @@ void ComponentTransform2D::OnSave(JSONWriter& writer) const
 	// Saving rotation
 	writer.String("Rotation");
 	writer.StartArray();
-	writer.Double(GetRotation());
+	//writer.Double(GetRotation());
 	writer.EndArray();
 
 	// Saving size
