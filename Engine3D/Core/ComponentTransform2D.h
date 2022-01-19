@@ -30,9 +30,9 @@ public:
 
 	void GetScreenRect(float2& a, float2& b);
 
-	void SetPosition(const ImVec2& newPosition);
+	void SetPosition(const float2& newPosition);
 	void SetPivot(const float2& newPivot);
-	void SetRotation(const float& newRotation);
+	void SetRotation(const float3& newRotation);
 	void SetSize(const float2& newSize);
 	void SetAnchor(const Anchor& newAnchor);
 
