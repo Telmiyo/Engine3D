@@ -15,6 +15,7 @@
     <ClCompile Include="Core\Color.cpp" />
     <ClCompile Include="Core\ComponentButton.cpp" />
     <ClCompile Include="Core\ComponentCamera.cpp" />
+    <ClCompile Include="Core\ComponentCanvas.cpp" />
     <ClCompile Include="Core\ComponentImage.cpp" />
     <ClCompile Include="Core\ComponentMaterial.cpp" />
     <ClCompile Include="Core\ComponentMesh.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\ComponentButton.h" />
     <ClInclude Include="Core\ComponentCamera.h" />
+    <ClInclude Include="Core\ComponentCanvas.h" />
     <ClInclude Include="Core\ComponentImage.h" />
     <ClInclude Include="Core\ComponentMaterial.h" />
     <ClInclude Include="Core\ComponentMesh.h" />

@@ -3,6 +3,8 @@
 #include "Globals.h"
 #include "Light.h"
 
+#include "glew.h"
+
 class ComponentCamera;
 
 class ModuleUI : public Module
@@ -24,4 +26,6 @@ public:
 
 public:
 	ComponentCamera* uiCamera;
+
+	GLint uiCameraViewport[4] = {0, 0, 0, 0};
 };

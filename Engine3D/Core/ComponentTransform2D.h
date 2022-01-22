@@ -42,6 +42,11 @@ public:
 	inline float2 GetSize() const { return size; };
 	inline Anchor GetAnchor() const { return anchor; };
 
+	virtual void GetRealPosition(float2& position);
+	virtual void GetRealSize(float2& realSize);
+
+	float2 GetAnchorPosition(Anchor anchor);
+
 	float2 position = { 0, 0 };
 	float2 pivot = { 0, 0 };
 	float3 rotation = { 0.f,0.f,0.f };
