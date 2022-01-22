@@ -155,7 +155,7 @@ void ComponentTransform2D::GetRealPosition(float2& realPosition, bool ignoreCanv
 	if (parentTransform != nullptr) {
 		if (ignoreCanvas)
 		{
-			realPosition = parentTransform->GetAnchorPosition(anchor) + position;
+			realPosition = parentTransform->GetRelativeAnchorPosition(anchor) + position;
 			return;
 		}
 	} else {
@@ -178,13 +178,20 @@ void ComponentTransform2D::GetRealSize(float2& realSize)
 
 void ComponentTransform2D::GetBoundingBox(float2& realPos, float2& realSize)
 {
+	float propX = App->ui->uiCameraViewport[2] / App->editor->lastViewportSize.x;
+	float propY = App->ui->uiCameraViewport[3] / App->editor->lastViewportSize.y;
+
 	GetRealPosition(realPos, true);
 	GetRealSize(realSize);
-	//realPos -= realSize / 2;
+	//realPos.x += position.x / propX;
+	//realPos.y += position.y / propY;
+	realSize /= 2;
+	realPos -= realSize;
 
 	realPos.x -= App->editor->viewport.x;
 	realPos.y -= App->editor->viewport.y;
 	realPos.y += 23;
+	realPos.y -= realSize.y / 2;
 }
 
 bool ComponentTransform2D::CheckMouseInsideBounds()
