@@ -4,6 +4,7 @@ ComponentText::ComponentText(GameObject* parent) : Component(parent)
 {
 	componentType = ComponentType::COMPONENT_TEXT;
 
+	text = textBuffer;
 }
 
 ComponentText::~ComponentText()
