@@ -61,7 +61,7 @@ update_status ModuleScene::Update(float dt)
 
 		if (App->editor->gameobjectSelected)
 		{
-			if (App->editor->gameobjectSelected->GetComponent<ComponentTransform2D>() == nullptr) {
+			if (App->editor->gameobjectSelected->GetComponent<ComponentTransform2D>() == nullptr && App->editor->gameobjectSelected->name != "Root") {
 				ComponentTransform* transform = App->editor->gameobjectSelected->GetComponent<ComponentTransform>();
 				float3 pos = transform->GetPosition();
 				glLineWidth(10.f);
@@ -76,7 +76,7 @@ update_status ModuleScene::Update(float dt)
 				glVertex3f(pos.x, pos.y, pos.z);
 				glVertex3f(pos.x + transform->Up().x, pos.y + transform->Up().y, pos.z + transform->Up().z);
 				glEnd();
-				glLineWidth(1.f);
+				glLineWidth(0.7f);
 			}
 		}
 

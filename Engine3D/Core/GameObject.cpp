@@ -42,6 +42,13 @@ GameObject::GameObject(const std::string name, bool is3D) : name(name)
 	active = true;
 }
 
+GameObject::GameObject(const char* name)
+{
+	this->name = name;
+
+	active = true;
+}
+
 
 GameObject::~GameObject() {
 
@@ -78,13 +85,14 @@ void GameObject::OnGui()
 		{
 			component->OnGui();
 		}
+		if (ImGui::CollapsingHeader("Identifiers"))
+		{
+			ImGui::Text("UUID: %u", (unsigned int)uuid);
+			ImGui::Text("Parent UUID: %u", (unsigned int)parentUuid);
+		}
 	}
 
-	if (ImGui::CollapsingHeader("Identifiers"))
-	{
-		ImGui::Text("UUID:", (unsigned int)uuid);
-		ImGui::Text("Parent UUID:", (unsigned int)parentUuid);
-	}
+	
 }
 
 void GameObject::DeleteComponent(Component* component) {
