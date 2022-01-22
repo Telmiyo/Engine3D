@@ -200,6 +200,9 @@
     <ClCompile Include="Core\ComponentCanvas.cpp">
       <Filter>Engine\GameObjects - Components\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Core\ComponentCheckbox.cpp">
+      <Filter>Engine\GameObjects - Components\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\ImGui\imconfig.h">
@@ -755,6 +758,9 @@
       <Filter>Engine\GameObjects - Components\UI</Filter>
     </ClInclude>
     <ClInclude Include="Core\ComponentCanvas.h">
+      <Filter>Engine\GameObjects - Components\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ComponentCheckbox.h">
       <Filter>Engine\GameObjects - Components\UI</Filter>
     </ClInclude>
   </ItemGroup>
