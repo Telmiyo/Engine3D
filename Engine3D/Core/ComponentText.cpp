@@ -19,6 +19,7 @@ bool ComponentText::Update(float dt)
 
 void ComponentText::OnGui()
 {
+
 	if (ImGui::CollapsingHeader("Text")) 
 	{
 		
@@ -40,11 +41,12 @@ void ComponentText::OnGui()
 void ComponentText::OnLoad(const JSONReader& reader)
 {
 	// Loading input text
-	if (reader.HasMember("Input text"))
+	/*if (reader.HasMember("Input text"))
 	{
+		
 		const rapidjson::Value& itemText = reader["Input text"];
 		text = itemText.GetString();
-	}
+	}*/
 }
 void ComponentText::OnSave(JSONWriter& writer) const
 {

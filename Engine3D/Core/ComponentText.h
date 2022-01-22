@@ -38,6 +38,7 @@ public:
 	inline const char* GetText()const { return text; };
 	inline void SetText(const char* newText) { text = newText; };
 
+
 private:
 	// Ui component visible
 	bool visible = true;
