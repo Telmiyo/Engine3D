@@ -55,9 +55,11 @@ void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
 	// TexCoords(u,v|u,v|u,v)
 	for (size_t i = 0; i < numVertices * 2; i +=2)
 	{
-		float u = *(parMesh->tcoords + i);
-		float v = *(parMesh->tcoords + (i + 1));
-		texCoords.push_back((float2(*(parMesh->tcoords + i), *(parMesh->tcoords +( i + 1)))));
+		if (parMesh->tcoords != nullptr) {
+			float u = *(parMesh->tcoords + i);
+			float v = *(parMesh->tcoords + (i + 1));
+			texCoords.push_back((float2(*(parMesh->tcoords + i), *(parMesh->tcoords + (i + 1)))));
+		}
 	}
 
 	for (size_t i = 0; i < numVertices; ++i)

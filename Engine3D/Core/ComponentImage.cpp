@@ -51,14 +51,19 @@ bool ComponentImage::Update(float dt)
 
 	/*float3 pos = { cTransform->position, App->camera->nearPlaneDistance + 0.1f };*/
 	/*float3 size = {  (float)viewport[2], (float)viewport[3], 1.0f };*/
-	float3 pos = { cTransform->position.x, cTransform->position.y, App->camera->nearPlaneDistance + 0.1f };
-	float3 size = { cTransform->size.x, cTransform->size.y, 1.0f };
+	float2 realPosition;
+	cTransform->GetRealPosition(realPosition);
+	float3 pos = { realPosition.x, realPosition.y, App->camera->nearPlaneDistance + 0.1f};
+	float2 realSize;
+	cTransform->GetRealSize(realSize);
+	float3 size = { realSize.x, realSize.y, 1.0f };
 	float3 rotation = { cTransform->rotation.x,cTransform->rotation.y,cTransform->rotation.z };
-
 	Quat rotationQuat = Quat::FromEulerXYZ(DEGTORAD * rotation.x, DEGTORAD * rotation.y, DEGTORAD * rotation.z);
 
 	float4x4 transform;
-	transform = transform.FromTRS(pos, rotationQuat, size);
+	transform = transform.FromTRS(pos, Quat::identity, size);
+
+	transform = transform * rotationQuat;
 
 	if (this->textureBufferId)
 	{

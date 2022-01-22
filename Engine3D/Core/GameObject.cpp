@@ -38,12 +38,6 @@ GameObject::GameObject(const std::string name, bool is3D) : name(name)
 		transform = CreateComponent<ComponentTransform>();
 		transform2d = nullptr;
 	}
-		
-	else
-	{
-		transform = nullptr;
-		transform2d = CreateComponent<ComponentTransform2D>();
-	}
 	
 	active = true;
 }

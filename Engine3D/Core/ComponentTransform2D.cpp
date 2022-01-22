@@ -4,6 +4,10 @@
 #include "ImGui/imgui_internal.h"
 #include "Application.h"
 #include "ModuleEditor.h"
+#include "ModuleScene.h"
+#include "ModuleCamera3D.h"
+#include "ComponentCanvas.h"
+#include "ModuleUI.h"
 
 #include "ComponentImage.h"
 
@@ -16,7 +20,7 @@ ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(paren
 	size = { 200, 200 };
 	pivot = { 0.5f, 0.5f };
 	rotation = { 0.0f,0.f,0.f };
-	anchor = Anchor::TOP_LEFT;
+	anchor = Anchor::CENTER;
 }
 
 bool ComponentTransform2D::Update(float dt)
@@ -83,6 +87,135 @@ void ComponentTransform2D::SetSize(const float2& newSize)
 void ComponentTransform2D::SetAnchor(const Anchor& newAnchor)
 {
 	anchor = newAnchor;
+	//CalculateAnchor();
+}
+
+/*void ComponentTransform2D::CalculateAnchor(float2& anchorPosition)
+{
+	// 0,0 
+	float2 scenesize;
+	if (App->editor->sceneWindow != NULL)
+	{
+		scenesize.x = App->editor->viewport.x;
+		scenesize.y = App->editor->viewport.y;
+		int b = 0;
+	}
+	else { return; }
+
+	//TOP LEFT = 0,0
+	switch (anchor)
+	{
+	case ComponentTransform2D::Anchor::TOP_LEFT:
+		position.x = ImGui::GetCurrentWindow()->Size.x;
+		position.y = ImGui::GetCurrentWindow()->Size.y;
+		break;
+	case ComponentTransform2D::Anchor::TOP_CENTER:
+		position.x = App->editor->GetSceneSize().x / 2;
+		position.y = App->editor->GetSceneSize().y;
+		break;
+	case ComponentTransform2D::Anchor::TOP_RIGHT:
+
+		position.x = App->camera->cameraFrustum.ViewportToScreenSpace(scenesize, App->editor->GetSceneSize().x, App->editor->GetSceneSize().y).x;
+		position.y = 0;
+		break;
+	case ComponentTransform2D::Anchor::LEFT:
+		position.x = 0;
+		position.y = App->editor->GetSceneSize().y / 2;
+		break;
+	case ComponentTransform2D::Anchor::CENTER:
+		position.x = 0;
+		position.y = 0;
+		break;
+	case ComponentTransform2D::Anchor::RIGHT:
+		position.x = App->editor->GetSceneSize().x;
+		position.y = App->editor->GetSceneSize().y / 2;
+		break;
+	case ComponentTransform2D::Anchor::BOTTOM_LEFT:
+		position.x = 0;
+		position.y = 0;
+		break;
+	case ComponentTransform2D::Anchor::BOTTOM_CENTER:
+		position.x = App->editor->GetSceneSize().x / 2;
+		position.y = 0;
+		break;
+	case ComponentTransform2D::Anchor::BOTTOM_RIGHT:
+		position.x = App->editor->GetSceneSize().x;
+		position.y = 0;
+		break;
+	default:
+		break;
+	}
+
+	return;
+}*/
+
+void ComponentTransform2D::GetRealPosition(float2& realPosition)
+{
+	ComponentTransform2D* parentTransform = owner->parent->GetComponent<ComponentTransform2D>();
+	if (parentTransform == nullptr) parentTransform = (ComponentTransform2D*)(owner->parent->GetComponent<ComponentCanvas>());
+
+	if (parentTransform == nullptr) return;
+
+	realPosition = parentTransform->GetAnchorPosition(anchor) + position;
+}
+
+void ComponentTransform2D::GetRealSize(float2& realSize)
+{
+	float propX = App->ui->uiCameraViewport[2] / App->editor->lastViewportSize.x;
+	float propY = App->ui->uiCameraViewport[3] / App->editor->lastViewportSize.y;
+
+	realSize.x = size.x * propX;
+	realSize.y = size.y * propY;
+}
+
+float2 ComponentTransform2D::GetAnchorPosition(Anchor anchor)
+{
+	float2 realPosition;
+	GetRealPosition(realPosition);
+	float2 realSize;
+	GetRealSize(realSize);
+
+	switch (anchor)
+	{
+	case ComponentTransform2D::Anchor::TOP_LEFT:
+		return { realPosition.x, realPosition.y + realSize.y };
+		break;
+	case ComponentTransform2D::Anchor::TOP_CENTER:
+		return { realPosition.x + realSize.x / 2, realPosition.y + realSize.y };
+
+		break;
+	case ComponentTransform2D::Anchor::TOP_RIGHT:
+		return { realPosition.x + realSize.x, realPosition.y + realSize.y };
+
+		break;
+	case ComponentTransform2D::Anchor::LEFT:
+		return { realPosition.x, realPosition.y + realSize.y / 2 };
+
+		break;
+	case ComponentTransform2D::Anchor::CENTER:
+		return { realPosition.x + realSize.x / 2, realPosition.y + realSize.y / 2 };
+
+		break;
+	case ComponentTransform2D::Anchor::RIGHT:
+		return { realPosition.x + realSize.x, realPosition.y + realSize.y / 2 };
+
+		break;
+	case ComponentTransform2D::Anchor::BOTTOM_LEFT:
+		return { realPosition.x, realPosition.y };
+
+		break;
+	case ComponentTransform2D::Anchor::BOTTOM_CENTER:
+		return { realPosition.x + realSize.x / 2, realPosition.y };
+
+		break;
+	case ComponentTransform2D::Anchor::BOTTOM_RIGHT:
+		return { realPosition.x + realSize.x, realPosition.y };
+
+		break;
+	default:
+		break;
+	}
+	return {0, 0};
 }
 
 void ComponentTransform2D::OnSave(JSONWriter& writer) const

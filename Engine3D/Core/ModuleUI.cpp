@@ -80,6 +80,11 @@ update_status ModuleUI::Update(float dt)
 	glLoadIdentity();
 	glOrtho(viewport[0], viewport[2], viewport[1], viewport[3], 1, 1000);
 
+	uiCameraViewport[0] = viewport[0];
+	uiCameraViewport[1] = viewport[1];
+	uiCameraViewport[2] = viewport[2];
+	uiCameraViewport[3] = viewport[3];
+
 	glPushAttrib(GL_LIST_BIT | GL_CURRENT_BIT | GL_ENABLE_BIT | GL_TRANSFORM_BIT);
 	glMatrixMode(GL_MODELVIEW);
 	glDisable(GL_LIGHTING);

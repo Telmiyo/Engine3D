@@ -15,6 +15,7 @@
 #include "ComponentMesh.h"
 #include "ComponentTransform.h"
 #include "ComponentImage.h"
+#include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
 #include "iconcpp.h"
 #include "icons.h"
@@ -389,8 +390,13 @@ void ModuleEditor::MenuBar() {
 				ImGui::EndMenu();
 			}
 			if (ImGui::BeginMenu("UI Objects")) {
+				if (ImGui::MenuItem("Canvas")) {
+					GameObject* newGameObject = App->scene->CreateGameObjectByName("Canvas", nullptr, false);
+					ComponentCanvas* canvas = new ComponentCanvas(newGameObject);
+				}
 				if (ImGui::MenuItem("Image")) {
 					GameObject* newGameObject = App->scene->CreateGameObjectByName("Image", nullptr, false);
+					ComponentTransform2D* transform = new ComponentTransform2D(newGameObject);
 					ComponentImage* defaultImage = new ComponentImage(newGameObject);
 				}
 				ImGui::EndMenu();
