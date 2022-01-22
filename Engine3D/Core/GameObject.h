@@ -18,6 +18,7 @@ public:
 
 	GameObject(bool is3D = true);
 	GameObject(const std::string name, bool is3D = true);
+	GameObject(const char* name);
 
 	~GameObject();
 
@@ -52,8 +53,8 @@ public:
 	void OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& reader);
 
 	std::string name;
-	unsigned int uuid;
-	unsigned int parentUuid;
+	unsigned int uuid = 0;
+	unsigned int parentUuid = 0;
 	GameObject* parent = nullptr;
 	ComponentTransform* transform = nullptr;
 	ComponentTransform2D* transform2d = nullptr;
