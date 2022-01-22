@@ -20,6 +20,8 @@
 #include "ComponentMesh.h"
 #include "ComponentTransform2D.h"
 
+#include <functional>
+
 class ComponentMesh;
 
 class ComponentButton : public Component {
@@ -43,9 +45,13 @@ public:
 	inline ButtonState GetState()const { return buttonState; };
 	inline void SetState(const ButtonState& newButtonState) { buttonState = newButtonState; };
 
+	bool CheckMouseInsideBounds();
+
 private:
 
 	ButtonState buttonState = ButtonState::DISABLED;
+
+	std::function<void()> callback;
 };
 
 #endif

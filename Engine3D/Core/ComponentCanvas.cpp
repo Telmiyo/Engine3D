@@ -63,7 +63,7 @@ void ComponentCanvas::AdjustPositionAndSize()
 	size.y = App->editor->lastViewportSize.y * propY;
 }
 
-void ComponentCanvas::GetRealPosition(float2& realPosition)
+void ComponentCanvas::GetRealPosition(float2& realPosition, bool ignoreCanvas)
 {
 	float propX = App->ui->uiCameraViewport[2] / App->editor->lastViewportSize.x;
 	float propY = App->ui->uiCameraViewport[3] / App->editor->lastViewportSize.y;

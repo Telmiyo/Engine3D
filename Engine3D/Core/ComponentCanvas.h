@@ -16,6 +16,6 @@ public:
 
 	void AdjustPositionAndSize();
 
-	void GetRealPosition(float2& position) override;
+	void GetRealPosition(float2& position, bool ignoreCanvas = false) override;
 	void GetRealSize(float2& realSize) override;
 };

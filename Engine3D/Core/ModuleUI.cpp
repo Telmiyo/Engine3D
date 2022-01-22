@@ -6,6 +6,7 @@
 #include "Application.h"
 #include "ModuleScene.h"
 #include "ModuleCamera3D.h"
+#include "ModuleEditor.h"
 
 #include "ComponentTransform2D.h"
 
@@ -144,6 +145,14 @@ update_status ModuleUI::PostUpdate(float dt)
 bool ModuleUI::CleanUp()
 {
 	return true;
+}
+
+float2 ModuleUI::GetMousePosition()
+{
+	float mouseX = App->editor->onSceneMousePos.x;
+	float mouseY = -(App->editor->onSceneMousePos.y - App->editor->lastViewportSize.y);
+
+	return { mouseX, mouseY };
 }
 
 void ModuleUI::OnGui()

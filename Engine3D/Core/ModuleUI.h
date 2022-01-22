@@ -20,6 +20,8 @@ public:
 	update_status PostUpdate(float dt) override;
 	bool CleanUp() override;
 
+	float2 GetMousePosition();
+
 	void OnGui() override;
 	void OnLoad(const JSONReader& reader) override;
 	void OnSave(JSONWriter& writer) const override;
