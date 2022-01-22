@@ -149,10 +149,18 @@ void ComponentTransform2D::SetAnchor(const Anchor& newAnchor)
 	return;
 }*/
 
-void ComponentTransform2D::GetRealPosition(float2& realPosition)
+void ComponentTransform2D::GetRealPosition(float2& realPosition, bool ignoreCanvas)
 {
-	ComponentTransform2D* parentTransform = owner->parent->GetComponent<ComponentTransform2D>();
-	if (parentTransform == nullptr) parentTransform = (ComponentTransform2D*)(owner->parent->GetComponent<ComponentCanvas>());
+	ComponentTransform2D* parentTransform = (ComponentTransform2D*)owner->parent->GetComponent<ComponentCanvas>();
+	if (parentTransform != nullptr) {
+		if (ignoreCanvas)
+		{
+			realPosition = parentTransform->GetAnchorPosition(anchor) + position;
+			return;
+		}
+	} else {
+		parentTransform = owner->parent->GetComponent<ComponentTransform2D>();
+	}
 
 	if (parentTransform == nullptr) return;
 
@@ -166,6 +174,40 @@ void ComponentTransform2D::GetRealSize(float2& realSize)
 
 	realSize.x = size.x * propX;
 	realSize.y = size.y * propY;
+}
+
+void ComponentTransform2D::GetBoundingBox(float2& realPos, float2& realSize)
+{
+	GetRealPosition(realPos, true);
+	GetRealSize(realSize);
+	//realPos -= realSize / 2;
+
+	realPos.x -= App->editor->viewport.x;
+	realPos.y -= App->editor->viewport.y;
+	realPos.y += 23;
+}
+
+bool ComponentTransform2D::CheckMouseInsideBounds()
+{
+	ComponentTransform2D* tmp = owner->GetComponent<ComponentTransform2D>();
+	float2 pos;
+	float2 size;
+	tmp->GetBoundingBox(pos, size);
+
+	float2 mousePosition = App->ui->GetMousePosition();
+
+	LOG("%f, %f", mousePosition.x, mousePosition.y);
+
+	//TODO CHECK
+	if (pos.x < mousePosition.x && pos.x + size.x > mousePosition.x)
+	{
+		if (pos.y < mousePosition.y && pos.y + size.y > mousePosition.y)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 float2 ComponentTransform2D::GetAnchorPosition(Anchor anchor)
@@ -216,6 +258,19 @@ float2 ComponentTransform2D::GetAnchorPosition(Anchor anchor)
 		break;
 	}
 	return {0, 0};
+}
+
+float2 ComponentTransform2D::GetRelativeAnchorPosition(Anchor anchor)
+{
+	float2 realPosition;
+	GetRealPosition(realPosition);
+	float2 realSize;
+	GetRealSize(realSize);
+
+	float2 anchorPosition = GetAnchorPosition(anchor);
+	float2 bottomLeft = { realPosition.x + App->editor->GetScenePosition().x, realPosition.y + App->editor->GetScenePosition().y };
+
+	return anchorPosition - bottomLeft;
 }
 
 void ComponentTransform2D::OnSave(JSONWriter& writer) const

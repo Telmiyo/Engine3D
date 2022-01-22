@@ -17,6 +17,7 @@
 #include "ComponentImage.h"
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
+#include "ComponentButton.h"
 #include "iconcpp.h"
 #include "icons.h"
 #include "font.h"
@@ -398,6 +399,12 @@ void ModuleEditor::MenuBar() {
 					GameObject* newGameObject = App->scene->CreateGameObjectByName("Image", nullptr, false);
 					ComponentTransform2D* transform = new ComponentTransform2D(newGameObject);
 					ComponentImage* defaultImage = new ComponentImage(newGameObject);
+				}
+				if (ImGui::MenuItem("Button")) {
+					GameObject* newGameObject = App->scene->CreateGameObjectByName("Button", nullptr, false);
+					ComponentTransform2D* transform = new ComponentTransform2D(newGameObject);
+					ComponentImage* defaultImage = new ComponentImage(newGameObject);
+					ComponentButton* button = new ComponentButton(newGameObject);
 				}
 				ImGui::EndMenu();
 			}
