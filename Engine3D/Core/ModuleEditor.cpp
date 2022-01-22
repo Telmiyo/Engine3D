@@ -18,6 +18,7 @@
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
 #include "ComponentButton.h"
+#include "ComponentCheckbox.h"
 #include "iconcpp.h"
 #include "icons.h"
 #include "font.h"
@@ -406,6 +407,12 @@ void ModuleEditor::MenuBar() {
 					ComponentImage* defaultImage = new ComponentImage(newGameObject);
 					ComponentButton* button = new ComponentButton(newGameObject);
 				}
+				if (ImGui::MenuItem("Checkbox")) {
+					GameObject* newGameObject = App->scene->CreateGameObjectByName("Checkbox", nullptr, false);
+					ComponentTransform2D* transform = new ComponentTransform2D(newGameObject);
+					ComponentImage* defaultImage = new ComponentImage(newGameObject);
+					ComponentCheckbox* newCheckbox = new ComponentCheckbox(newGameObject);
+				}
 				ImGui::EndMenu();
 			}
 			ImGui::EndMenu();
@@ -618,7 +625,7 @@ void ModuleEditor::UpdateWindowStatus() {
 
 			if (ImGui::TreeNodeEx(go->name.c_str(), nodeFlags))
 			{
-				if (go->name != App->scene->root->name)
+				if (App->scene->root->name != go->name)
 				{
 					if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
 					{
@@ -626,22 +633,22 @@ void ModuleEditor::UpdateWindowStatus() {
 						ImGui::Text("%s", go->name.c_str());
 						ImGui::EndDragDropSource();
 					}
-
-					if (ImGui::BeginDragDropTarget())
-					{
-						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DragDropHierarchy"))
-						{
-							IM_ASSERT(payload->DataSize == sizeof(GameObject*));
-							GameObject* droppedGo = (GameObject*)*(const int*)payload->Data;
-							if (droppedGo)
-							{
-								droppedGo->parent->RemoveChild(droppedGo);
-								go->AttachChild(droppedGo);
-							}
-						}
-						ImGui::EndDragDropTarget();
-					}
 				}
+				if (ImGui::BeginDragDropTarget())
+				{
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("DragDropHierarchy"))
+					{
+						IM_ASSERT(payload->DataSize == sizeof(GameObject*));
+						GameObject* droppedGo = (GameObject*)*(const int*)payload->Data;
+						if (droppedGo)
+						{
+							droppedGo->parent->RemoveChild(droppedGo);
+							go->AttachChild(droppedGo);
+						}
+					}
+					ImGui::EndDragDropTarget();
+				}
+				
 				if (gameobjectSelected != nullptr)
 				{
 					gameobjectSelected->isSelected = true;
