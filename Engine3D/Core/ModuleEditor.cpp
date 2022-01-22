@@ -17,6 +17,7 @@
 #include "ComponentImage.h"
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
+#include "ComponentCheckbox.h"
 #include "iconcpp.h"
 #include "icons.h"
 #include "font.h"
@@ -398,6 +399,12 @@ void ModuleEditor::MenuBar() {
 					GameObject* newGameObject = App->scene->CreateGameObjectByName("Image", nullptr, false);
 					ComponentTransform2D* transform = new ComponentTransform2D(newGameObject);
 					ComponentImage* defaultImage = new ComponentImage(newGameObject);
+				}
+				if (ImGui::MenuItem("Checkbox")) {
+					GameObject* newGameObject = App->scene->CreateGameObjectByName("Checkbox", nullptr, false);
+					ComponentTransform2D* transform = new ComponentTransform2D(newGameObject);
+					ComponentImage* defaultImage = new ComponentImage(newGameObject);
+					ComponentCheckbox* newCheckbox = new ComponentCheckbox(newGameObject);
 				}
 				ImGui::EndMenu();
 			}
