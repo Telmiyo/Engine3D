@@ -528,6 +528,7 @@ void ModuleEditor::UpdateWindowStatus() {
 					}
 				}
 			}
+			ImGui::SameLine();
 			if (ImGui::Button("Assign to checked"))
 			{
 				if (gameobjectSelected)
@@ -538,6 +539,7 @@ void ModuleEditor::UpdateWindowStatus() {
 					}
 				}
 			}
+			ImGui::SameLine();
 			if (ImGui::Button("Assign to unchecked"))
 			{
 				if (gameobjectSelected)
