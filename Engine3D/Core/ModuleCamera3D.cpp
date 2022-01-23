@@ -60,7 +60,7 @@ update_status ModuleCamera3D::Update(float dt)
 			}
 			else
 			{
-				App->editor->gameobjectSelected = nullptr;
+				// App->editor->gameobjectSelected = nullptr;
 			}
 		}
 			
