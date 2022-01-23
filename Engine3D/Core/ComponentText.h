@@ -1,5 +1,5 @@
-#ifndef _COMPONENT_CHECKBOX_H_
-#define _COMPONENT_CHECKBOX_H_
+#ifndef _COMPONENT_TEXT_H_
+#define _COMPONENT_TEXT_H_
 
 #include <string.h>
 #include <vector>
@@ -22,14 +22,12 @@
 #include "ComponentCanvas.h"
 #include "ComponentImage.h"
 
-class ComponentMesh;
-
-class ComponentCheckbox : public Component {
+class ComponentText : public Component {
 public:
 
 public:
-	ComponentCheckbox(GameObject* parent);
-	~ComponentCheckbox();
+	ComponentText(GameObject* parent);
+	~ComponentText();
 
 	bool Update(float dt) override;
 	void OnGui() override;
@@ -37,14 +35,19 @@ public:
 	void OnLoad(const JSONReader& reader) override;
 	void OnSave(JSONWriter& writer) const override;
 
-	inline bool IsChecked()const { return checked; };
-	inline void SetCheckboxState(const bool& newCheckboxState) { checked = newCheckboxState; };
+	inline const char* GetText()const { return text; };
+	inline void SetText(const char* newText) { text = newText; };
+
 
 private:
 	// Ui component visible
 	bool visible = true;
 
-	bool checked = false;
+	// Input text
+	const char* text = nullptr;
+
+	// Imgui input text buffer && set default text
+	char textBuffer[400] = "Default text";
 };
 
 #endif

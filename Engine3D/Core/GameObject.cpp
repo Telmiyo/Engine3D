@@ -8,6 +8,8 @@
 #include "ComponentTransform2D.h"
 #include "ComponentImage.h"
 #include "ComponentButton.h"
+#include "ComponentCheckbox.h"
+#include "ComponentText.h"
 
 #include "ImGui/imgui.h"
 
@@ -242,6 +244,18 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 			const rapidjson::Value& itemButton = itemComponents["Button"];
 			CreateComponent<ComponentButton>();
 			GetComponent<ComponentButton>()->OnLoad(itemButton);
+		}
+		if (itemComponents.HasMember("Checkbox"))
+		{
+			const rapidjson::Value& itemCheckbox = itemComponents["Checkbox"];
+			CreateComponent<ComponentCheckbox>();
+			GetComponent<ComponentCheckbox>()->OnLoad(itemCheckbox);
+		}
+		if (itemComponents.HasMember("Text"))
+		{
+			const rapidjson::Value& itemText = itemComponents["Text"];
+			CreateComponent<ComponentText>();
+			GetComponent<ComponentText>()->OnLoad(itemText);
 		}
 	}
 
