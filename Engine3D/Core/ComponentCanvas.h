@@ -18,4 +18,7 @@ public:
 
 	void GetRealPosition(float2& position, bool ignoreCanvas = false) override;
 	void GetRealSize(float2& realSize) override;
+
+	void OnLoad(const JSONReader& reader) override;
+	void OnSave(JSONWriter& writer) const override;
 };

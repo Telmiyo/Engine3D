@@ -251,6 +251,16 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 			CreateComponent<ComponentCheckbox>();
 			GetComponent<ComponentCheckbox>()->OnLoad(itemCheckbox);
 		}
+		if (itemComponents.HasMember("Canvas"))
+		{
+			const rapidjson::Value& itemCanvas = itemComponents["Canvas"];
+			CreateComponent<ComponentCanvas>();
+			GetComponent<ComponentCanvas>()->OnLoad(itemCanvas);
+			if (GetComponent<ComponentTransform>() != nullptr)
+			{
+				DeleteComponent(GetComponent<ComponentTransform>());
+			}
+		}
 		if (itemComponents.HasMember("Text"))
 		{
 			const rapidjson::Value& itemText = itemComponents["Text"];
