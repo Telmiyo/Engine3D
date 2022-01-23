@@ -80,7 +80,7 @@ void GameObject::OnGui()
 {
 	if (App->scene->root != this)
 	{
-		ImGui::Text("%s", name.c_str());
+		//ImGui::Text("%s", name.c_str());
 		ImGui::Separator();
 
 		for (Component* component : components)

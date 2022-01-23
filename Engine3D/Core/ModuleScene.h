@@ -30,6 +30,7 @@ public:
 	void DuplicateGameObject(GameObject* parent = nullptr);
 	void CreateRoot();
 	
+	GameObject* FindObjectByName(std::string name);
 private:
 	int emptyCounter = 0;
 

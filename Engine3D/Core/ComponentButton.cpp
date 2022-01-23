@@ -9,13 +9,12 @@ ComponentButton::ComponentButton(GameObject* parent) : Component(parent)
 	componentType = ComponentType::COMPONENT_BUTTON;
 	buttonState = ButtonState::IDLE;
 
-	callback = []() {
-		LOG("HELLO");
-
+	callback = [](bool loaded) {
 		// FADE OUT
 		App->ui->fadeOut = !App->ui->fadeOut;
-		App->import->LoadGeometryCustom("Baker_House");
-		
+		if (!loaded)
+			App->import->LoadGeometryCustom("Baker_House");
+		loaded = true;
 	};
 }
 
@@ -39,7 +38,8 @@ bool ComponentButton::Update(float dt)
 	{
 		// Button pressed o
 		if (tmp->CheckMouseInsideBounds()) {
-			callback();
+			callback(loadedHouse);
+			loadedHouse = true;
 			buttonState = ButtonState::IDLE;
 		}
 		

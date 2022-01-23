@@ -37,6 +37,7 @@ public:
 	void OnSave(JSONWriter& writer) const override;
 
 	ComponentMesh* plane = nullptr;
+	float4 imageColor = { 1.000f,1.000f, 1.000f, 1.000f };
 private:
 	std::string texturePath;
 	uint textureBufferId = 0;
@@ -45,7 +46,6 @@ private:
 	//std::string textureName;
 	//uint textureId = 0, width = 0, height = 0;
 
-	float4 imageColor = { 1.000f,1.000f, 1.000f, 1.000f };
 
 	float4x4 transform;
 

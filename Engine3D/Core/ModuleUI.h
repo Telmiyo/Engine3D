@@ -2,8 +2,10 @@
 #include "Module.h"
 #include "Globals.h"
 #include "Light.h"
+#include "GameObject.h"
 
 #include "glew.h"
+#include <vector>
 
 class ComponentCamera;
 
@@ -34,4 +36,11 @@ public:
 	GLint uiCameraViewport[4] = {0, 0, 0, 0};
 
 	bool fadeOut = false;
+	bool options = false;
+	GameObject* canvas = nullptr;
+	GameObject* win = nullptr;
+	GameObject* text = nullptr;
+	GameObject* checkbox = nullptr;
+
+	std::vector<GameObject*> optionsList;
 };

@@ -89,7 +89,7 @@ bool ModuleImport::LoadGeometry(const char* path) {
 bool ModuleImport::LoadGeometryCustom(std::string name)
 {
 	MeshFile* file = App->resources->LoadMeshFile(name);
-	GameObject* gameObject = App->scene->CreateGameObjectByName(name);
+	GameObject* gameObject = App->scene->CreateGameObjectByName(name, App->scene->root,true);
 
 	ComponentMesh* m = new ComponentMesh(gameObject);
 	m->SetFileValues(file);

@@ -770,7 +770,10 @@ void ModuleEditor::UpdateWindowStatus() {
 void ModuleEditor::InspectorGameObject()
 {
 	if (gameobjectSelected)
+	{
+		ImGui::InputText("NAME:", (char*)gameobjectSelected->name.c_str(), 20);
 		gameobjectSelected->OnGui();
+	}
 }
 
 bool ModuleEditor::isMouseOnScene()
