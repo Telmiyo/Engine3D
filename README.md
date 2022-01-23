@@ -1,6 +1,8 @@
 # Amapola Engine
 3D engine project created for "Videogame's Engine" subject at the Bachelor's degree in Video Game Design and Development in CITM.
 
+[GitHub](https://github.com/Telmiyo/Engine3D)
+
 ## Members
  - David Montufo: ([Montuuh](https://github.com/Montuuh))
  - Telmo Beroiz: ([Telmiyo](https://github.com/Telmiyo))
@@ -21,7 +23,7 @@
 - A canvas parent must be created in order UI elements can be drawn
 ### Transform 2D
  - Every component has the transform 2d component
- - At the inspector, the user can modify the position, the rotation, the pivot, the size and the desired anchor
+ - At the inspector, the user can modify the position, the rotation, the size and the desired anchor
 ### Image
  - In order to have a ui component rendered, it must have a component image
  - You can drag & drop the desired texture to the inspector, or select it by the texture resources folder
