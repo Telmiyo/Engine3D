@@ -22,25 +22,6 @@ ComponentButton::~ComponentButton()
 bool ComponentButton::Update(float dt)
 {
 	ComponentTransform2D* tmp = owner->GetComponent<ComponentTransform2D>();
-	float2 pos;
-	float2 size;
-	tmp->GetBoundingBox(pos, size);
-
-	glBegin(GL_LINES);
-	glColor3f(1, 0, 0);
-	glVertex3f(pos.x, pos.y + size.y, 0.f);
-	glVertex3f(pos.x + size.x, pos.y + size.y, 0.f);
-	
-	glVertex3f(pos.x + size.x, pos.y + size.y, 0.f);
-	glVertex3f(pos.x + size.x, pos.y,0.f);
-
-	glVertex3f(pos.x + size.x, pos.y, 0.f);
-	glVertex3f(pos.x, pos.y , 0.f);
-
-	glVertex3f(pos.x, pos.y, 0.f);
-	glVertex3f(pos.x, pos.y + size.y, 0.f);
-
-	glEnd();
 
 	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT)
 	{
@@ -56,9 +37,9 @@ bool ComponentButton::Update(float dt)
 			callback();
 		}
 	}
-	//else if (CheckMouseInsideBounds()) {
+	else if (tmp->CheckMouseInsideBounds()) {
 		// Hover
-	//}
+	}
 
 	return true;
 }
