@@ -178,8 +178,8 @@
                             "Components": {
                                 "Transform 2D": {
                                     "Position": [
-                                        2.0,
-                                        0.0
+                                        18.0,
+                                        19.0
                                     ],
                                     "Pivot": [
                                         0.5,
@@ -200,55 +200,19 @@
                                         73,
                                         74
                                     ],
-                                    "Texture ID": 14,
+                                    "Texture ID": 9,
                                     "Image color": [
                                         1.0,
                                         1.0,
                                         1.0,
-                                        255.0
+                                        1.0
                                     ]
+                                },
+                                "Window": {
+                                    "Smoothness": 1.0
                                 }
                             },
                             "Children": [
-                                {
-                                    "Name": "VsyncText",
-                                    "UUID": 0,
-                                    "Parent UUID": 0,
-                                    "Components": {
-                                        "Transform 2D": {
-                                            "Position": [
-                                                -111.0,
-                                                -72.0
-                                            ],
-                                            "Pivot": [
-                                                0.5,
-                                                0.5
-                                            ],
-                                            "Rotation": [],
-                                            "Size": [
-                                                99.0,
-                                                56.0
-                                            ],
-                                            "Anchor": [
-                                                4
-                                            ]
-                                        },
-                                        "Image": {
-                                            "Texture name": "vsync.png",
-                                            "Size": [
-                                                160,
-                                                100
-                                            ],
-                                            "Texture ID": 9,
-                                            "Image color": [
-                                                1.0,
-                                                1.0,
-                                                1.0,
-                                                255.0
-                                            ]
-                                        }
-                                    }
-                                },
                                 {
                                     "Name": "OptionCheckbox",
                                     "UUID": 0,
@@ -283,13 +247,52 @@
                                                 1.0,
                                                 1.0,
                                                 1.0,
-                                                255.0
+                                                1.0
                                             ]
                                         },
                                         "Checkbox": {
                                             "Checkbox state": false,
                                             "Unchecked Texture": "checkbox_off.png",
                                             "Checked Texture": "checkbox_on.png"
+                                        }
+                                    }
+                                },
+                                {
+                                    "Name": "VsyncText",
+                                    "UUID": 0,
+                                    "Parent UUID": 0,
+                                    "Components": {
+                                        "Transform 2D": {
+                                            "Position": [
+                                                -111.0,
+                                                -72.0
+                                            ],
+                                            "Pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "Rotation": [],
+                                            "Size": [
+                                                99.0,
+                                                56.0
+                                            ],
+                                            "Anchor": [
+                                                4
+                                            ]
+                                        },
+                                        "Image": {
+                                            "Texture name": "vsync.png",
+                                            "Size": [
+                                                160,
+                                                100
+                                            ],
+                                            "Texture ID": 13,
+                                            "Image color": [
+                                                1.0,
+                                                1.0,
+                                                1.0,
+                                                1.0
+                                            ]
                                         }
                                     }
                                 }
