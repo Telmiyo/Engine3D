@@ -28,7 +28,7 @@ public:
 
 private:
 
-	float smoothness = 10.f;
+	float smoothness = 1.f;
 };
 
 

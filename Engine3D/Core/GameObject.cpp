@@ -10,6 +10,7 @@
 #include "ComponentButton.h"
 #include "ComponentCheckbox.h"
 #include "ComponentText.h"
+#include "ComponentWindow.h"
 
 #include "ImGui/imgui.h"
 
@@ -266,6 +267,12 @@ void GameObject::OnLoad(const rapidjson::GenericObject<true, rapidjson::Value>& 
 			const rapidjson::Value& itemText = itemComponents["Text"];
 			CreateComponent<ComponentText>();
 			GetComponent<ComponentText>()->OnLoad(itemText);
+		}
+		if (itemComponents.HasMember("Window"))
+		{
+			const rapidjson::Value& itemWindow = itemComponents["Window"];
+			CreateComponent<ComponentWindow>();
+			GetComponent<ComponentWindow>()->OnLoad(itemWindow);
 		}
 	}
 
