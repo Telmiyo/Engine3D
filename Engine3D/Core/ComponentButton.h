@@ -1,5 +1,4 @@
-#ifndef _COMPONENT_BUTTON_H_
-#define _COMPONENT_BUTTON_H_
+#pragma once
 
 #include <string.h>
 #include <vector>
@@ -53,5 +52,3 @@ private:
 
 	std::function<void()> callback;
 };
-
-#endif

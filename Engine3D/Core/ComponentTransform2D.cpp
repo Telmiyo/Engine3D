@@ -7,6 +7,8 @@
 #include "ModuleScene.h"
 #include "ModuleCamera3D.h"
 #include "ComponentCanvas.h"
+#include "ComponentCamera.h"
+#include "ComponentMesh.h"
 #include "ModuleUI.h"
 
 #include "ComponentImage.h"
@@ -59,13 +61,6 @@ void ComponentTransform2D::OnGui()
 		}
 	}
 }
-
-void ComponentTransform2D::GetScreenRect(float2& a, float2& b)
-{
-	a = { 0, 0 };
-	b = { 100, 100 };
-}
-
 void ComponentTransform2D::SetPosition(const float2& newPosition)
 {
 	position = newPosition;
@@ -178,7 +173,7 @@ void ComponentTransform2D::GetRealSize(float2& realSize)
 
 void ComponentTransform2D::GetBoundingBox(float2& realPos, float2& realSize)
 {
-	float propX = App->ui->uiCameraViewport[2] / App->editor->lastViewportSize.x;
+	/*float propX = App->ui->uiCameraViewport[2] / App->editor->lastViewportSize.x;
 	float propY = App->ui->uiCameraViewport[3] / App->editor->lastViewportSize.y;
 
 	GetRealPosition(realPos, true);
@@ -188,15 +183,28 @@ void ComponentTransform2D::GetBoundingBox(float2& realPos, float2& realSize)
 	realSize /= 2;
 	realPos -= realSize;
 
-	realPos.x -= App->editor->viewport.x;
-	realPos.y -= App->editor->viewport.y;
+	//realPos.x -= App->editor->viewport.x;
+	//realPos.y -= App->editor->viewport.y;
 	realPos.y += 23;
-	realPos.y -= realSize.y / 2;
+	realPos.y -= realSize.y / 2;*/
+}
+
+float2 ComponentTransform2D::GetCanvasCenter()
+{
+	ComponentCanvas* canvas = owner->parent->GetComponent<ComponentCanvas>();
+	if (canvas != nullptr)
+		return canvas->GetAnchorPosition(Anchor::CENTER);
+	else
+	{
+		ComponentTransform2D* trans = owner->parent->GetComponent<ComponentTransform2D>();
+		if (trans == nullptr) return { 0, 0 };
+		else return trans->GetCanvasCenter();
+	}
 }
 
 bool ComponentTransform2D::CheckMouseInsideBounds()
 {
-	ComponentTransform2D* tmp = owner->GetComponent<ComponentTransform2D>();
+	/*ComponentTransform2D* tmp = owner->GetComponent<ComponentTransform2D>();
 	float2 pos;
 	float2 size;
 	tmp->GetBoundingBox(pos, size);
@@ -214,6 +222,36 @@ bool ComponentTransform2D::CheckMouseInsideBounds()
 		}
 	}
 
+	return false;*/
+
+	ComponentImage* componentImage = owner->GetComponent<ComponentImage>();
+	ComponentMesh* mesh = componentImage->plane;
+
+	//mesh->GenerateBounds(true);
+	//mesh->UpdateBounds(componentImage);
+	//mesh->DrawAABB();
+
+	float normalized_x = ( - 1.0 + 2.0 * App->editor->onSceneMousePos.x / App->editor->lastViewportSize.x) * 2;
+	float normalized_y = (1.0 - 2.0 * App->editor->onSceneMousePos.y / App->editor->lastViewportSize.y) * 2;
+
+	LineSegment picking = App->camera->cameraFrustum.UnProjectLineSegment(normalized_x, normalized_y);
+	float x, y;
+	float2 realPos;
+	GetRealPosition(realPos);
+	float2 canvasCenter = GetCanvasCenter();
+	x = (realPos.x - canvasCenter.x) / App->editor->lastViewportSize.x;
+	y = (realPos.y - canvasCenter.y) / App->editor->lastViewportSize.x;
+	//mesh->localAABB.minPoint.x *= x;
+	//mesh->localAABB.minPoint.y *= y;
+	//mesh->localAABB.maxPoint.x *= x;
+	//mesh->localAABB.maxPoint.y *= y;
+	//mesh->localAABB.Scale(mesh->localAABB.CenterPoint(), { x, y, 1 });
+	mesh->localAABB.Translate({ x, y ,0 });
+	bool hit = picking.Intersects(mesh->localAABB);
+	mesh->localAABB.Translate({ -x, -y ,0 });
+	if (hit) {
+		return true;
+	}
 	return false;
 }
 

@@ -9,6 +9,7 @@
 
 #include "Math/float2.h"
 #include "Math/float4.h"
+#include "Math/float4x4.h"
 #include "Globals.h"
 #include <string.h>
 #include <vector>
@@ -28,11 +29,12 @@ public:
 	inline void SetTexture(const TextureObject& newTexture) { texture = newTexture; };
 	void SetTextureById(const int id);
 
+	float4x4 GetTransform();
 	void OnLoad(const JSONReader& reader) override;
 	void OnSave(JSONWriter& writer) const override;
 
-private:
 	ComponentMesh* plane = nullptr;
+private:
 	std::string texturePath;
 	uint textureBufferId = 0;
 
@@ -41,6 +43,8 @@ private:
 	//uint textureId = 0, width = 0, height = 0;
 
 	float4 imageColor = { 1.000f,1.000f, 1.000f, 1.000f };
+
+	float4x4 transform;
 
 	TextureObject texture;
 };
