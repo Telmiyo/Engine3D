@@ -22,6 +22,7 @@
     <ClCompile Include="Core\ComponentMesh.cpp" />
     <ClCompile Include="Core\ComponentText.cpp" />
     <ClCompile Include="Core\ComponentTransform2D.cpp" />
+    <ClCompile Include="Core\ComponentWindow.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Core\ModuleFileSystem.cpp" />
     <ClCompile Include="Core\ImGui\imgui.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="Core\ComponentMesh.h" />
     <ClInclude Include="Core\ComponentText.h" />
     <ClInclude Include="Core\ComponentTransform2D.h" />
+    <ClInclude Include="Core\ComponentWindow.h" />
     <ClInclude Include="Core\DevIL\include\config.h" />
     <ClInclude Include="Core\DevIL\include\devil_internal_exports.h" />
     <ClInclude Include="Core\DevIL\include\il.h" />

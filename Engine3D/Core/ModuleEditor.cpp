@@ -17,6 +17,7 @@
 #include "ComponentImage.h"
 #include "ComponentCanvas.h"
 #include "ComponentTransform2D.h"
+#include "ComponentWindow.h"
 #include "ComponentButton.h"
 #include "ComponentCheckbox.h"
 #include "ComponentText.h"
@@ -419,6 +420,12 @@ void ModuleEditor::MenuBar() {
 					ComponentTransform2D* transform = new ComponentTransform2D(newGameObject);
 					ComponentText* newText = new ComponentText(newGameObject);
 				}
+				if (ImGui::MenuItem("Option Window")) {
+					GameObject* newGameObject = App->scene->CreateGameObjectByName("Window", nullptr, false);
+					ComponentTransform2D* transform = new ComponentTransform2D(newGameObject);
+					ComponentImage* defaultImage = new ComponentImage(newGameObject);
+					ComponentWindow* window = new ComponentWindow(newGameObject);
+				}
 				ImGui::EndMenu();
 			}
 			ImGui::EndMenu();
@@ -773,6 +780,13 @@ bool ModuleEditor::isMouseOnScene()
 	{
 		return false;
 	}
+}
+
+void ModuleEditor::BuildDemoScene()
+{
+
+
+
 }
 
 ModuleEditor::Grid::~Grid()

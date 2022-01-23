@@ -80,3 +80,17 @@ void ComponentCanvas::GetRealSize(float2& realSize)
 	realSize.x = App->editor->lastViewportSize.x * propX;
 	realSize.y = App->editor->lastViewportSize.y * propY;
 }
+
+void ComponentCanvas::OnLoad(const JSONReader& reader)
+{
+}
+
+void ComponentCanvas::OnSave(JSONWriter& writer) const
+{
+	writer.String("Canvas");
+	writer.StartObject();
+
+	// Saving button state
+
+	writer.EndObject();
+}

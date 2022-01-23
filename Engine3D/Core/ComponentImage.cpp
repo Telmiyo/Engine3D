@@ -169,6 +169,7 @@ void ComponentImage::OnLoad(const JSONReader& reader)
 	{
 		const rapidjson::Value& itemTextureName = reader["Texture name"];
 		texture.name = itemTextureName.GetString();
+		App->textures->Load(texture.name);
 	}
 
 	// Loading texture size
