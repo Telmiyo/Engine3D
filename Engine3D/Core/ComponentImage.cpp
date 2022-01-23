@@ -60,7 +60,6 @@ bool ComponentImage::Update(float dt)
 	float3 rotation = { cTransform->rotation.x,cTransform->rotation.y,cTransform->rotation.z };
 	Quat rotationQuat = Quat::FromEulerXYZ(DEGTORAD * rotation.x, DEGTORAD * rotation.y, DEGTORAD * rotation.z);
 
-	float4x4 transform;
 	transform = transform.FromTRS(pos, Quat::identity, size);
 
 	transform = transform * rotationQuat;
@@ -154,6 +153,13 @@ void ComponentImage::OnGui()
 		ImGui::SameLine();
 		ImGui::Text("Image color");
 	}
+}
+
+float4x4 ComponentImage::GetTransform()
+{
+	float4x4 ret = transform.ScaleAlongAxis(float3::unitX, 1 * App->editor->lastViewportSize.x);
+	ret = ret.ScaleAlongAxis(float3::unitY, 1 * App->editor->lastViewportSize.y);
+	return transform;
 }
 
 void ComponentImage::OnLoad(const JSONReader& reader)

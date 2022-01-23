@@ -6,6 +6,7 @@
 #include "Math/float2.h"
 #include "MathGeoLib.h"
 #include "Geometry/AABB.h"
+#include "ComponentImage.h"
 #include "par_shapes.h"
 #include "MeshFile.h"
 
@@ -28,8 +29,8 @@ public:
 
 	void GenerateBuffers();
 	void ComputeNormals();
-	void GenerateBounds();
-	void UpdateBounds();
+	void GenerateBounds(bool forUI = false);
+	void UpdateBounds(ComponentImage* image = nullptr);
 	void DrawNormals() const;
 	float3 GetCenterPointInWorldCoords() const;
 	inline float GetSphereRadius() const { return radius; }

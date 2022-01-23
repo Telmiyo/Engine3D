@@ -27,7 +27,6 @@ public:
 	void OnSave(JSONWriter& writer) const override;
 
 public:
-	ComponentCamera* uiCamera;
 
 	GLint uiCameraViewport[4] = {0, 0, 0, 0};
 };

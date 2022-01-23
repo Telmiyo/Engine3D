@@ -8,9 +8,12 @@
 #include "ComponentTransform.h"
 #include "ResourceManager.h"
 #include "GameObject.h"
+#include "ModuleEditor.h"
 #include "ImGui/imgui.h"
 #include "Geometry/Sphere.h"
 #include "par_shapes.h"
+#include "ComponentTransform2D.h"
+#include "ComponentImage.h"
 
 
 ComponentMesh::ComponentMesh(GameObject* parent) : Component(parent) {
@@ -53,7 +56,7 @@ void ComponentMesh::CopyParMesh(par_shapes_mesh* parMesh)
 
 	// Copy Texture Coords
 	// TexCoords(u,v|u,v|u,v)
-	for (size_t i = 0; i < numVertices * 2; i +=2)
+	for (size_t i = 0; i < numVertices * 2; i += 2)
 	{
 		if (parMesh->tcoords != nullptr) {
 			float u = *(parMesh->tcoords + i);
@@ -128,31 +131,49 @@ void ComponentMesh::ComputeNormals()
 	int kk = 0;
 }
 
-void ComponentMesh::GenerateBounds()
+void ComponentMesh::GenerateBounds(bool forUI)
 {
+	std::vector<float3> scaledVertices;
+
+	for (int i = 0; i < vertices.size(); i++) {
+		float3 v = vertices[i];
+		if (forUI) {
+			//v.x *= App->editor->lastViewportSize.x;
+			//v.y *= App->editor->lastViewportSize.y;
+		}
+
+		scaledVertices.push_back(v);
+	}
 
 	localAABB.SetNegativeInfinity();
-	localAABB.Enclose(&vertices[0], vertices.size());
+	localAABB.Enclose(&scaledVertices[0], scaledVertices.size());
 
 	Sphere sphere;
 	sphere.r = 0.f;
 	sphere.pos = localAABB.CenterPoint();
 	sphere.Enclose(localAABB);
 
-
-
 	radius = sphere.r;
 	centerPoint = sphere.pos;
 }
 
-void ComponentMesh::UpdateBounds()
+void ComponentMesh::UpdateBounds(ComponentImage* image)
 {
+	ComponentTransform* three;
+
 	obb.SetFrom(localAABB);
-	obb.Transform(owner->GetComponent<ComponentTransform>()->transformMatrix);
+
+	if (image == nullptr) {
+		three = owner->GetComponent<ComponentTransform>();
+		obb.Transform(three->transformMatrix);
+	}
+	else 
+	{
+		obb.Transform(image->GetTransform());
+	}
 
 	localAABB.SetNegativeInfinity();
 	localAABB.Enclose(obb);
-
 }
 
 void ComponentMesh::DrawNormals() const

@@ -1,5 +1,4 @@
-#ifndef _COMPONENT_TRANSFORM_2D_H_
-#define _COMPONENT_TRANSFORM_2D_H_
+#pragma once
 
 #include "Component.h"
 #include "Math/float2.h"
@@ -28,14 +27,14 @@ public:
 	void OnLoad(const JSONReader& reader) override;
 	void OnSave(JSONWriter& writer) const override;
 
-	void GetScreenRect(float2& a, float2& b);
-
+	// Setters
 	void SetPosition(const float2& newPosition);
 	void SetPivot(const float2& newPivot);
 	void SetRotation(const float3& newRotation);
 	void SetSize(const float2& newSize);
 	void SetAnchor(const Anchor& newAnchor);
 
+	// Getters
 	inline float2 GetPosition() const { return position; };
 	inline float2 GetPivot() const { return pivot; };
 	inline float3 GetRotation() const { return rotation; };
@@ -45,6 +44,9 @@ public:
 	virtual void GetRealPosition(float2& position, bool ignoreCanvas = false);
 	virtual void GetRealSize(float2& realSize);
 	void GetBoundingBox(float2& position, float2& size);
+
+	float2 GetCanvasCenter();
+	
 	bool CheckMouseInsideBounds();
 
 	float2 GetAnchorPosition(Anchor anchor);
@@ -57,5 +59,3 @@ public:
 
 	Anchor anchor = Anchor::CENTER;
 };
-
-#endif
