@@ -24,6 +24,7 @@ public:
 	void OnLoad(const JSONReader& reader) override;
 
 	GameObject* GetGameObjectMousePicked();
+	float2 WorldToScreen(float3 pos);
 
 	float3 right, up, front, position, reference;
 	Frustum cameraFrustum;

@@ -43,7 +43,6 @@ public:
 
 	virtual void GetRealPosition(float2& position, bool ignoreCanvas = false);
 	virtual void GetRealSize(float2& realSize);
-	void GetBoundingBox(float2& position, float2& size);
 
 	float2 GetCanvasCenter();
 	

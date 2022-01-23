@@ -22,6 +22,8 @@
 #include "ComponentCanvas.h"
 #include "ComponentImage.h"
 
+#include <functional>
+
 class ComponentMesh;
 
 class ComponentCheckbox : public Component {
@@ -40,11 +42,19 @@ public:
 	inline bool IsChecked()const { return checked; };
 	inline void SetCheckboxState(const bool& newCheckboxState) { checked = newCheckboxState; };
 
+	void SetCheckedTexture(TextureObject id);
+	void SetUncheckedTexture(TextureObject id);
+
 private:
 	// Ui component visible
 	bool visible = true;
 
 	bool checked = false;
+
+	std::function<void(bool)> callback;
+
+	TextureObject uncheckedTexture;
+	TextureObject checkedTexture;
 };
 
 #endif

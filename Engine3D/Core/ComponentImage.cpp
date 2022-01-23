@@ -157,8 +157,8 @@ void ComponentImage::OnGui()
 
 float4x4 ComponentImage::GetTransform()
 {
-	float4x4 ret = transform.ScaleAlongAxis(float3::unitX, 1 * App->editor->lastViewportSize.x);
-	ret = ret.ScaleAlongAxis(float3::unitY, 1 * App->editor->lastViewportSize.y);
+	float4x4 ret = transform.ScaleAlongAxis(float3::unitX, 1);
+	ret = ret.ScaleAlongAxis(float3::unitY, 1);
 	return transform;
 }
 

@@ -44,8 +44,6 @@ public:
 	inline ButtonState GetState()const { return buttonState; };
 	inline void SetState(const ButtonState& newButtonState) { buttonState = newButtonState; };
 
-	bool CheckMouseInsideBounds();
-
 private:
 
 	ButtonState buttonState = ButtonState::DISABLED;

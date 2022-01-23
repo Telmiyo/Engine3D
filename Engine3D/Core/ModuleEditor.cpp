@@ -521,6 +521,26 @@ void ModuleEditor::UpdateWindowStatus() {
 					}
 				}
 			}
+			if (ImGui::Button("Assign to checked"))
+			{
+				if (gameobjectSelected)
+				{
+					ComponentCheckbox* checkbox = gameobjectSelected->GetComponent<ComponentCheckbox>();
+					if (checkbox) {
+						checkbox->SetCheckedTexture(t.second);
+					}
+				}
+			}
+			if (ImGui::Button("Assign to unchecked"))
+			{
+				if (gameobjectSelected)
+				{
+					ComponentCheckbox* checkbox = gameobjectSelected->GetComponent<ComponentCheckbox>();
+					if (checkbox) {
+						checkbox->SetUncheckedTexture(t.second);
+					}
+				}
+			}
 			ImGui::PopID();
 		}
 		ImGui::End();
@@ -719,8 +739,8 @@ void ModuleEditor::UpdateWindowStatus() {
 			App->camera->RecalculateProjection();
 		}
 
-		onSceneMousePos.x = App->input->GetMouseX() - ImGui::GetCurrentWindow()->Pos.x;
-		onSceneMousePos.y = App->input->GetMouseY() - ImGui::GetCurrentWindow()->Pos.y - 23;
+		onSceneMousePos.x = App->input->GetMouseX() - GetScenePosition().x;
+		onSceneMousePos.y = App->input->GetMouseY() - GetScenePosition().y - 23;
 
 		if (onSceneMousePos.x <= 0) onSceneMousePos.x = 0;
 		else if (onSceneMousePos.x > ImGui::GetCurrentWindow()->Size.x) onSceneMousePos.x = ImGui::GetCurrentWindow()->Size.x;
