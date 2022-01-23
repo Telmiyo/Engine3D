@@ -26,8 +26,11 @@ public:
 	void OnGui() override;
 
 	inline TextureObject GetTexture() const { return texture; };
+	inline float GetOpacity() { return imageColor.w; }
 	inline void SetTexture(const TextureObject& newTexture) { texture = newTexture; };
 	void SetTextureById(const int id);
+	void SetOpacity(float alpha);
+
 
 	float4x4 GetTransform();
 	void OnLoad(const JSONReader& reader) override;

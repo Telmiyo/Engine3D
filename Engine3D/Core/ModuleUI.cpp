@@ -9,7 +9,8 @@
 #include "ModuleEditor.h"
 
 #include "ComponentTransform2D.h"
-
+#include "ComponentCanvas.h"
+#include "ComponentImage.h"
 #include "ComponentCamera.h"
 
 ModuleUI::ModuleUI(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -58,6 +59,11 @@ update_status ModuleUI::Update(float dt)
 	glTranslatef(uiCamera->cameraFrustum.pos.x, uiCamera->cameraFrustum.pos.y, uiCamera->cameraFrustum.pos.z);
 	glColor3f(1, 0, 0);
 	gluSphere(quad, 2, 100, 20);*/
+
+	if (fadeOut)
+	{
+		FadeOut();
+	}
 
 	float3 right = App->camera->right;
 	float3 up = App->camera->up;
@@ -165,4 +171,32 @@ void ModuleUI::OnLoad(const JSONReader& reader)
 
 void ModuleUI::OnSave(JSONWriter& writer) const
 {
+}
+
+void ModuleUI::FadeOut()
+{
+	for (auto o : App->scene->gameObjectList)
+	{
+		if (o->GetComponent<ComponentTransform2D>() != nullptr && o->GetComponent<ComponentImage>() != nullptr)
+		{
+			if (o->GetComponent<ComponentImage>()->GetOpacity() <= 0)
+			{
+				fadeOut = false;
+			}
+			o->GetComponent<ComponentImage>()->SetOpacity(0.01f);
+
+		}
+
+	}
+
+}
+
+void ModuleUI::FadeIn()
+{
+	for (auto o : App->scene->gameObjectList)
+	{
+		if (o->GetComponent<ComponentTransform2D>() != nullptr && o->GetComponent<ComponentImage>() != nullptr)
+			o->GetComponent<ComponentImage>()->SetOpacity(-0.01f);
+
+	}
 }

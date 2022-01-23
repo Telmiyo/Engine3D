@@ -26,7 +26,12 @@ public:
 	void OnLoad(const JSONReader& reader) override;
 	void OnSave(JSONWriter& writer) const override;
 
+	void FadeOut();
+	void FadeIn();
+
 public:
 
 	GLint uiCameraViewport[4] = {0, 0, 0, 0};
+
+	bool fadeOut = false;
 };

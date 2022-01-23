@@ -14,7 +14,7 @@
 #include "ModuleCamera3D.h"
 #include "ModuleRenderer3D.h"
 #include "Globals.h"
-
+#include "ModuleUI.h"
 #include "Component.h"
 #include "ComponentMesh.h"
 #include "ComponentTransform2D.h"
@@ -40,10 +40,10 @@ public:
 
 	void OnLoad(const JSONReader& reader) override;
 	void OnSave(JSONWriter& writer) const override;
+	
 
 	inline ButtonState GetState()const { return buttonState; };
 	inline void SetState(const ButtonState& newButtonState) { buttonState = newButtonState; };
-
 private:
 
 	ButtonState buttonState = ButtonState::DISABLED;
