@@ -15,6 +15,7 @@
 #include "ModuleFileSystem.h"
 #include <stack>
 #include <queue>
+#include <algorithm>
 
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -24,13 +25,13 @@ bool ModuleScene::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-	
+
 	CreateRoot();
-	
-	
+
+
 	//Loading house and textures since beginning
 	OnLoad("scene1.scene");
-	
+
 	return ret;
 }
 
@@ -169,7 +170,7 @@ void ModuleScene::OnLoad(std::string scene)
 			rootList.push_back(root);
 			gameObjectList.clear();
 			gameObjectList.push_back(root);
-			
+
 
 			if (config.HasMember(sceneName.c_str()))
 			{
@@ -189,11 +190,33 @@ void ModuleScene::OnLoad(std::string scene)
 						root->OnLoad(itemGameObjs.GetObjectJSON());
 				}
 			}
-		
+
 
 			LOG("Scene: '%s' succesfully loaded", scene.c_str());
 		}
 	}
+
+	std::queue<GameObject*> S;
+	for (GameObject* child : App->scene->root->children)
+	{
+		if (child->active)
+			S.push(child);
+	}
+
+	while (!S.empty())
+	{
+		GameObject* go = S.front();
+		if (go->GetComponent<ComponentTransform2D>() != nullptr) {
+			//std::reverse(go->children.begin(), go->children.end());
+		}
+		S.pop();
+		for (GameObject* child : go->children)
+		{
+			if (child->active)
+				S.push(child);
+		}
+	}
+
 	RELEASE_ARRAY(buffer);
 }
 
@@ -258,9 +281,9 @@ GameObject* ModuleScene::CreateChildrenGameObject(GameObject* selectedGameObject
 
 		LOG("Creating empty game object at %s", selectedGameObject->name.c_str());
 		selectedGameObject->AttachChild(temp);
-		
+
 	}
-	
+
 
 	return temp;
 }
@@ -270,7 +293,7 @@ GameObject* ModuleScene::CreateCamera(GameObject* parent)
 	GameObject* camera = CreateGameObjectByName("Camera", root);
 	camera->CreateComponent<ComponentCamera>();
 	ComponentMesh* m = new ComponentMesh(camera, ComponentMesh::Shape::CUBE);
-	
+
 	return camera;
 }
 
@@ -367,6 +390,30 @@ void ModuleScene::CreateRoot()
 	{
 		gameObjectList.push_back(child);
 	}
+}
+
+GameObject* ModuleScene::FindObjectByName(std::string name)
+{
+	std::queue<GameObject*> S;
+	for (GameObject* child : App->scene->root->children)
+	{
+		S.push(child);
+	}
+
+	while (!S.empty())
+	{
+		GameObject* go = S.front();
+		if (go->name == name)
+			return go;
+
+		S.pop();
+		for (GameObject* child : go->children)
+		{
+			S.push(child);
+		}
+	}
+
+	return nullptr;
 }
 
 void ModuleScene::DuplicateGameObject(GameObject* parent)

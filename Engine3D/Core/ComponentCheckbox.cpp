@@ -9,6 +9,8 @@ ComponentCheckbox::ComponentCheckbox(GameObject* parent) : Component(parent)
 
 	callback = [](bool checked) {
 		//LOG("%s", checked ? "true" : "false");
+		LOG("CHECKBOX");
+		App->renderer3D->vsyncActive = !App->renderer3D->vsyncActive;
 	};
 }
 
@@ -83,6 +85,18 @@ void ComponentCheckbox::OnLoad(const JSONReader& reader)
 		const rapidjson::Value& itemCheckboxState = reader["Checkbox state"];
 		checked = itemCheckboxState.GetBool();
 	}
+	if (reader.HasMember("Unchecked Texture"))
+	{
+		const rapidjson::Value& itemTextureName = reader["Unchecked Texture"];
+		uncheckedTexture.name = itemTextureName.GetString();
+		uncheckedTexture = App->textures->Load(uncheckedTexture.name);
+	}
+	if (reader.HasMember("Checked Texture"))
+	{
+		const rapidjson::Value& itemTextureNameTwo = reader["Checked Texture"];
+		checkedTexture.name = itemTextureNameTwo.GetString();
+		checkedTexture = App->textures->Load(checkedTexture.name);
+	}
 }
 void ComponentCheckbox::OnSave(JSONWriter& writer) const
 {
@@ -92,6 +106,14 @@ void ComponentCheckbox::OnSave(JSONWriter& writer) const
 	// Saving button state
 	writer.String("Checkbox state");
 	writer.Bool(checked);
+
+	// Saving texture name
+	writer.String("Unchecked Texture");
+	writer.String(uncheckedTexture.name.c_str());
+
+	// Saving texture name
+	writer.String("Checked Texture");
+	writer.String(checkedTexture.name.c_str());
 
 	writer.EndObject();
 }

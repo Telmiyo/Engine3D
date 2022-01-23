@@ -13,7 +13,7 @@
                     },
                     "Children": [
                         {
-                            "Name": "Image",
+                            "Name": "BackGround",
                             "UUID": 0,
                             "Parent UUID": 0,
                             "Components": {
@@ -28,8 +28,8 @@
                                     ],
                                     "Rotation": [],
                                     "Size": [
-                                        1134.0,
-                                        583.0
+                                        1205.0,
+                                        714.0
                                     ],
                                     "Anchor": [
                                         4
@@ -52,13 +52,133 @@
                             }
                         },
                         {
-                            "Name": "Button",
+                            "Name": "PlayButton",
                             "UUID": 0,
                             "Parent UUID": 0,
                             "Components": {
                                 "Transform 2D": {
                                     "Position": [
                                         0.0,
+                                        -191.0
+                                    ],
+                                    "Pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "Rotation": [],
+                                    "Size": [
+                                        200.0,
+                                        114.0
+                                    ],
+                                    "Anchor": [
+                                        4
+                                    ]
+                                },
+                                "Image": {
+                                    "Texture name": "button.png",
+                                    "Size": [
+                                        400,
+                                        192
+                                    ],
+                                    "Texture ID": 6,
+                                    "Image color": [
+                                        1.0,
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ]
+                                },
+                                "Button": {
+                                    "Button state": 1
+                                }
+                            }
+                        },
+                        {
+                            "Name": "Crosshair",
+                            "UUID": 0,
+                            "Parent UUID": 0,
+                            "Components": {
+                                "Transform 2D": {
+                                    "Position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "Pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "Rotation": [],
+                                    "Size": [
+                                        60.0,
+                                        60.0
+                                    ],
+                                    "Anchor": [
+                                        4
+                                    ]
+                                },
+                                "Image": {
+                                    "Texture name": "crosshair.png",
+                                    "Size": [
+                                        488,
+                                        511
+                                    ],
+                                    "Texture ID": 7,
+                                    "Image color": [
+                                        1.0,
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "Name": "Image",
+                            "UUID": 0,
+                            "Parent UUID": 0,
+                            "Components": {
+                                "Transform 2D": {
+                                    "Position": [
+                                        0.0,
+                                        -190.0
+                                    ],
+                                    "Pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "Rotation": [],
+                                    "Size": [
+                                        134.0,
+                                        97.0
+                                    ],
+                                    "Anchor": [
+                                        4
+                                    ]
+                                },
+                                "Image": {
+                                    "Texture name": "play.png",
+                                    "Size": [
+                                        160,
+                                        100
+                                    ],
+                                    "Texture ID": 8,
+                                    "Image color": [
+                                        1.0,
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "Name": "OptionsWindow",
+                            "UUID": 0,
+                            "Parent UUID": 0,
+                            "Components": {
+                                "Transform 2D": {
+                                    "Position": [
+                                        2.0,
                                         0.0
                                     ],
                                     "Pivot": [
@@ -75,23 +195,105 @@
                                     ]
                                 },
                                 "Image": {
-                                    "Texture name": "buttom.png",
+                                    "Texture name": "options_background.png",
                                     "Size": [
-                                        480,
-                                        480
+                                        73,
+                                        74
                                     ],
-                                    "Texture ID": 6,
+                                    "Texture ID": 14,
                                     "Image color": [
                                         1.0,
                                         1.0,
                                         1.0,
-                                        1.0
+                                        255.0
                                     ]
-                                },
-                                "Button": {
-                                    "Button state": 0
                                 }
-                            }
+                            },
+                            "Children": [
+                                {
+                                    "Name": "VsyncText",
+                                    "UUID": 0,
+                                    "Parent UUID": 0,
+                                    "Components": {
+                                        "Transform 2D": {
+                                            "Position": [
+                                                -111.0,
+                                                -72.0
+                                            ],
+                                            "Pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "Rotation": [],
+                                            "Size": [
+                                                99.0,
+                                                56.0
+                                            ],
+                                            "Anchor": [
+                                                4
+                                            ]
+                                        },
+                                        "Image": {
+                                            "Texture name": "vsync.png",
+                                            "Size": [
+                                                160,
+                                                100
+                                            ],
+                                            "Texture ID": 9,
+                                            "Image color": [
+                                                1.0,
+                                                1.0,
+                                                1.0,
+                                                255.0
+                                            ]
+                                        }
+                                    }
+                                },
+                                {
+                                    "Name": "OptionCheckbox",
+                                    "UUID": 0,
+                                    "Parent UUID": 0,
+                                    "Components": {
+                                        "Transform 2D": {
+                                            "Position": [
+                                                -264.0,
+                                                -70.0
+                                            ],
+                                            "Pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "Rotation": [],
+                                            "Size": [
+                                                60.0,
+                                                60.0
+                                            ],
+                                            "Anchor": [
+                                                4
+                                            ]
+                                        },
+                                        "Image": {
+                                            "Texture name": "checkbox_off.png",
+                                            "Size": [
+                                                74,
+                                                74
+                                            ],
+                                            "Texture ID": 10,
+                                            "Image color": [
+                                                1.0,
+                                                1.0,
+                                                1.0,
+                                                255.0
+                                            ]
+                                        },
+                                        "Checkbox": {
+                                            "Checkbox state": false,
+                                            "Unchecked Texture": "checkbox_off.png",
+                                            "Checked Texture": "checkbox_on.png"
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     ]
                 }

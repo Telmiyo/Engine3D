@@ -48,5 +48,7 @@ private:
 
 	ButtonState buttonState = ButtonState::DISABLED;
 
-	std::function<void()> callback;
+	bool loadedHouse = false;
+
+	std::function<void(bool)> callback;
 };

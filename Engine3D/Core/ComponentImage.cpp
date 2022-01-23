@@ -121,7 +121,7 @@ void ComponentImage::SetTextureById(const int id)
 
 void ComponentImage::SetOpacity(float alpha)
 {
-	if (imageColor.w == 0 || imageColor.w >= 255.f)
+	if (imageColor.w == 0.f)
 	{
 		App->ui->fadeOut = false;
 		return;
@@ -180,7 +180,7 @@ void ComponentImage::OnLoad(const JSONReader& reader)
 	{
 		const rapidjson::Value& itemTextureName = reader["Texture name"];
 		texture.name = itemTextureName.GetString();
-		App->textures->Load(texture.name);
+		texture = App->textures->Load(texture.name);
 	}
 
 	// Loading texture size
@@ -204,7 +204,7 @@ void ComponentImage::OnLoad(const JSONReader& reader)
 	if (reader.HasMember("Texture ID"))
 	{
 		const rapidjson::Value& itemTextureId = reader["Texture ID"];
-		texture.id = itemTextureId.GetInt();
+		//texture.id = itemTextureId.GetInt();
 	}
 
 	// Loading image color
