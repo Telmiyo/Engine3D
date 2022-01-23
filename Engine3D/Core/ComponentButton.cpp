@@ -7,7 +7,7 @@
 ComponentButton::ComponentButton(GameObject* parent) : Component(parent)
 {
 	componentType = ComponentType::COMPONENT_BUTTON;
-	buttonState = ButtonState::DISABLED;
+	buttonState = ButtonState::IDLE;
 
 	callback = []() {
 		LOG("HELLO");
@@ -27,18 +27,25 @@ bool ComponentButton::Update(float dt)
 	{
 		// Button holding press
 		if (tmp->CheckMouseInsideBounds()) {
-
+			buttonState = ButtonState::PRESSED;
 		}
 	}
 	else if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP)
 	{
-		// Button pressed
+		// Button pressed o
 		if (tmp->CheckMouseInsideBounds()) {
 			callback();
+			buttonState = ButtonState::IDLE;
 		}
+		
 	}
 	else if (tmp->CheckMouseInsideBounds()) {
 		// Hover
+		buttonState = ButtonState::FOCUSED;
+	}
+	else
+	{
+		if (buttonState != ButtonState::DISABLED) buttonState = ButtonState::IDLE;
 	}
 
 	return true;
@@ -48,7 +55,7 @@ void ComponentButton::OnGui()
 {
 	if (ImGui::CollapsingHeader("Button")) {
 		int newButtonState = (int)buttonState;
-		if (ImGui::Combo("Button state", &newButtonState, "DISABLED\0IDLE\FOCUSED\0PRESSED\0"))
+		if (ImGui::Combo("Button state", &newButtonState, "DISABLED\0IDLE\0FOCUSED\0PRESSED\0"))
 		{
 			buttonState = (ButtonState)newButtonState;
 		}
