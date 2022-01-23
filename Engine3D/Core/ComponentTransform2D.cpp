@@ -173,24 +173,6 @@ void ComponentTransform2D::GetRealSize(float2& realSize)
 	realSize.y = size.y * propY;
 }
 
-void ComponentTransform2D::GetBoundingBox(float2& realPos, float2& realSize)
-{
-	/*float propX = App->ui->uiCameraViewport[2] / App->editor->lastViewportSize.x;
-	float propY = App->ui->uiCameraViewport[3] / App->editor->lastViewportSize.y;
-
-	GetRealPosition(realPos, true);
-	GetRealSize(realSize);
-	//realPos.x += position.x / propX;
-	//realPos.y += position.y / propY;
-	realSize /= 2;
-	realPos -= realSize;
-
-	//realPos.x -= App->editor->viewport.x;
-	//realPos.y -= App->editor->viewport.y;
-	realPos.y += 23;
-	realPos.y -= realSize.y / 2;*/
-}
-
 float2 ComponentTransform2D::GetCanvasCenter()
 {
 	ComponentCanvas* canvas = owner->parent->GetComponent<ComponentCanvas>();
@@ -205,21 +187,15 @@ float2 ComponentTransform2D::GetCanvasCenter()
 }
 
 bool ComponentTransform2D::CheckMouseInsideBounds()
-{
-
+{ 
 	float2 mousePosition = { (float)App->input->GetMouseX(), SCREEN_HEIGHT - (float)App->input->GetMouseY() };
 
 	float2 uiMousePosition = App->ui->GetMousePosition();
 	uiMousePosition.x = uiMousePosition.x / App->editor->lastViewportSize.x * SCREEN_WIDTH;
 	uiMousePosition.y = uiMousePosition.y / App->editor->lastViewportSize.y * SCREEN_HEIGHT;
 
-	LOG("%f, %f", uiMousePosition.x, uiMousePosition.y);
-
 	float2 realPos;
 	GetRealPosition(realPos, false);
-
-	//LOG("scene: %f, %f", scenePos.x, scenePos.y);
-	LOG("real: %f, %f", realPos.x, realPos.y);
 
 	float2 realSize;
 	GetRealSize(realSize);

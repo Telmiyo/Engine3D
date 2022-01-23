@@ -521,6 +521,26 @@ void ModuleEditor::UpdateWindowStatus() {
 					}
 				}
 			}
+			if (ImGui::Button("Assign to checked"))
+			{
+				if (gameobjectSelected)
+				{
+					ComponentCheckbox* checkbox = gameobjectSelected->GetComponent<ComponentCheckbox>();
+					if (checkbox) {
+						checkbox->SetCheckedTexture(t.second);
+					}
+				}
+			}
+			if (ImGui::Button("Assign to unchecked"))
+			{
+				if (gameobjectSelected)
+				{
+					ComponentCheckbox* checkbox = gameobjectSelected->GetComponent<ComponentCheckbox>();
+					if (checkbox) {
+						checkbox->SetUncheckedTexture(t.second);
+					}
+				}
+			}
 			ImGui::PopID();
 		}
 		ImGui::End();
