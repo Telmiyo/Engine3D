@@ -9,8 +9,10 @@
 #include "ComponentCanvas.h"
 #include "ComponentCamera.h"
 #include "ComponentMesh.h"
+#include "ModuleInput.h"
 #include "ModuleUI.h"
 
+#include "Globals.h"
 #include "ComponentImage.h"
 
 ComponentTransform2D::ComponentTransform2D(GameObject* parent) : Component(parent)
@@ -204,54 +206,36 @@ float2 ComponentTransform2D::GetCanvasCenter()
 
 bool ComponentTransform2D::CheckMouseInsideBounds()
 {
-	/*ComponentTransform2D* tmp = owner->GetComponent<ComponentTransform2D>();
-	float2 pos;
-	float2 size;
-	tmp->GetBoundingBox(pos, size);
 
-	float2 mousePosition = App->ui->GetMousePosition();
+	float2 mousePosition = { (float)App->input->GetMouseX(), SCREEN_HEIGHT - (float)App->input->GetMouseY() };
 
-	LOG("%f, %f", mousePosition.x, mousePosition.y);
+	float2 uiMousePosition = App->ui->GetMousePosition();
+	uiMousePosition.x = uiMousePosition.x / App->editor->lastViewportSize.x * SCREEN_WIDTH;
+	uiMousePosition.y = uiMousePosition.y / App->editor->lastViewportSize.y * SCREEN_HEIGHT;
+
+	LOG("%f, %f", uiMousePosition.x, uiMousePosition.y);
+
+	float2 realPos;
+	GetRealPosition(realPos, false);
+
+	//LOG("scene: %f, %f", scenePos.x, scenePos.y);
+	LOG("real: %f, %f", realPos.x, realPos.y);
+
+	float2 realSize;
+	GetRealSize(realSize);
+
+	float2 lowerBot = { realPos.x - realSize.x / 2, realPos.y - realSize.y / 2 };
+	float2 upperRight = { realPos.x + realSize.x / 2, realPos.y + realSize.y / 2 };
 
 	//TODO CHECK
-	if (pos.x < mousePosition.x && pos.x + size.x > mousePosition.x)
+	if (lowerBot.x < uiMousePosition.x && upperRight.x > uiMousePosition.x)
 	{
-		if (pos.y < mousePosition.y && pos.y + size.y > mousePosition.y)
+		if (lowerBot.y < uiMousePosition.y && upperRight.y > uiMousePosition.y)
 		{
 			return true;
 		}
 	}
 
-	return false;*/
-
-	ComponentImage* componentImage = owner->GetComponent<ComponentImage>();
-	ComponentMesh* mesh = componentImage->plane;
-
-	//mesh->GenerateBounds(true);
-	//mesh->UpdateBounds(componentImage);
-	//mesh->DrawAABB();
-
-	float normalized_x = ( - 1.0 + 2.0 * App->editor->onSceneMousePos.x / App->editor->lastViewportSize.x) * 2;
-	float normalized_y = (1.0 - 2.0 * App->editor->onSceneMousePos.y / App->editor->lastViewportSize.y) * 2;
-
-	LineSegment picking = App->camera->cameraFrustum.UnProjectLineSegment(normalized_x, normalized_y);
-	float x, y;
-	float2 realPos;
-	GetRealPosition(realPos);
-	float2 canvasCenter = GetCanvasCenter();
-	x = (realPos.x - canvasCenter.x) / App->editor->lastViewportSize.x;
-	y = (realPos.y - canvasCenter.y) / App->editor->lastViewportSize.x;
-	//mesh->localAABB.minPoint.x *= x;
-	//mesh->localAABB.minPoint.y *= y;
-	//mesh->localAABB.maxPoint.x *= x;
-	//mesh->localAABB.maxPoint.y *= y;
-	//mesh->localAABB.Scale(mesh->localAABB.CenterPoint(), { x, y, 1 });
-	mesh->localAABB.Translate({ x, y ,0 });
-	bool hit = picking.Intersects(mesh->localAABB);
-	mesh->localAABB.Translate({ -x, -y ,0 });
-	if (hit) {
-		return true;
-	}
 	return false;
 }
 
