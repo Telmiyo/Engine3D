@@ -12,8 +12,31 @@
 - Object Selection my mouse.
 - A camera component that uses frustum culling.
 - A camera ca be created in game object imgui window
+- First screen is an image with a play button. Afterwards, the scene is loaded
 - Scenes can be serialized to a file that can be loaded.
+- New User Interface resources (buttons, checkboxes, input text, images...)
+- Press F1 for opening an options window with a vsync checkbox
 
+## User Interface components
+- A canvas parent must be created in order UI elements can be drawn
+### Transform 2D
+ - Every component has the transform 2d component
+ - At the inspector, the user can modify the position, the rotation, the pivot, the size and the desired anchor
+### Image
+ - In order to have a ui component rendered, it must have a component image
+ - You can drag & drop the desired texture to the inspector, or select it by the texture resources folder
+ - A display at the inspector is shown
+ - You can change the texture color palette at the inspector
+### Button
+ - Basic button function with basic states. Disabled if a button is not active, Idle, Focused and Pressed.
+### Checkbox
+ - Basic checkbox function. Check bool.
+ - You can select different texture for both checked states. It is done in the texture resources folder.
+### Text
+ - We could not manage to implement text rendering!
+### Options window
+ - You are able to create an options window which can contain any UI element desired
+ - In example, we delivered by default an options window with a vsync checkbox (Press F1)
 ## Camera controls
  - Right Click: Rotate the camera freely
  - WASD: Move the camera forward, left, back and right respectively
@@ -31,7 +54,9 @@
     - ALT + F4: Exit engine 
  - GameObject:
     - Create empty Game Object
+    - Create camera
     - Create 3D Primitives (Cube, Sphere, Cylinder)
+    - Create UI resources (Canvas, Image, Button, Checkbox, Text, Option Window)
  - Window:
     - Examples: ImGui Tutorial
     - Workspace Style: Change Engine theme
