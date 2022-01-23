@@ -11,6 +11,11 @@ ComponentButton::ComponentButton(GameObject* parent) : Component(parent)
 
 	callback = []() {
 		LOG("HELLO");
+
+		// FADE OUT
+		App->ui->fadeOut = !App->ui->fadeOut;
+		App->import->LoadGeometryCustom("Baker_House");
+		
 	};
 }
 

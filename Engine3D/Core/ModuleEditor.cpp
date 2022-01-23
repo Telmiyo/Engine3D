@@ -365,7 +365,11 @@ void ModuleEditor::MenuBar() {
 				App->scene->OnLoad("scene1.scene");
 			}
 			ImGui::Separator();
-			if (ImGui::MenuItem("Exit", "(Alt+F4)")) App->closeEngine = true;
+			if (ImGui::MenuItem("Exit", "(Alt+F4)"))
+			{
+				App->scene->OnSave("scene1.scene");
+				App->closeEngine = true;
+			}
 			ImGui::EndMenu();
 		}
 

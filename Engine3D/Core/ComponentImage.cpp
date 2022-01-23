@@ -11,6 +11,7 @@
 #include "ModuleScene.h"
 #include "Math/Quat.h"
 #include "ComponentMesh.h"
+#include "ModuleUI.h"
 #include "glew.h"
 #include <vector>
 
@@ -116,6 +117,16 @@ void ComponentImage::SetTextureById(const int id)
 			texture = App->textures->Get(i->second.name);
 		}
 	}
+}
+
+void ComponentImage::SetOpacity(float alpha)
+{
+	if (imageColor.w == 0 || imageColor.w >= 255.f)
+	{
+		App->ui->fadeOut = false;
+		return;
+	}
+	 imageColor.w -= alpha; 
 }
 
 void ComponentImage::OnGui()

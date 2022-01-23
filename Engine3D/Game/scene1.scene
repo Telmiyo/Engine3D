@@ -28,18 +28,18 @@
                                     ],
                                     "Rotation": [],
                                     "Size": [
-                                        988.0,
-                                        382.0
+                                        1134.0,
+                                        583.0
                                     ],
                                     "Anchor": [
                                         4
                                     ]
                                 },
                                 "Image": {
-                                    "Texture name": "Assets/Textures/bg.jpg",
+                                    "Texture name": "bg.png",
                                     "Size": [
-                                        1280,
-                                        720
+                                        1921,
+                                        1080
                                     ],
                                     "Texture ID": 5,
                                     "Image color": [
@@ -48,6 +48,48 @@
                                         1.0,
                                         1.0
                                     ]
+                                }
+                            }
+                        },
+                        {
+                            "Name": "Button",
+                            "UUID": 0,
+                            "Parent UUID": 0,
+                            "Components": {
+                                "Transform 2D": {
+                                    "Position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "Pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "Rotation": [],
+                                    "Size": [
+                                        200.0,
+                                        200.0
+                                    ],
+                                    "Anchor": [
+                                        4
+                                    ]
+                                },
+                                "Image": {
+                                    "Texture name": "buttom.png",
+                                    "Size": [
+                                        480,
+                                        480
+                                    ],
+                                    "Texture ID": 6,
+                                    "Image color": [
+                                        1.0,
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ]
+                                },
+                                "Button": {
+                                    "Button state": 0
                                 }
                             }
                         }
