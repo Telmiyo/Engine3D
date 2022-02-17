@@ -31,7 +31,7 @@ jobs:
         mkdir build
         cd build
         mkdir ${{ env.RELEASE_NAME }}
-        cd ../../Engine3D
+        cd ../../Engine3D/Engine3D
         dir
         
     # Setup MSBuild.exe path if required
