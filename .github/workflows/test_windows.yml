@@ -40,7 +40,7 @@ jobs:
     
     - name: Build Solution (MSVC16)
       run: |
-        msbuild.exe Engine3D\Engine3D.sln  /property:Configuration=Release
+        msbuild.exe Engine3D.sln  /property:Configuration=Release
         copy /Y build\Release\amapola_engine.exe build\${{ env.RELEASE_NAME }}\amapola_engine.exe
       shell: cmd
       
